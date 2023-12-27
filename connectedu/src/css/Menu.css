@@ -1,0 +1,39 @@
+/* Menu.css */
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  padding: 10px; /* Ajoute un espace autour des éléments du menu */
+  margin-left: 30px;
+}
+
+
+.liens{
+  margin-left: 450px;
+}
+
+.menu-items {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  margin: 0; /* Supprime la marge par défaut de la liste */
+  padding: 0; /* Supprime le rembourrage par défaut de la liste */
+}
+
+a {
+  text-decoration: none;
+  font-family: robotto;
+  color: rgb(255, 255, 255);
+  padding: 40px; /* Ajoute un peu de rembourrage pour rendre les liens plus cliquables */
+}
+
+.isActiveLink {
+  font-weight: bold;
+  color: rgb(49, 151, 215);
+}
+
+inscription{
+  color: #2ECC71;
+  font-weight: bold;
+}

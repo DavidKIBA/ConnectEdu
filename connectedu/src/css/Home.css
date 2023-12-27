@@ -1,0 +1,75 @@
+.home-container {
+    position: relative;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(52, 73, 94, 0.75); /* Couleur bleu de nuit avec opacité de 75% */
+  }
+  
+  .logo {
+    width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
+  }
+ 
+.titre1{
+  position: absolute;
+  margin-top: -600px;
+  margin-left: 100px;
+  font-family:  Montserrat;
+  color: white;
+  font-size: 4pc;
+}
+
+.titre2{
+  position: absolute;
+  margin-top: -480px;
+  margin-left: 100px;
+  font-family:  Montserrat;
+  color: white;
+  font-size: 2pc;
+}
+
+.titre3{
+  position: absolute;
+  margin-top: -400px;
+  margin-left: 100px;
+  font-family:  Montserrat;
+  color: white;
+  font-size: 2pc;
+}
+
+.liste{
+  position: absolute;
+  margin-top: -330px;
+  margin-left: 150px;
+  font-family:  Montserrat;
+  color: white;
+  font-size: 1pc;
+}
+
+.voirplus{
+  position: absolute;
+  margin-top: -180px;
+  width: 80px;
+  height: 30px;
+  margin-left: 170px;
+  border-radius: 5px;
+  color: white;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  padding: 2px;
+  background-color: #2ECC71;
+}
+  
+  

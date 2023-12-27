@@ -1,0 +1,51 @@
+.home-container {
+    position: relative;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 128, 0.5); /* Couleur bleu de nuit avec opacité */
+  }
+  
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .logo {
+    width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
+  }
+  
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu li {
+    margin: 0 10px;
+    color: white;
+    font-size: 16px;
+  }
+  
