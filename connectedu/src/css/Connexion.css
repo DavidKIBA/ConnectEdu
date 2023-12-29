@@ -1,0 +1,121 @@
+.home-container {
+    position: relative;
+  }
+  
+  .background-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #001e32d3; /* Couleur bleu de nuit avec opacité */
+  }
+  
+  .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .logo {
+    width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
+  }
+  
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu li {
+    margin: 0 10px;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .titreconn{
+    position: absolute;
+    margin-top: -660px;
+    left: 470px;
+    font-family:  Montserrat;
+    color: white;
+    font-size: 3pc;
+  }
+
+  /* Formulaire de connexion */
+
+.login-container {
+  position: absolute;
+  top: 500px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.148);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+}
+
+label {
+  margin-bottom: 8px;
+}
+
+input {
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #3498DB;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-links {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-links a {
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: #3498DB;
+}
+
+button {
+  background-color: #3498DB;
+  color: #FFFFFF;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background-color: #2ECC71;
+}

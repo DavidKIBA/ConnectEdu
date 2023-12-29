@@ -6,11 +6,12 @@
   align-items: center; 
   padding: 10px; /* Ajoute un espace autour des éléments du menu */
   margin-left: 30px;
+  z-index: 2;
 }
 
 
 .liens{
-  margin-left: 450px;
+  margin-left: 360px;
 }
 
 .menu-items {
@@ -23,7 +24,7 @@
 
 a {
   text-decoration: none;
-  font-family: robotto;
+  font-family: 'Roboto', sans-serif;
   color: rgb(255, 255, 255);
   padding: 40px; /* Ajoute un peu de rembourrage pour rendre les liens plus cliquables */
 }
@@ -33,7 +34,22 @@ a {
   color: rgb(49, 151, 215);
 }
 
-inscription{
+.inscription{
   color: #2ECC71;
   font-weight: bold;
+}
+
+.signin-button {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px; /* Ajustez le rembourrage selon vos besoins */
+  background-color: #2ECC71; /* Utilisez la couleur de fond que vous avez mentionnée */
+  color: #FFFFFF; /* Utilisez la couleur de texte souhaitée */
+  cursor: pointer;
+  border-radius: 3px;
+  width: 75px;
+}
+
+.signin-button:hover {
+  background-color:rgb(49, 151, 215);; /* Couleur de survol */
 }
