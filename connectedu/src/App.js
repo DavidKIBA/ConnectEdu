@@ -11,7 +11,9 @@ import Contact from './pages/Contact';
 import Error from './pages/Error';
 import Connected from './pages/Connected';
 import Connexion from './pages/Connexion';
-
+import Inscription2 from './pages/Inscription2';
+import Inscription3 from './pages/Inscription3';
+import Inscription4 from './pages/Inscription4';
 
 // fichiers css
 import './css/Home.css';
@@ -20,6 +22,9 @@ import './css/Connected.css';
 import './css/Inscription.css';
 import './css/Connexion.css';
 import './css/Footer.css';
+import './css/Inscription2.css';
+import './css/Inscription3.css';
+import './css/Inscription4.css';
 
 const App = () => {
   return (
@@ -33,6 +38,9 @@ const App = () => {
         <Route path="/contact" exact component={Contact} />
         <Route path="/connected" exact component={Connected} />
         <Route path="/connexion" exact component={Connexion} />
+        <Route path="/inscription2" exact component={Inscription2} />
+        <Route path="/inscription3" exact component={Inscription3} />
+        <Route path="/inscription4" exact component={Inscription4} />
         <Route component={Error} />
       </Switch>
     </Router>

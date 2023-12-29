@@ -108,18 +108,23 @@ input {
   outline: none;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Aligne les boutons à gauche et à droite */
+  }
+  
 button {
-  background-color: #3498DB;
-  color: #FFFFFF;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  width: 100px;
-  align-self: self-end;
-}
-
+    background-color: #3498DB;
+    color: #FFFFFF;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    width: 100px;
+    align-self: self-end;
+  }
+  
 button:hover {
   background-color: #2ECC71;
 }
@@ -146,3 +151,18 @@ h2{
   color: #2ECC71;
   font-family: 'Roboto', sans-serif;
 }
+
+.form-group1 {
+    margin-bottom: 15px;
+  }
+  
+  .form-group1 input,
+  .form-group1 select {
+    width: 100%; /* Utilisez la largeur que vous préférez */
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: rgb(255, 255, 255); /* Couleur de fond avec opacité */
+    color: #000000; /* Couleur du texte */
+  }

@@ -108,18 +108,23 @@ input {
   outline: none;
 }
 
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Aligne les boutons à gauche et à droite */
+  }
+  
 button {
-  background-color: #3498DB;
-  color: #FFFFFF;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  width: 100px;
-  align-self: self-end;
-}
-
+    background-color: #3498DB;
+    color: #FFFFFF;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    width: 100px;
+    align-self: self-end;
+  }
+  
 button:hover {
   background-color: #2ECC71;
 }
