@@ -15,6 +15,7 @@ import Inscription2 from './pages/Inscription2';
 import Inscription3 from './pages/Inscription3';
 import Inscription4 from './pages/Inscription4';
 
+
 // fichiers css
 import './css/Home.css';
 import './css/Menu.css';
@@ -25,6 +26,7 @@ import './css/Footer.css';
 import './css/Inscription2.css';
 import './css/Inscription3.css';
 import './css/Inscription4.css';
+import './css/ConnectedMenu.css';
 
 const App = () => {
   return (

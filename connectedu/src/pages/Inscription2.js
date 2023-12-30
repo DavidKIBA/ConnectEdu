@@ -6,11 +6,6 @@ const Inscription2 = () => {
     
       // aller a la pge suivante
     const continuer = useHistory();
-    const Continuer = (e) => {
-        e.preventDefault();
-        continuer.push('/inscription3')
-        }
-    
  
     // traitement du formulaire
     const handleContinue = (e) => {
@@ -100,7 +95,7 @@ const Inscription2 = () => {
 
             <div className="button-container">
                 <button type="submit" onClick={Precedent}>Précédent</button>
-                <button type="submit" onClick={Continuer}>Continuer</button>    
+                <button type="submit" >Continuer</button>    
             </div>
     
           </form>

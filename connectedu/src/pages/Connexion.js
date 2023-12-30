@@ -11,10 +11,11 @@ const Connexion = () => {
      };
      
      // fonction logique de connexion ici
+    const connexion = useHistory();
     const handleLogin = (e) => {
         e.preventDefault();
         // Ajoutez votre logique de connexion ici
-        console.log('Connecté!');
+        connexion.push("/connected");
       };
 
     return (

@@ -38,9 +38,9 @@ const Home = () => {
         ConnectEdu 
       </h1>
       <h1 className='titre2'>
-        <span></span>
+        <div className='tiret'></div>
         <span>L'école à porté de main</span> 
-        <span></span>
+        <div className='tiret'></div>
       </h1>
 
       <h1 className='titre3'>
@@ -48,7 +48,7 @@ const Home = () => {
           pour vous :
         
       </h1>
-     
+      
       <div className='liste'>
         <ul>
             <li className='ligne'>Gérez facilement vos étudiants, des admissions <br/> 
@@ -64,29 +64,44 @@ const Home = () => {
        {/* devises de ConnectEdu */}
 
       <div className='devises'>
-        <span className='devise1'>
-            <h1>Efficacité Simplifiée</h1>
+        <div className='devise1'>
+              <img
+              className="iconedevise"
+              src={process.env.PUBLIC_URL + '/images/Project Setup.png'}
+              alt="Accueil"
+              />
+            <h3>Efficacité Simplifiée</h3>
             <p>Gérez tous les aspects de votre école en un seul endroit.</p>
-        </span>
-        <span className='devise2'>
-            <h1>Sécurité Prioritaire</h1>
+        </div>
+        <div className='devise2'>
+              <img
+              className="iconedevise"
+              src={process.env.PUBLIC_URL + '/images/Security Shield.png'}
+              alt="Accueil"
+              />
+            <h3>Sécurité Prioritaire</h3>
             <p>Gérez tous les aspects de votre école en un seul endroit.</p>
-        </span>
-        <span className='devise3'>
-            <h1>Personnalisé pour Vous</h1>
+        </div>
+        <div className='devise3'>
+             <img
+              className="iconedevise"
+              src={process.env.PUBLIC_URL + '/images/Registration.png'}
+              alt="Accueil"
+              />
+            <h3>Personnalisé pour Vous</h3>
             <p>Gérez tous les aspects de votre école en un seul endroit.</p>
-        </span>
+        </div>
       </div>
-
+         <br></br>
    {/* formulaire de contact */}
         
    <div className="contact-container">
       <div className="description">
         <h2>Description</h2>
-        <p>Une description quelconque de votre choix.</p>
+        <p>Une description quelconque de Notre choix.</p>
       </div>
       <div className="form-container">
-        <h2>Contactez-nous</h2>
+        <h2 className='contact'>Contactez-nous</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="name">Nom :</label>
           <input type="text" id="name" name="name" required />
@@ -108,14 +123,21 @@ const Home = () => {
           <button type="submit">Envoyer</button>
         </form>
       </div>
-    </div>
 
+    
+    </div>
+    <br></br>
+    <div className='presence'>
+          Présent dans plus de 20 pays d’Afrique
+      </div>
+      <div className='pays'>
+          Congo, RDC, Guinée Bissau, Tchad, ...
+      </div>
+    <br></br>
      {/* footer*/}
 
      <Footer/>
   
-
-
    </div>
       
   );

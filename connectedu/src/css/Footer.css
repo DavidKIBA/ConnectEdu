@@ -64,3 +64,48 @@ footer {
     text-decoration: underline;
   }
   
+  
+
+.main{
+  background-color: #34495E;
+}
+
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .newsletter {
+    flex: 1;
+    max-width: 300px; /* Ajustez la largeur selon vos besoins */
+  }
+  
+  .newsletter form {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .newsletter label,
+  .newsletter input,
+  .newsletter button {
+    margin-bottom: 10px;
+  }
+  
+  
+  .info {
+    flex: 1;
+    max-width: 200px; /* Ajustez la largeur selon vos besoins */
+  }
+  
+  .links {
+    flex: 1;
+    max-width: 200px; /* Ajustez la largeur selon vos besoins */
+  }
+  
+  .copyright {
+    text-align: center;
+    color: white;
+  }
+  

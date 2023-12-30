@@ -6,11 +6,6 @@ const Inscription3 = () => {
     
      // aller a la pge suivante
      const continuer = useHistory();
-     const Continuer = (e) => {
-         e.preventDefault();
-         continuer.push('/inscription4')
-         }
-     
   
      // traitement du formulaire
      const handleContinue = (e) => {
@@ -18,10 +13,10 @@ const Inscription3 = () => {
      continuer.push('/inscription4')
      }
  
-     // retour a la page inscription
+     // retour a la page inscription2
      const precedent = useHistory();
      const Precedent = () => {
-         precedent.push('/inscription')
+         precedent.push('/inscription2')
           }
           
         return (
@@ -101,3 +96,5 @@ const Inscription3 = () => {
 };
 
 export default Inscription3;
+
+

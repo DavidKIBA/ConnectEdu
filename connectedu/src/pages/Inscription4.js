@@ -27,8 +27,13 @@ const Inscription4 = () => {
             alt="Accueil"
           />
 
+          <h1 className='titreconn5'>
+          Vous recevrez un mail de confirmation après validation de votre dossier
+          </h1>
+
         </div>
     );
 };
 
 export default Inscription4;
+

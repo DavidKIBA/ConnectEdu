@@ -43,6 +43,15 @@
   font-size: 2pc;
 }
 
+.tiret{
+  position: absolute;
+  margin-top: -480px;
+  margin-left: 100px;
+  width: 100px;
+  height: 5px;
+  color: #ffffff;
+}
+
 .titre3{
   position: absolute;
   margin-top: -400px;
@@ -77,33 +86,40 @@
   border-color: #2ECC71;
 }
 
-.devises{
-    display: flex;
-    position: absolute;
-    margin-top: -200px;
-    align-content: space-between;
+
+
+.devises {
+  display: flex;
+  width: 100%;
 }
 
-.devise1{
-  width: 300px;
-  height: 100px;
- 
-  color: white;
-}
-
-.devise1{
-  width: 300px;
-  height: 100px;
-  background-color: #2ECC71;
-  color: white;
-}
-
-.devise1{
-  width: 300px;
-  height: 100px;
+.devise1 {
+  flex: 1;
   background-color: #3498DB;
-  color: white;
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+  font-family: Roboto, sans-serif;
 }
+
+.devise2 {
+  flex: 1;
+  background-color: #2ECC71;
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+  font-family: Roboto, sans-serif;
+}
+
+.devise3 {
+  flex: 1;
+  background-color: #3498DB;
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+  font-family: Roboto, sans-serif;
+}
+
 
 
 /* formulaire */
@@ -112,7 +128,7 @@
 .contact-container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 10px;
   z-index: 1;
   width: 100%;
 }
@@ -120,10 +136,13 @@
 .description {
   flex: 1;
   padding-right: 20px;
-  background-color: #3498db;
-  color: #fff;
+  color: #000000;
   margin-left: 0%;
   padding: 10px;
+}
+
+.contact{
+  color: #ffffff;
 }
 
 .form-container {
@@ -161,3 +180,18 @@ button {
   align-items: center;
 }
 
+.iconedevise{
+  width: 50px;
+  height: auto;
+}
+
+.presence{
+  text-align: center;
+  font-size: 1.5pc;
+  font-family: Roboto, sans-serif;
+}
+
+.pays{
+  text-align: center;
+  font-family: Roboto, sans-serif;
+}

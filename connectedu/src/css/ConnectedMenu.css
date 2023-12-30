@@ -1,0 +1,97 @@
+/* Menu.css */
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    padding: 10px; /* Ajoute un espace autour des éléments du menu */
+    margin-left: 30px;
+    z-index: 2;
+  }
+  
+  
+  .liens{
+    margin-left: 160px;
+  }
+  
+  .menu-items {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    margin: 0; /* Supprime la marge par défaut de la liste */
+    padding: 0; /* Supprime le rembourrage par défaut de la liste */
+  }
+  
+  a {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(255, 255, 255);
+    padding: 40px; /* Ajoute un peu de rembourrage pour rendre les liens plus cliquables */
+  }
+  
+  .isActiveLink {
+    font-weight: bold;
+    color: rgb(49, 151, 215);
+  }
+  
+  .dashboard{
+    color: #2ECC71;
+    font-weight: bold;
+  }
+  
+  .signout-button {
+    display: flex;
+    align-items: center;
+    padding: 6px 5px; /* Ajustez le rembourrage selon vos besoins */
+    background-color: #2ECC71; /* Utilisez la couleur de fond que vous avez mentionnée */
+    color: #FFFFFF; /* Utilisez la couleur de texte souhaitée */
+    cursor: pointer;
+    border-radius: 3px;
+    width: 75px;
+  }
+  
+  .signout-button:hover {
+    background-color:rgb(49, 151, 215);; /* Couleur de survol */
+  }
+
+/*  image de profil */
+
+  .profile-menu {
+    position: relative;
+  }
+  
+  .profile-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.7); /* Lueur externe verte */
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #2ECC71; /* Couleur de fond du menu déroulant */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+  
+ 
+  

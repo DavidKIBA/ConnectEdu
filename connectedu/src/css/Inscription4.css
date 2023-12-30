@@ -18,6 +18,16 @@
     text-align: center;
   }
 
+  .titreconn5{
+    position: absolute;
+    margin-top: -950px;
+    margin-left: 90px;
+    font-family:  Montserrat;
+    color: #2ECC71;
+    font-size: 2pc;
+    text-align: center;
+  }
+
   .overlay1 {
     position: absolute;
     top: 0;
