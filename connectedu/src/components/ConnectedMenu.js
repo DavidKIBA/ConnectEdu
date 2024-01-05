@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom'; // pour rediriger les bouttons sur d'autres pages
 import { FaUser } from 'react-icons/fa'; // importer l'icone utilisateur 
@@ -25,7 +26,7 @@ const ConnectedMenu = () => {
 
     return (
          <div className="menu">
-       <div className='Logo1'>
+       <div className='Logo'>
         
        <img
             className="logo"
