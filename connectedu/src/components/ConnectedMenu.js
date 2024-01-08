@@ -6,7 +6,11 @@ import { FaUser } from 'react-icons/fa'; // importer l'icone utilisateur
 
 const ConnectedMenu = () => {
 
-    
+    const togge = useHistory ();
+    const togge1 = () => {
+      togge.push('/dashbord')
+
+    }
     // gerer l'etat d'ouverture et fermeture du menu du profil
 
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -54,7 +58,7 @@ const ConnectedMenu = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/dashboard" className="dashboard">
+          <NavLink onClick={togge1} activeClassName="isActiveLink">
             Tableau de bord
           </NavLink>
         </li>

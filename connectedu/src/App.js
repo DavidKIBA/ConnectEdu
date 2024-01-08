@@ -1,6 +1,8 @@
 // App.js
 
 import React from 'react';
+/*import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';*/
+import { Space } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // importation des pages
@@ -14,7 +16,7 @@ import Connexion from './pages/Connexion';
 import Inscription2 from './pages/Inscription2';
 import Inscription3 from './pages/Inscription3';
 import Inscription4 from './pages/Inscription4';
-
+import Dashboard from './pages/Dashboard';
 
 // fichiers css
 import './css/Home.css';
@@ -27,11 +29,13 @@ import './css/Inscription2.css';
 import './css/Inscription3.css';
 import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
+import './css/Dashboard.css';
+
 
 const App = () => {
   return (
     <Router>
-      {/* Définir les routes */}
+      {/* Définir les routes*/}
   
       <Switch>
         <Route path="/" exact component={Home} />
@@ -43,10 +47,10 @@ const App = () => {
         <Route path="/inscription2" exact component={Inscription2} />
         <Route path="/inscription3" exact component={Inscription3} />
         <Route path="/inscription4" exact component={Inscription4} />
+        <Route path="/dashboard" exact component={Dashboard} />
         <Route component={Error} />
       </Switch>
     </Router>
   );
 };
-
 export default App;
