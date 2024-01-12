@@ -3,6 +3,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom'; // pour rediriger les bouttons sur d'autres pages
 import Menu from "../components/Menu";
 import Footer from '../components/Footer';
+import  { useState } from 'react';
+import { Button, Form, Image, Input, Checkbox, Typography, Row, Col } from 'antd';
+import { ProjectOutlined, SecurityScanOutlined, IdcardOutlined } from '@ant-design/icons';
 
 
 const Home = () => {
@@ -22,11 +25,12 @@ const Home = () => {
 
     return (
     <div className="home-container">
-      <img
-        className="background-image"
-        src={process.env.PUBLIC_URL + '/images/homeimage.jpg'}
-        alt="Accueil"
-      />
+      <Image
+             className="background-image"
+             src={process.env.PUBLIC_URL + '/images/homeimage.jpg'}
+             alt="Accueil"
+          />
+     
       <div className="overlay"></div>
  
       <div>

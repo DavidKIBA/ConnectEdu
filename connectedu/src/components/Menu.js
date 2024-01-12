@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa';
-import { Button, Drawer, Menu as AntMenu, Col } from 'antd';
+import { Button, Drawer, Menu as AntMenu, Col, Image } from 'antd';
 import { MenuOutlined} from '@ant-design/icons';
 
 const { SubMenu } = AntMenu;
@@ -25,9 +25,10 @@ const Menu = () => {
 
   return (
     <div className="menu">
-      <div className='Logo1'>
-        <img
+      <div className='logo1'>
+      <Image
           className="logo"
+          width={100}
           src={process.env.PUBLIC_URL + '/images/Logo.png'}
           alt="logo"
         />

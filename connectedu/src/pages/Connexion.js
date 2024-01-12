@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
-import { Layout, Form, Input, Button, Checkbox } from 'antd';
+import { Layout, Form, Input, Button, Image, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const Connexion = () => {
@@ -22,6 +22,10 @@ const Connexion = () => {
 
      return (
        <div>
+         <Image
+             width='100%'
+            src={process.env.PUBLIC_URL + '/images/connexionimage.jpg'}
+          />
          <Layout>
            <div className="overlay">
              <h1 className="titreconn">
