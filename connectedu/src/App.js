@@ -14,12 +14,13 @@ import Connexion from './pages/Connexion';
 import Inscription2 from './pages/Inscription2';
 import Inscription3 from './pages/Inscription3';
 import Inscription4 from './pages/Inscription4';
+import Dashboard from './pages/Dashboard';
 
 
 // fichiers css
 
 import './css/Home.css';
-import './css/Menu.css';
+
 import './css/Connected.css';
 import './css/Inscription.css';
 import './css/Connexion.css';
@@ -28,6 +29,7 @@ import './css/Inscription2.css';
 import './css/Inscription3.css';
 import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
+import './css/Dashboard.css';
 
 const App = () => {
   return (
@@ -44,6 +46,7 @@ const App = () => {
         <Route path="/inscription2" exact component={Inscription2} />
         <Route path="/inscription3" exact component={Inscription3} />
         <Route path="/inscription4" exact component={Inscription4} />
+        <Route path="/dashboard" exact component={Dashboard} />
         <Route component={Error} />
       </Switch>
     </Router>

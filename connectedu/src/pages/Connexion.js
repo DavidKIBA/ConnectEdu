@@ -1,65 +1,98 @@
 import React from 'react';
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
+import { Layout, Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const Connexion = () => {
 
      // fonction retour vers la page inscription
      const inscription = useHistory();
-     const RetourSignin = () => {
-        inscription.push("/inscription")
-     };
+      const RetourSignin = () => {
+         inscription.push("/inscription")
+      };
      
      // fonction logique de connexion ici
-    const connexion = useHistory();
-    const handleLogin = (e) => {
-        e.preventDefault();
-        // Ajoutez votre logique de connexion ici
-        connexion.push("/connected");
-      };
+     const connexion = useHistory();
+      const onFinish = (e) => {
+         e.preventDefault();
+         // Ajoutez votre logique de connexion ici
+         connexion.push("/connected");
+       };
 
-    return (
-        <div>
-            <img
-        className="background-image"
-        src={process.env.PUBLIC_URL + '/images/connexionimage.jpg'}
-        alt="Accueil"
-      />
-      <div className="overlay"></div>
+     return (
+       <div>
+         <Layout>
+           <div className="overlay">
+             <h1 className="titreconn">
+               <UserOutlined /> Connexion
+             </h1>
+             {/* ... autres éléments de contenu ... */}
+           </div>
+         </Layout>
 
-      <h1 className='titreconn'>
-        Connexion
-      </h1>
+         <div>
+           <Menu />
+         </div>
 
-      <div>
-        
-          <Menu />
-        
-      </div>
+         {/* formulaire */}
+         <div className="login-container">
+           <Form name="login-form" className="login-form" onFinish={onFinish}>
+             <h2>Connexion</h2>
+             <Form.Item
+               name="matricule"
+               rules={[{ required: true, message: 'Veuillez entrer votre numéro matricule!' }]}
+             >
+               <Input prefix={<UserOutlined />} placeholder="Numéro Matricule" />
+             </Form.Item>
+             <Form.Item
+               name="password"
+               rules={[{ required: true, message: 'Veuillez entrer votre mot de passe!' }]}
+             >
+               <Input.Password prefix={<LockOutlined />} placeholder="Mot de passe" />
+             </Form.Item>
+             <Form.Item>
+               <Form.Item name="remember" valuePropName="checked" noStyle>
+                 <Checkbox>Se souvenir de moi</Checkbox>
+               </Form.Item>
 
-      {/* formulaire */}
+               <a className="login-form-forgot" href="#">
+                 Mot de passe oublié?
+               </a>
+             </Form.Item>
 
-   
-
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleLogin}>
-        <h2>Connexion</h2>
-        <label htmlFor="matricule">Numéro Matricule:</label>
-        <input type="text" id="matricule" name="matricule" required />
-
-        <label htmlFor="password">Mot de passe:</label>
-        <input type="password" id="password" name="password" required />
-        <button type="submit">Se connecter</button>
-        <div className="form-links">
-          <a href="#">Mot de passe oublié?</a>
-          <span>Vous n'avez pas de compte? <a href="#" onClick={RetourSignin}>S'inscrire</a></span>
-        </div>
-      </form>
-    </div>
-
-    </div>
-
-    );
+             <Form.Item>
+               <Button type="primary" htmlType="submit" className="login-form-button">
+                 Se connecter
+               </Button>
+               <div className="form-links">
+                 Vous n'avez pas de compte? <a href="#" onClick={RetourSignin}>S'inscrire</a>
+               </div>
+             </Form.Item>
+           </Form>
+         </div>
+       </div>
+     );
 };
 
 export default Connexion;
+
+
+
+// <div>
+//           <Image
+//             width='100%'
+//             src={process.env.PUBLIC_URL + '/images/connexionimage.jpg'}
+//           />
+//         <div className=''>
+//           <Form className='loginForm'>
+//             <Form.Item label='Email' name={'myEmail'}>
+//               <Input placeholder='Enter your email'/>
+//             </Form.Item>
+//             <Form.Item label='Password' name={'myPassword'}>
+//               <Input placeholder='Enter your password'/>
+//             </Form.Item>
+//           </Form>
+
+//         </div>
+//       </div>
