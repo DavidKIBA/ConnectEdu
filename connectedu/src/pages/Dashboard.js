@@ -1,5 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+
+
 import {
     UserOutlined,
     MessageOutlined,
@@ -28,15 +30,11 @@ import {
    Row, 
    Statistic,
    Progress,
+   Carousel,
   } from 'antd';
 
   import { Typography } from 'antd';
 
-const { Header, Content, Sider } = Layout;
-const { Search } = Input;
-const { Meta } = Card;
-
-const { Title, Paragraph } = Typography;
 
 // Noms pour le menu horizontal
 // const horizontalMenuItems = ['DASHBOARD', "search" , 'À propos'].map((label, index) => ({
@@ -44,22 +42,29 @@ const { Title, Paragraph } = Typography;
 //   label: `${label}`,
 // }));
 
-// Noms pour le menu horizontal
+const { Header, Content, Sider } = Layout;
+const { Search } = Input;
+const { Meta } = Card;
+const { TextArea } = Input;
+
+const { Title, Paragraph } = Typography;
+
+    // Noms pour le menu horizontal
 const horizontalMenuItems = [
-    { key: '1', label: <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>Dashboard</span> },
-    { key: '3', icon: <ReloadOutlined /> },
-    { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
-    { key: '4', icon: <Badge count={3} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
-    { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
-  ];
+  { key: '1', label: <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>Dashboard</span> },
+  { key: '3', icon: <ReloadOutlined /> },
+  { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
+  { key: '4', icon: <Badge count={3} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
+  { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
+];
 
 // Noms pour le menu vertical
 const verticalMenuItems = [
-  { key: 'sub1', icon: React.createElement(UserOutlined), label: 'Thalès de Millet', options: ['Espaces éleves','Espaces parents', 'Espaces membres'] },
-  { key: 'sub2', icon: React.createElement(MessageOutlined), label: 'Messages', options: [5, 6, 7, 8] },
-  { key: 'sub3', icon: React.createElement(SettingOutlined), label: 'Parametres', options: [9, 10, 11, 12] },
-  { key: 'sub4', icon: React.createElement(CalendarOutlined), label: 'Calendrier', options: [13, 14, 15, 16] },
-  { key: 'sub5', icon: React.createElement(FileTextOutlined), label: 'Termes et conditions' }, // Sans sous-menu
+{ key: 'sub1', icon: React.createElement(UserOutlined), label: 'Thalès de Millet', options: ['Espaces eleves','Espaces parents', 'Espaces membres'] },
+{ key: 'sub2', icon: React.createElement(MessageOutlined), label: 'Messages', options: [5, 6, 7, 8] },
+{ key: 'sub3', icon: React.createElement(SettingOutlined), label: 'Parametres', options: [9, 10, 11, 12] },
+{ key: 'sub4', icon: React.createElement(CalendarOutlined), label: 'Calendrier', options: [13, 14, 15, 16] },
+{ key: 'sub5', icon: React.createElement(FileTextOutlined), label: 'Termes et conditions' }, // Sans sous-menu
 ];
 
 
@@ -67,6 +72,7 @@ const verticalMenuItems = [
 
 const Dashboard = () => {
 
+         
    
     const menu = (
         <Menu>
@@ -77,15 +83,50 @@ const Dashboard = () => {
         </Menu>
       );
       
+      {/* Début images defilantes */}
+
+      const contentStyle = {
+        height: '160px',
+        position: 'relative',
+      };
+    
+      const overlayStyle = {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 128, 0.5)', // Couleur bleu foncé avec opacité
+      };
+    
+
+      {/* Fin images defilantes */}
+                                                  
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const history = useHistory();
 
+  
   const handleMenuClick = (key) => {
-    history.push(`/page${key}`); // Rediriger vers le composant correspondant en fonction de la clé
+    // Ajoutez la logique de redirection ici en fonction de la clé
+    switch (key) {
+      case 'Espaces eleves':
+        history.push('/espaceeleves');
+        break;
+      case 'Espaces parents':
+        history.push('/espaceparents');
+        break;
+      case 'Espaces membres':
+        history.push('/espacemembres');
+        break;
+      default:
+        break;
+    }
   };
+
   const handleSearch = (value) => {
     // Mettez en œuvre la logique de recherche ici
     console.log('Recherche:', value);
@@ -132,7 +173,7 @@ const Dashboard = () => {
           theme='dark'
           width={200}
           style={{
-          background: '001E32',
+          background: '#001E32',
           
           }}
         >
@@ -140,6 +181,7 @@ const Dashboard = () => {
           {/* Menu vertical */}
 
           <Menu
+            theme="dark"
             mode="inline"
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
@@ -148,24 +190,24 @@ const Dashboard = () => {
               borderRight: 0,
             }}
           >
-            {verticalMenuItems.map((item) => (
-              <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
-                {item.options &&
-                  item.options.map((option) => (
-                    <Menu.Item key={option} onClick={() => handleMenuClick(option)}>
-                      {`${option}`}
-                    </Menu.Item>
-                  ))}
-              </Menu.SubMenu>
-            ))}
+             {verticalMenuItems.map((item) => (
+                <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
+                  {item.options &&
+                    item.options.map((option) => (
+                      <Menu.Item key={option} onClick={() => handleMenuClick(option)}>
+                        {`${option}`}
+                      </Menu.Item>
+                    ))}
+                </Menu.SubMenu>
+              ))}
           </Menu>
         </Sider>
 
         {/* Corps de la page 1 */}
         
-        <Layout style={{ padding: '0 24px 24px' }}>
-          <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer' }}>
-            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/home')}>Home</Breadcrumb.Item>
+        <Layout style={{ padding: '0 24px 24px', backgroundColor:'#001E32' }}>
+          <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
+            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/')}>Home</Breadcrumb.Item>
             <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>List</Breadcrumb.Item>
             <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')}>App</Breadcrumb.Item>
           </Breadcrumb>
@@ -295,10 +337,24 @@ const Dashboard = () => {
             <div>
                 <Title level={3}>Actualités de ConnectEdu</Title>
                 <Paragraph>
-                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                   Sed do eiusmod tempor incididunt ut labore et dolore magna 
-                   aliqua. Ut enim ad minim veniam.
-                </Paragraph>
+                    <TextArea
+                      autoSize={{ minRows: 3, maxRows: 5 }}
+                      value="Lorem ipsum dolor sit amet, consectetur 
+                      adipiscing elit. Sed do eiusmod tempor incididunt 
+                      ut labore et dolore magna aliqua. Ut enim ad minim 
+                      veniam.
+                      
+                      Lorem ipsum dolor sit amet, consectetur 
+                      adipiscing elit. Sed do eiusmod tempor incididunt 
+                      ut labore et dolore magna aliqua. Ut enim ad minim 
+                      veniam.
+                      
+                      Lorem ipsum dolor sit amet, consectetur 
+                      adipiscing elit. Sed do eiusmod tempor incididunt 
+                      ut labore et dolore magna aliqua. Ut enim ad minim 
+                      veniam."
+                    />
+               </Paragraph>
             </div>
 
           </Content>
@@ -318,7 +374,41 @@ const Dashboard = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Content 3
+            <div>
+                <Title level={3}>Activités récentes</Title>
+                        {/* Votre contenu ici */}
+                        <div style={{ display: 'flex' }}>
+                            <div style={{ flex: 1, marginRight: 16 }}>
+                              <Card>
+                                <Title level={3}>Div 1</Title>
+                                <Paragraph>
+                                  Contenu de la première div avec du code Ant Design.
+                                </Paragraph>
+                              </Card>
+                            </div>
+                            <div style={{ flex: 1, marginRight: 16 }}>
+                              <Card>
+                                <Title level={3}>Div 2</Title>
+                                <Paragraph>
+                                  Contenu de la deuxième div avec du code Ant Design.
+                                </Paragraph>
+                              </Card>
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <Card>
+                                {/* <Title level={3}>Div 3</Title> */}
+                                <Carousel autoplay>
+                                  <div style={{ ...contentStyle, backgroundImage: 'url("/images/fondconnexion.png")' }}>
+                                    <div style={overlayStyle}></div>
+                                    <h3 style={{ ...overlayStyle, color: '#fff', textAlign: 'center', zIndex: 1 }}>1</h3>
+                                  </div>
+                                 
+                                  {/* Ajoutez des éléments similaires pour les autres slides */}
+                                </Carousel>
+                              </Card>
+                            </div>
+                          </div>
+            </div>
           </Content>
 
           {/* Fin du corps de la page 3*/}

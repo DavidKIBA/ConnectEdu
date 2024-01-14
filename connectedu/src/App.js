@@ -15,6 +15,9 @@ import Inscription2 from './pages/Inscription2';
 import Inscription3 from './pages/Inscription3';
 import Inscription4 from './pages/Inscription4';
 import Dashboard from './pages/Dashboard';
+import Espaceeleves from './pages/Espaceeleves';
+import Espaceparents from './pages/Espaceparents';
+import Espacemembres from './pages/Espacemembres';
 
 
 // fichiers css
@@ -30,6 +33,8 @@ import './css/Inscription3.css';
 import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
 import './css/Dashboard.css';
+
+
 
 const App = () => {
   return (
@@ -47,6 +52,9 @@ const App = () => {
         <Route path="/inscription3" exact component={Inscription3} />
         <Route path="/inscription4" exact component={Inscription4} />
         <Route path="/dashboard" exact component={Dashboard} />
+        <Route path="/espaceeleves" exact component={Espaceeleves} />
+        <Route path="/espaceparents" exact component={Espaceparents} />
+        <Route path="/espacemembres" exact component={Espaceparents} />
         <Route component={Error} />
       </Switch>
     </Router>
