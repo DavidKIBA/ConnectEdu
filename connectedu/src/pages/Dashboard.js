@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
+import Dashboardmenu from '../components/Dashboardmenu';
 
 import {
     UserOutlined,
@@ -36,6 +36,7 @@ import {
   import { Typography } from 'antd';
 
 
+
 // Noms pour le menu horizontal
 // const horizontalMenuItems = ['DASHBOARD', "search" , 'À propos'].map((label, index) => ({
 //   key: String(index + 1),
@@ -49,14 +50,7 @@ const { TextArea } = Input;
 
 const { Title, Paragraph } = Typography;
 
-    // Noms pour le menu horizontal
-const horizontalMenuItems = [
-  { key: '1', label: <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>Dashboard</span> },
-  { key: '3', icon: <ReloadOutlined /> },
-  { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
-  { key: '4', icon: <Badge count={3} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
-  { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
-];
+   
 
 // Noms pour le menu vertical
 const verticalMenuItems = [
@@ -72,16 +66,6 @@ const verticalMenuItems = [
 
 const Dashboard = () => {
 
-         
-   
-    const menu = (
-        <Menu>
-          <Menu.Item key="1">Mon Profil</Menu.Item>
-          <Menu.Item key="2">Paramètres</Menu.Item>
-          <Menu.Divider />
-          <Menu.Item key="3" onClick={() => handleMenuClick(3)}>Déconnexion</Menu.Item>
-        </Menu>
-      );
       
       {/* Début images defilantes */}
 
@@ -127,11 +111,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleSearch = (value) => {
-    // Mettez en œuvre la logique de recherche ici
-    console.log('Recherche:', value);
-  };
-
+ 
   const handleBreadcrumbClick = (route) => {
     history.push(route);
   };
@@ -142,31 +122,7 @@ const Dashboard = () => {
   return (
     <Layout style={{ background: '#001E32' }}>
 
-      {/* Début du menu horizontal */}
-
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={horizontalMenuItems}
-          style={{ flex: 1, minWidth: 0 }}
-          onClick={({ key }) => handleMenuClick(key)}
-        />
-
-         <Search
-          placeholder="Rechercher"
-          onSearch={handleSearch}
-          style={{ width: 200 }}
-        />
-        <Dropdown overlay={menu} placement="bottomRight">
-          <Avatar size="large" icon={<UserOutlined />} style={{ cursor: 'pointer', marginLeft: '20px' }} />
-        </Dropdown>
-
-      </Header>
-
-      {/* Fin du menu horizontal */}
+      <Dashboardmenu/>
 
       <Layout >
         <Sider

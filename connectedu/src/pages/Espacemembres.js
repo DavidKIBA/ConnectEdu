@@ -1,5 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Dashboardmenu from '../components/Dashboardmenu';
+import Dashboardsider from '../components/Dashboardsider';
 
 
 import {
@@ -49,35 +51,11 @@ const { TextArea } = Input;
 
 const { Title, Paragraph } = Typography;
 
-    // Noms pour le menu horizontal
-const horizontalMenuItems = [
-  { key: '1', label: <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>Dashboard</span> },
-  { key: '3', icon: <ReloadOutlined /> },
-  { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
-  { key: '4', icon: <Badge count={3} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
-  { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
-];
-
-// Noms pour le menu vertical
-const verticalMenuItems = [
-{ key: 'sub1', icon: React.createElement(UserOutlined), label: 'Thalès de Millet', options: ['Espaces eleves','Espaces parents', 'Espaces membres'] },
-{ key: 'sub2', icon: React.createElement(MessageOutlined), label: 'Messages', options: [5, 6, 7, 8] },
-{ key: 'sub3', icon: React.createElement(SettingOutlined), label: 'Parametres', options: [9, 10, 11, 12] },
-{ key: 'sub4', icon: React.createElement(CalendarOutlined), label: 'Calendrier', options: [13, 14, 15, 16] },
-{ key: 'sub5', icon: React.createElement(FileTextOutlined), label: 'Termes et conditions' }, // Sans sous-menu
-];
 
 
 const Espacemembres = () => {
       
-    const menu = (
-        <Menu>
-          <Menu.Item key="1">Mon Profil</Menu.Item>
-          <Menu.Item key="2">Paramètres</Menu.Item>
-          <Menu.Divider />
-          <Menu.Item key="3" onClick={() => handleMenuClick(3)}>Déconnexion</Menu.Item>
-        </Menu>
-      );
+   
       
       {/* Début images defilantes */}
 
@@ -104,30 +82,7 @@ const Espacemembres = () => {
   } = theme.useToken();
 
   const history = useHistory();
-
-  
-  const handleMenuClick = (key) => {
-    // Ajoutez la logique de redirection ici en fonction de la clé
-    switch (key) {
-      case 'Espaces eleves':
-        history.push('/espaceeleves');
-        break;
-      case 'Espaces parents':
-        history.push('/espaceparents');
-        break;
-      case 'Espaces membres':
-        history.push('/espacemembres');
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleSearch = (value) => {
-    // Mettez en œuvre la logique de recherche ici
-    console.log('Recherche:', value);
-  };
-
+ 
   const handleBreadcrumbClick = (route) => {
     history.push(route);
   };
@@ -137,66 +92,10 @@ const Espacemembres = () => {
     return (
         <Layout style={{ background: '#001E32' }}>
 
-        {/* Début du menu horizontal */}
-  
-        <Header style={{ display: 'flex', alignItems: 'center' }}>
-          <div className="demo-logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            items={horizontalMenuItems}
-            style={{ flex: 1, minWidth: 0 }}
-            onClick={({ key }) => handleMenuClick(key)}
-          />
-  
-           <Search
-            placeholder="Rechercher"
-            onSearch={handleSearch}
-            style={{ width: 200 }}
-          />
-          <Dropdown overlay={menu} placement="bottomRight">
-            <Avatar size="large" icon={<UserOutlined />} style={{ cursor: 'pointer', marginLeft: '20px' }} />
-          </Dropdown>
-  
-        </Header>
-  
-        {/* Fin du menu horizontal */}
-  
-        <Layout >
-          <Sider
-            theme='dark'
-            width={200}
-            style={{
-            background: '#001E32',
-            
-            }}
-          >
-  
-            {/* Menu vertical */}
-  
-            <Menu
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              style={{
-                height: '100%',
-                borderRight: 0,
-              }}
-            >
-               {verticalMenuItems.map((item) => (
-                  <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
-                    {item.options &&
-                      item.options.map((option) => (
-                        <Menu.Item key={option} onClick={() => handleMenuClick(option)}>
-                          {`${option}`}
-                        </Menu.Item>
-                      ))}
-                  </Menu.SubMenu>
-                ))}
-            </Menu>
-          </Sider>
+          <Dashboardmenu/>
+         
+        <Layout style={{ background: '#001E32' }} >
+          <Dashboardsider/>
   
           {/* Corps de la page 1 */}
           

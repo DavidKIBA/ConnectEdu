@@ -18,7 +18,8 @@ import Dashboard from './pages/Dashboard';
 import Espaceeleves from './pages/Espaceeleves';
 import Espaceparents from './pages/Espaceparents';
 import Espacemembres from './pages/Espacemembres';
-
+import Dashboardmenu from './components/Dashboardmenu';
+import Dashboardsider from './components/Dashboardsider';
 
 // fichiers css
 
@@ -33,6 +34,7 @@ import './css/Inscription3.css';
 import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
 import './css/Dashboard.css';
+
 
 
 
@@ -54,7 +56,9 @@ const App = () => {
         <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/espaceeleves" exact component={Espaceeleves} />
         <Route path="/espaceparents" exact component={Espaceparents} />
-        <Route path="/espacemembres" exact component={Espaceparents} />
+        <Route path="/espacemembres" exact component={Espacemembres} />
+        <Route path="/dashboardmenu" exact component={Dashboardmenu} />
+        <Route path="/dashboardsider" exact component={Dashboardsider} />
         <Route component={Error} />
       </Switch>
     </Router>
