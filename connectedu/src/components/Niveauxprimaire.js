@@ -11,7 +11,7 @@ const mockClasses = [
   { key: '3', title: 'CE2', description: 'Description de CE2', disabled: false },
   { key: '4', title: 'CM1', description: 'Description de CM1', disabled: false },
   { key: '5', title: 'CM2', description: 'Description de CM2', disabled: false },
-  // ... Ajoutez d'autres classes selon vos besoins
+  // ... Ajoutez d'autres classes selon vos besoin
 ];
 
 const oriTargetKeys = mockClasses.filter((classe) => !classe.disabled).map((classe) => classe.key);
