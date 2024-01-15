@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Dashboardmenu from '../components/Dashboardmenu';
 import Dashboardsider from '../components/Dashboardsider';
@@ -33,59 +33,87 @@ import {
    Statistic,
    Progress,
    Carousel,
+   Button, List, Skeleton,
   } from 'antd';
 
   import { Typography } from 'antd';
+ 
+  const count = 3;
+  const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
+  
 
-
-// Noms pour le menu horizontal
-// const horizontalMenuItems = ['DASHBOARD', "search" , 'À propos'].map((label, index) => ({
-//   key: String(index + 1),
-//   label: `${label}`,
-// }));
 
 const { Header, Content, Sider } = Layout;
-const { Search } = Input;
-const { Meta } = Card;
-const { TextArea } = Input;
-
 const { Title, Paragraph } = Typography;
 
 
 
-const Espacemembres = () => {
+const Espacemembres = () => {                                             
+
+        const {
+          token: { colorBgContainer, borderRadiusLG },
+        } = theme.useToken();
+
+        const history = useHistory();
       
-   
-      
-      {/* Début images defilantes */}
+        const handleBreadcrumbClick = (route) => {
+          history.push(route);
+        };
 
-      const contentStyle = {
-        height: '160px',
-        position: 'relative',
-      };
-    
-      const overlayStyle = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 128, 0.5)', // Couleur bleu foncé avec opacité
-      };
-    
+        
 
-      {/* Fin images defilantes */}
-                                                  
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
-  const history = useHistory();
- 
-  const handleBreadcrumbClick = (route) => {
-    history.push(route);
+        const [initLoading, setInitLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    fetch(fakeDataUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        setInitLoading(false);
+        setData(res.results);
+        setList(res.results);
+      });
+  }, []);
+  const onLoadMore = () => {
+    setLoading(true);
+    setList(
+      data.concat(
+        [...new Array(count)].map(() => ({
+          loading: true,
+          name: {},
+          picture: {},
+        })),
+      ),
+    );
+    fetch(fakeDataUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        const newData = data.concat(res.results);
+        setData(newData);
+        setList(newData);
+        setLoading(false);
+        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
+        // In real scene, you can using public method of react-virtualized:
+        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
+        window.dispatchEvent(new Event('resize'));
+      });
   };
+  const loadMore =
+    !initLoading && !loading ? (
+      <div
+        style={{
+          textAlign: 'center',
+          marginTop: 12,
+          height: 32,
+          lineHeight: '32px',
+        }}
+      >
+        <Button onClick={onLoadMore}>loading more</Button>
+      </div>
+    ) : null
+
+
 
 
 
@@ -102,210 +130,48 @@ const Espacemembres = () => {
           <Layout style={{ padding: '0 24px 24px', backgroundColor:'#001E32' }}>
             <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
               <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/')}>Home</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>List</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')}>App</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Thalès de Millet</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Membres</font></Breadcrumb.Item>
             </Breadcrumb>
             <Content
               style={{
                 padding: 24,
                 margin: 0,
                 minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
+        
               }}
             >
   
-               {/* Statistique eleves */}
+               {/* Liste membres */}
               
-               <Card bordered={false}>
-                      <div>
-                          <Title level={3}>Statistiques des résultats des élèves</Title>
-                          {/* Votre contenu ici */}
-                      </div>
-                <Row gutter={16}>
-                <Col span={4}>
-                  
-                    <Statistic
-                      title="Primaire"
-                      value={11.28}
-                      precision={2}
-                      valueStyle={{
-                        color: '#3f8600',
-                      
-                      }}
-                      suffix="%"
+                   <List
+                          className="demo-loadmore-list"
+                          loading={initLoading}
+                          itemLayout="horizontal"
+                          loadMore={loadMore}
+                          dataSource={list}
+                          renderItem={(item) => (
+                            <List.Item
+                              actions={[<a key="list-loadmore-edit">Modifier</a>, <a key="list-loadmore-more">more</a>]}
+                            >
+                              <Skeleton avatar title={false} loading={item.loading} active>
+                                  <List.Item.Meta
+                                    avatar={<Avatar src={item.picture.large} />}
+                                    title={<a href="https://ant.design" style={{ color: '#2ecc71' }}>{item.name?.last}</a>}
+                                    description={<span style={{ color: '#fff' }}>Ant Design, a design language for background applications, is refined by Ant UED Team</span>}
+                                  />
+                                  <div style={{ color: '#3498DB' }}>membre</div>
+                                </Skeleton>
+                            </List.Item>
+                          )}
                     />
-                    <Progress
-                      type="dashboard"
-                      percent={11.28}
-                      width={80}
-                      format={(percent) => `${percent}%`}
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
-                  
-                </Col>
-  
-                <Col span={4}>
-                 
-                    <Statistic
-                      title="Collège"
-                      value={9.3}
-                      precision={2}
-                      valueStyle={{
-                        color: '#cf1322',
-                      }}
-                      suffix="%"
-                    />
-                    <Progress
-                      type="dashboard"
-                      percent={9.3}
-                      width={80}
-                      format={(percent) => `${percent}%`}
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
-                  
-                </Col>
-  
-                <Col span={4}>
-                  
-                  <Statistic
-                    title="Lycée"
-                    value={11.28}
-                    precision={2}
-                    valueStyle={{
-                      color: '#3f8600',
-                    }}
-                    suffix="%"
-                  />
-                  <Progress
-                    type="dashboard"
-                    percent={11.28}
-                    width={80}
-                    format={(percent) => `${percent}%`}
-                    strokeColor={{
-                      '0%': '#108ee9',
-                      '100%': '#87d068',
-                    }}
-                  />
-                
-              </Col>
-  
-  
-              <Col>
-  
-             
-                 </Col>
-  
-              </Row>
-              </Card>
-              
-               {/* Fin Statistique eleves */}
                
-  
-               
-  
+               {/* fin Liste membres */}
             </Content>
   
-           {/* fin Corps de la page 1 */}
-     
+           
   
-            <br></br>
-  
-           {/* Corps de la page 2 */}
-  
-            <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-              <div>
-                  <Title level={3}>Actualités de ConnectEdu</Title>
-                  <Paragraph>
-                      <TextArea
-                        autoSize={{ minRows: 3, maxRows: 5 }}
-                        value="Lorem ipsum dolor sit amet, consectetur 
-                        adipiscing elit. Sed do eiusmod tempor incididunt 
-                        ut labore et dolore magna aliqua. Ut enim ad minim 
-                        veniam.
-                        
-                        Lorem ipsum dolor sit amet, consectetur 
-                        adipiscing elit. Sed do eiusmod tempor incididunt 
-                        ut labore et dolore magna aliqua. Ut enim ad minim 
-                        veniam.
-                        
-                        Lorem ipsum dolor sit amet, consectetur 
-                        adipiscing elit. Sed do eiusmod tempor incididunt 
-                        ut labore et dolore magna aliqua. Ut enim ad minim 
-                        veniam."
-                      />
-                 </Paragraph>
-              </div>
-  
-            </Content>
-         
-            {/* Fin du corps de la page 2*/}
-  
-             <br></br>
-  
-            {/*corps de la page 3*/}
-            
-            <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-              <div>
-                  <Title level={3}>Activités récentes</Title>
-                          {/* Votre contenu ici */}
-                          <div style={{ display: 'flex' }}>
-                              <div style={{ flex: 1, marginRight: 16 }}>
-                                <Card>
-                                  <Title level={3}>Div 1</Title>
-                                  <Paragraph>
-                                    Contenu de la première div avec du code Ant Design.
-                                  </Paragraph>
-                                </Card>
-                              </div>
-                              <div style={{ flex: 1, marginRight: 16 }}>
-                                <Card>
-                                  <Title level={3}>Div 2</Title>
-                                  <Paragraph>
-                                    Contenu de la deuxième div avec du code Ant Design.
-                                  </Paragraph>
-                                </Card>
-                              </div>
-                              <div style={{ flex: 1 }}>
-                                <Card>
-                                  {/* <Title level={3}>Div 3</Title> */}
-                                  <Carousel autoplay>
-                                    <div style={{ ...contentStyle, backgroundImage: 'url("/images/fondconnexion.png")' }}>
-                                      <div style={overlayStyle}></div>
-                                      <h3 style={{ ...overlayStyle, color: '#fff', textAlign: 'center', zIndex: 1 }}>1</h3>
-                                    </div>
-                                   
-                                    {/* Ajoutez des éléments similaires pour les autres slides */}
-                                  </Carousel>
-                                </Card>
-                              </div>
-                            </div>
-              </div>
-            </Content>
-  
-            {/* Fin du corps de la page 3*/}
+           
   
           </Layout>
           

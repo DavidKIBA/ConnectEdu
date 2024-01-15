@@ -34,6 +34,7 @@ import './css/Inscription3.css';
 import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
 import './css/Dashboard.css';
+import './css/Espacemembres.css';
 
 
 
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/espacemembres" exact component={Espacemembres} />
         <Route path="/dashboardmenu" exact component={Dashboardmenu} />
         <Route path="/dashboardsider" exact component={Dashboardsider} />
+        <Route path="/espacemembres" exact component={Espacemembres} />
         <Route component={Error} />
       </Switch>
     </Router>

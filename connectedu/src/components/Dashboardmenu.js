@@ -42,17 +42,24 @@ const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 
 
-    // Noms pour le menu horizontal
-const horizontalMenuItems = [
-  { key: '1', label: <span style={{ color: '#2ECC71', fontWeight: 'bold' }}>Dashboard</span> },
-  { key: '3', icon: <ReloadOutlined /> },
-  { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
-  { key: '4', icon: <Badge count={3} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
-  { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
-];
 
 
 const Dashboardmenu = () => {
+    
+        const page = useHistory();
+        const dashboard = () => {
+            page.push('/dashboard');
+        };
+
+        // Noms pour le menu horizontal
+      const horizontalMenuItems = [
+      { key: '1', label: <span style={{ color: '#2ECC71', fontWeight: 'bold' }} onClick={dashboard}>Dashboard</span> },
+      { key: '3', icon: <ReloadOutlined /> },
+      { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
+      { key: '4', icon: <Badge count={3} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
+      { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
+      ];
+
 
     const menu = (
         <Menu>

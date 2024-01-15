@@ -99,9 +99,9 @@ const Espaceeleves = () => {
           
           <Layout style={{ padding: '0 24px 24px', backgroundColor:'#001E32' }}>
             <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/')}>Home</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>List</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')}>App</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/connected')}>Home</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Thalès de Millet</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Elèves</font></Breadcrumb.Item>
             </Breadcrumb>
             <Content
               style={{
@@ -116,10 +116,7 @@ const Espaceeleves = () => {
                {/* Statistique eleves */}
               
                <Card bordered={false}>
-                      <div>
-                          <Title level={3}>Statistiques des résultats des élèves</Title>
-                          {/* Votre contenu ici */}
-                      </div>
+                     
                 <Row gutter={16}>
                 <Col span={4}>
                   
@@ -196,9 +193,78 @@ const Espaceeleves = () => {
   
   
               <Col>
-  
-             
-                 </Col>
+                
+                {/* Eleves */}
+                    
+                <Card
+                    style={{ width: 190 , height:210, backgroundColor:'#2ECC71',}}
+                    cover={
+                      <div style={{ position: 'relative' }}>
+                        <img
+                          alt="example"
+                          src={process.env.PUBLIC_URL + '/images/élève.jpg'}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
+                            borderRadius: '5px 5px 0 0',
+                          }}
+                        />
+                      </div>
+                    }
+                  >
+                    <Meta
+                      title="Elèves"
+                      description="2857 Comptes inscrits"
+                    />
+                  </Card>
+
+                  {/* Fin Eleves */}
+           
+            </Col>
+
+            <Col>
+                
+                {/* Membres */}
+
+                <Card
+                    style={{ width: 190 , height:210, backgroundColor:'#3197d7',}}
+                    cover={
+                      <div style={{ position: 'relative' }}>
+                        <img
+                          alt="example"
+                          src={process.env.PUBLIC_URL + '/images/parent.jpg'}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                        <div
+                          style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
+                            borderRadius: '5px 5px 0 0',
+                          }}
+                        />
+                      </div>
+                    }
+                  >
+                    <Meta
+                      title="Parents"
+                      description="857 Comptes inscrits"
+                    />
+                  </Card>
+
+                  {/* Fin Membres*/}
+           
+            </Col>
   
               </Row>
               </Card>
@@ -217,93 +283,9 @@ const Espaceeleves = () => {
   
            {/* Corps de la page 2 */}
   
-            <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-              <div>
-                  <Title level={3}>Actualités de ConnectEdu</Title>
-                  <Paragraph>
-                      <TextArea
-                        autoSize={{ minRows: 3, maxRows: 5 }}
-                        value="Lorem ipsum dolor sit amet, consectetur 
-                        adipiscing elit. Sed do eiusmod tempor incididunt 
-                        ut labore et dolore magna aliqua. Ut enim ad minim 
-                        veniam.
-                        
-                        Lorem ipsum dolor sit amet, consectetur 
-                        adipiscing elit. Sed do eiusmod tempor incididunt 
-                        ut labore et dolore magna aliqua. Ut enim ad minim 
-                        veniam.
-                        
-                        Lorem ipsum dolor sit amet, consectetur 
-                        adipiscing elit. Sed do eiusmod tempor incididunt 
-                        ut labore et dolore magna aliqua. Ut enim ad minim 
-                        veniam."
-                      />
-                 </Paragraph>
-              </div>
+           
   
-            </Content>
-         
-            {/* Fin du corps de la page 2*/}
-  
-             <br></br>
-  
-            {/*corps de la page 3*/}
-            
-            <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-              <div>
-                  <Title level={3}>Activités récentes</Title>
-                          {/* Votre contenu ici */}
-                          <div style={{ display: 'flex' }}>
-                              <div style={{ flex: 1, marginRight: 16 }}>
-                                <Card>
-                                  <Title level={3}>Div 1</Title>
-                                  <Paragraph>
-                                    Contenu de la première div avec du code Ant Design.
-                                  </Paragraph>
-                                </Card>
-                              </div>
-                              <div style={{ flex: 1, marginRight: 16 }}>
-                                <Card>
-                                  <Title level={3}>Div 2</Title>
-                                  <Paragraph>
-                                    Contenu de la deuxième div avec du code Ant Design.
-                                  </Paragraph>
-                                </Card>
-                              </div>
-                              <div style={{ flex: 1 }}>
-                                <Card>
-                                  {/* <Title level={3}>Div 3</Title> */}
-                                  <Carousel autoplay>
-                                    <div style={{ ...contentStyle, backgroundImage: 'url("/images/fondconnexion.png")' }}>
-                                      <div style={overlayStyle}></div>
-                                      <h3 style={{ ...overlayStyle, color: '#fff', textAlign: 'center', zIndex: 1 }}>1</h3>
-                                    </div>
-                                   
-                                    {/* Ajoutez des éléments similaires pour les autres slides */}
-                                  </Carousel>
-                                </Card>
-                              </div>
-                            </div>
-              </div>
-            </Content>
-  
-            {/* Fin du corps de la page 3*/}
+          
   
           </Layout>
           
