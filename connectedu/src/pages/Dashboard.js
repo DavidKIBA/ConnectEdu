@@ -73,18 +73,13 @@ const Dashboard = () => {
       {/* Début images defilantes */}
 
       const contentStyle = {
-        height: '160px',
-        position: 'relative',
-      };
-    
-      const overlayStyle = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 128, 0.5)', // Couleur bleu foncé avec opacité
-      };
+        width: '160px',
+        color: '#fff',
+        lineHeight: '160px',
+        textAlign: 'center',
+        background: '#364d79',
+  
+      }
     
 
       {/* Fin images defilantes */}
@@ -167,8 +162,7 @@ const Dashboard = () => {
         <Layout style={{ padding: '0 24px 24px', backgroundColor:'#001E32' }}>
           <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
             <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/connected')}>Home</Breadcrumb.Item>
-            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>List</Breadcrumb.Item>
-            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')}>App</Breadcrumb.Item>
+            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}><font color='#2498DB'>Dashboard</font></Breadcrumb.Item>
           </Breadcrumb>
           <Content
             style={{
@@ -287,8 +281,8 @@ const Dashboard = () => {
                     }
                   >
                     <Meta
-                      title="Elèves"
-                      description="2857 Comptes inscrits"
+                      title={<span style={{ color: '#fff' }}>Elèves</span>}
+                      description={<span style={{ color: '#fff' }}>2857 Comptes inscrits</span>}
                     />
                   </Card>
 
@@ -324,8 +318,8 @@ const Dashboard = () => {
                     }
                   >
                     <Meta
-                      title="Parents"
-                      description="857 Comptes inscrits"
+                      title={<span style={{ color: '#fff' }}>Parents</span>}
+                      description={<span style={{ color: '#fff' }}>857 Comptes inscrits</span>}
                     />
                   </Card>
 
@@ -409,7 +403,9 @@ const Dashboard = () => {
                           </div>
                         }
                       >
-                        <Meta title="Membres" description="8 Comptes ajoutés" />
+                        <Meta title="Membres"
+                        description="8 Comptes ajoutés" 
+                        />
                       </Card>
                       {/* Fin Membres */}
                     </Col>
@@ -455,20 +451,26 @@ const Dashboard = () => {
                             <div style={{ flex: 1 }}>
                               <Card>
                                 {/* <Title level={3}>Div 3</Title> */}
-                                <Carousel autoplay>
-                                  <div style={{ ...contentStyle, backgroundImage: 'url("/images/fondconnexion.png")' }}>
-                                    <div style={overlayStyle}></div>
-                                    <h3 style={{ ...overlayStyle, color: '#fff', textAlign: 'center', zIndex: 1 }}>1</h3>
-                                  </div>
-                                 
-                                  {/* Ajoutez des éléments similaires pour les autres slides */}
-                                </Carousel>
+                                
                               </Card>
                             </div>
                           </div>
             </div>
-          </Content>
-
+                         </Content>
+                              <Carousel autoplay style={{width:'190'}}>
+                                  <div>
+                                    <h3 style={contentStyle}>1</h3>
+                                  </div>
+                                  <div>
+                                    <h3 style={contentStyle}>2</h3>
+                                  </div>
+                                  <div>
+                                    <h3 style={contentStyle}>3</h3>
+                                  </div>
+                                  <div>
+                                    <h3 style={contentStyle}>4</h3>
+                                  </div>
+                                </Carousel>
           {/* Fin du corps de la page 3*/}
 
         </Layout>

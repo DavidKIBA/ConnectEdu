@@ -2,7 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Dashboardmenu from '../components/Dashboardmenu';
 import Dashboardsider from '../components/Dashboardsider';
-
+import Niveauxprescolaire from '../components/Niveauxprescolaire';
+import Niveauxprimaire from '../components/Niveauxprimaire';
 
 import {
     UserOutlined,
@@ -36,6 +37,9 @@ import {
   } from 'antd';
 
   import { Typography } from 'antd';
+
+
+
 
 
 // Noms pour le menu horizontal
@@ -272,15 +276,21 @@ const Espaceeleves = () => {
                {/* Fin Statistique eleves */}
                
   
-               
-  
             </Content>
-  
-           {/* fin Corps de la page 1 */}
-     
-  
             <br></br>
-  
+           {/* fin Corps de la page 1 */}
+           <Title level={3} style={{ color: '#3197d7' }}>
+              Enregistrez les différentes classes du prescolaire et du primaire
+            </Title>
+            <br></br>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Niveauxprescolaire />
+              {/* Ajoutez de l'espace horizontal ici */}
+              <div style={{ width: '16px' }}></div>
+              <Niveauxprimaire />
+            </div>
+            <br></br>
+            
            {/* Corps de la page 2 */}
   
            

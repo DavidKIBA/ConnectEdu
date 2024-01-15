@@ -20,6 +20,7 @@ import Espaceparents from './pages/Espaceparents';
 import Espacemembres from './pages/Espacemembres';
 import Dashboardmenu from './components/Dashboardmenu';
 import Dashboardsider from './components/Dashboardsider';
+import Niveauxprescolaire from './components/Niveauxprescolaire';
 
 // fichiers css
 
@@ -61,6 +62,7 @@ const App = () => {
         <Route path="/dashboardmenu" exact component={Dashboardmenu} />
         <Route path="/dashboardsider" exact component={Dashboardsider} />
         <Route path="/espacemembres" exact component={Espacemembres} />
+        <Route path="/niveauxprescolaire" exact component={Niveauxprescolaire} />
         <Route component={Error} />
       </Switch>
     </Router>
