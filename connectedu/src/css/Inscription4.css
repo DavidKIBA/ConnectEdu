@@ -72,5 +72,6 @@
   .inscription4img{
     position: absolute;
     margin-top: -500px;
-    margin-left: 450px;
+    align-content: center;
+    width: 100%;
   }

@@ -170,14 +170,15 @@ const Espacemembres = () => {
             </Content>
   
            
-  
-           
+          
   
           </Layout>
           
           
         </Layout>
       </Layout>
+     
+           
     );
 };
 
