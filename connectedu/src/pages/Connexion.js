@@ -14,7 +14,7 @@ const Connexion = () => {
      
      // fonction logique de connexion ici
      const connexion = useHistory();
-      const onFinish = (e) => {
+      const homeconnected = (e) => {
          e.preventDefault();
          // Ajoutez votre logique de connexion ici
          connexion.push("/connected");
@@ -41,7 +41,7 @@ const Connexion = () => {
 
          {/* formulaire */}
          <div className="login-container">
-           <Form name="login-form" className="login-form" onFinish={onFinish}>
+           <Form name="login-form" className="login-form">
              <h2>Connexion</h2>
              <Form.Item
                name="matricule"
@@ -66,7 +66,7 @@ const Connexion = () => {
              </Form.Item>
 
              <Form.Item>
-               <Button type="primary" htmlType="submit" className="login-form-button">
+               <Button type="primary" htmlType="submit" onClick={homeconnected} className="login-form-button">
                  Se connecter
                </Button>
                <div className="form-links">
