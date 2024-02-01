@@ -45,7 +45,7 @@ CREATE TABLE ResponsableEcole(
     piece_identite IMAGE NOT NULL,
     photo_profile IMAGE,
     mot_de_passe VARCHAR(255) NOT NULL,
-);
+); 
 
 CREATE TABLE Classes(
     id_classe INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -94,7 +94,6 @@ CREATE TABLE Professeurs(
     prenom_professeur VARCHAR(255) NOT NULL,
     telephone NUMBER(30) NOT NULL,
     niveau FOREIGN key (id_classe) REFERENCES Classe(id_classe) ON DELETE CASCADE NOT NULL,
-    matiere FOREIGN KEY (id_matiere) REFERENCES Matieres(id_matiere) ON DELETE CASCADE NOT NULL,
 );
 
 CREATE TABLE Appreciacions(

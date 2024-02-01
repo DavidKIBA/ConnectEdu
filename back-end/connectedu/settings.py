@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
-import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,29 +21,56 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5iwx#l3xp+6djf14s!^m%urvq3evsx2dc%2r6^_o_n2d8%a!71'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+BASE_DOMAIN = 'localhost'
+
+AUTH_USER_MODEL = 'utilisateurs.Utilisateurs'
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+
+
+SHARED_APPS = (
+    'django_tenants',  # mandatory
+    'comptes_ecole',  # you must list the app where your tenant model resides in
+    'utilisateurs',
+
     'django.contrib.contenttypes',
+
+    # everything below here is optional
+    'django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.admin',
     'django.contrib.staticfiles',
-    'comptes_ecole',
+    'django.contrib.sites',
     'rest_framework',
     'rest_framework.authtoken',
-]
+    'rest_framework_simplejwt',
+    
+)
+
+TENANT_APPS = (
+    # your tenant-specific apps
+    'eleves',
+    'gestion_ecole',
+)
+
+INSTALLED_APPS = list(SHARED_APPS) + \
+    [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+TENANT_MODEL = "comptes_ecole.Ecoles"  # app.Model
+
+TENANT_DOMAIN_MODEL = "comptes_ecole.Domain"  # app.Model
 
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,8 +82,9 @@ MIDDLEWARE = [
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
@@ -65,6 +92,7 @@ REST_FRAMEWORK = {
 }
 
 ROOT_URLCONF = 'connectedu.urls'
+PUBLIC_SCHEMA_URLCONF = 'connectedu.urls_public'
 
 TEMPLATES = [
     {
@@ -87,42 +115,20 @@ WSGI_APPLICATION = 'connectedu.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django_tenants.postgresql_backend',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
-        'PORT': '5432',
+        'PORT': config('DB_PORT'),
     },
-    'school_db_belle_rose':{
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'school_db_belle_rose',
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': '5432',
 }
-    }
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
 
-
-new_db_config = {
-    "ENGINE": "django.db.backends.postgresql",
-    "NAME": config('DB_NAME'),
-    "USER": config('DB_USER'),
-    "PASSWORD": config('DB_PASSWORD'),
-    "HOST": config('DB_HOST'),
-    "PORT": "5432",
-}
-
-data = {
-    "new_db_config": new_db_config
-}
-
-with open('/database_config.json', 'w+') as json_file:
-    json.dump(data, json_file)
 
 
 
@@ -148,7 +154,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -166,3 +172,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#         'level': 'DEBUG',  # Vous pouvez ajuster le niveau de logging ici (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+#     },
+# }

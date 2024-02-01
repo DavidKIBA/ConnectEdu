@@ -1,15 +1,12 @@
 from django.contrib import admin
-from .models import Ecoles, ResponsableEcole
+from .models import Ecoles
 # Register your models here.
 
 class EcoleAdmin(admin.ModelAdmin):
 
-    list_display = ['nom', 'email', 'adresse', 'date_creation']
+    list_display = ['nom', 'email', 'adresse', 'date_creation', 'active']
 
 
-class ResponsableAdmin(admin.ModelAdmin):
 
-    list_display = ['telephone', 'adresse']
 
 admin.site.register(Ecoles, EcoleAdmin)
-# admin.site.register(ResponsableEcole, ResponsableAdmin)
