@@ -4,7 +4,8 @@ import Dashboardmenu from '../components/Dashboardmenu';
 import Dashboardsider from '../components/Dashboardsider';
 import Niveauxprescolaire from '../components/Niveauxprescolaire';
 import Niveauxprimaire from '../components/Niveauxprimaire';
-
+import Niveauxcollege from '../components/Niveauxcollege';
+import Niveauxlycee from '../components/Niveauxlycee';
 import {
     UserOutlined,
     MessageOutlined,
@@ -37,6 +38,7 @@ import {
   } from 'antd';
 
   import { Typography } from 'antd';
+
 
 
 
@@ -292,7 +294,18 @@ const Espaceeleves = () => {
             <br></br>
             
            {/* Corps de la page 2 */}
-  
+
+           <Title level={3} style={{ color: '#3197d7' }}>
+              Enregistrez les différentes classes du Collège et du Lycée
+            </Title>
+            <br></br>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Niveauxcollege />
+              {/* Ajoutez de l'espace horizontal ici */}
+              <div style={{ width: '16px' }}></div>
+              <Niveauxlycee />
+            </div>
+            <br></br>
            
   
           

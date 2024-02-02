@@ -21,7 +21,8 @@ import Espacemembres from './pages/Espacemembres';
 import Dashboardmenu from './components/Dashboardmenu';
 import Dashboardsider from './components/Dashboardsider';
 import Niveauxprescolaire from './components/Niveauxprescolaire';
-
+import Niveauxcollege from './components/Niveauxcollege';
+import Niveauxlycee from './components/Niveauxlycee';
 
 // fichiers css
 
@@ -65,6 +66,8 @@ const App = () => {
         <Route path="/dashboardsider" exact component={Dashboardsider} />
         <Route path="/espacemembres" exact component={Espacemembres} />
         <Route path="/niveauxprescolaire" exact component={Niveauxprescolaire} />
+        <Route path="/niveauxcollege" exact component={Niveauxcollege} />
+        <Route path="/niveauxlycee" exact component={Niveauxlycee} />
         <Route component={Error} />
       </Switch>
     </Router>
