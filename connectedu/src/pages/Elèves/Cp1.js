@@ -1,11 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import Dashboardmenu from '../components/Dashboardmenu';
-import Dashboardsider from '../components/Dashboardsider';
-import Niveauxprescolaire from '../components/Niveauxprescolaire';
-import Niveauxprimaire from '../components/Niveauxprimaire';
-import Niveauxcollege from '../components/Niveauxcollege';
-import Niveauxlycee from '../components/Niveauxlycee';
+import Dashboardmenu from '../../components/Dashboardmenu';
+import Dashboardsider from '../../components/Dashboardsider';
+import Niveauxprescolaire from '../../components/Niveauxprescolaire';
+import Niveauxprimaire from '../../components/Niveauxprimaire';
+import Niveauxlycee from '../../components/Niveauxlycee';
+import Niveauxcollege from '../../components/Niveauxcollege';
 import {
     UserOutlined,
     MessageOutlined,
@@ -107,7 +107,8 @@ const Cp1 = () => {
             <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
               <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/connected')}>Home</Breadcrumb.Item>
               <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Thalès de Millet</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Elèves</font></Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Espace éleves</Breadcrumb.Item>
+              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Cp1</font></Breadcrumb.Item>
             </Breadcrumb>
             <Content
               style={{
@@ -119,195 +120,13 @@ const Cp1 = () => {
               }}
             >
   
-               {/* Statistique eleves */}
-              
-               <Card bordered={false}>
-                     
-                <Row gutter={16}>
-                <Col span={4}>
-                  
-                    <Statistic
-                      title="Primaire"
-                      value={11.28}
-                      precision={2}
-                      valueStyle={{
-                        color: '#3f8600',
-                      
-                      }}
-                      suffix="%"
-                    />
-                    <Progress
-                      type="dashboard"
-                      percent={11.28}
-                      width={80}
-                      format={(percent) => `${percent}%`}
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
-                  
-                </Col>
-  
-                <Col span={4}>
-                 
-                    <Statistic
-                      title="Collège"
-                      value={9.3}
-                      precision={2}
-                      valueStyle={{
-                        color: '#cf1322',
-                      }}
-                      suffix="%"
-                    />
-                    <Progress
-                      type="dashboard"
-                      percent={9.3}
-                      width={80}
-                      format={(percent) => `${percent}%`}
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
-                  
-                </Col>
-  
-                <Col span={4}>
-                  
-                  <Statistic
-                    title="Lycée"
-                    value={11.28}
-                    precision={2}
-                    valueStyle={{
-                      color: '#3f8600',
-                    }}
-                    suffix="%"
-                  />
-                  <Progress
-                    type="dashboard"
-                    percent={11.28}
-                    width={80}
-                    format={(percent) => `${percent}%`}
-                    strokeColor={{
-                      '0%': '#108ee9',
-                      '100%': '#87d068',
-                    }}
-                  />
-                
-              </Col>
-  
-  
-              <Col>
-                
-                {/* Eleves */}
-                    
-                <Card
-                    style={{ width: 190 , height:210, backgroundColor:'#2ECC71',}}
-                    cover={
-                      <div style={{ position: 'relative' }}>
-                        <img
-                          alt="example"
-                          src={process.env.PUBLIC_URL + '/images/élève.jpg'}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
-                            borderRadius: '5px 5px 0 0',
-                          }}
-                        />
-                      </div>
-                    }
-                  >
-                    <Meta
-                      title="Elèves"
-                      description="2857 Comptes inscrits"
-                    />
-                  </Card>
-
-                  {/* Fin Eleves */}
-           
-            </Col>
-
-            <Col>
-                
-                {/* Membres */}
-
-                <Card
-                    style={{ width: 190 , height:210, backgroundColor:'#3197d7',}}
-                    cover={
-                      <div style={{ position: 'relative' }}>
-                        <img
-                          alt="example"
-                          src={process.env.PUBLIC_URL + '/images/parent.jpg'}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
-                            borderRadius: '5px 5px 0 0',
-                          }}
-                        />
-                      </div>
-                    }
-                  >
-                    <Meta
-                      title="Parents"
-                      description="857 Comptes inscrits"
-                    />
-                  </Card>
-
-                  {/* Fin Membres*/}
-           
-            </Col>
-  
-              </Row>
-              </Card>
-              
-               {/* Fin Statistique eleves */}
                
   
             </Content>
             <br></br>
-           {/* fin Corps de la page 1 */}
-           <Title level={3} style={{ color: '#3197d7' }}>
-              Enregistrez les différentes classes du prescolaire et du primaire
-            </Title>
-            <br></br>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Niveauxprescolaire />
-              {/* Ajoutez de l'espace horizontal ici */}
-              <div style={{ width: '16px' }}></div>
-              <Niveauxprimaire />
-            </div>
-            <br></br>
-            
-           {/* Corps de la page 2 */}
-
-           <Title level={3} style={{ color: '#3197d7' }}>
-              Enregistrez les différentes classes du Collège et du Lycée
-            </Title>
-            <br></br>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Niveauxcollege />
-              {/* Ajoutez de l'espace horizontal ici */}
-              <div style={{ width: '16px' }}></div>
-              <Niveauxlycee />
-            </div>
-            <br></br>
            
-  
+
+          
           
   
           </Layout>
