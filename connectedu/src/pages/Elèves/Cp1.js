@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useHistory } from 'react-router-dom';
 import Dashboardmenu from '../../components/Dashboardmenu';
 import Dashboardsider from '../../components/Dashboardsider';
@@ -35,20 +36,13 @@ import {
    Statistic,
    Progress,
    Carousel,
+   Table,
   } from 'antd';
 
   import { Typography } from 'antd';
 
 
 
-
-
-
-// Noms pour le menu horizontal
-// const horizontalMenuItems = ['DASHBOARD', "search" , 'À propos'].map((label, index) => ({
-//   key: String(index + 1),
-//   label: `${label}`,
-// }));
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -58,40 +52,101 @@ const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 
 
+{/* declaration de la liste */}
+
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+  },
+  {
+    title: 'Age',
+    dataIndex: 'age',
+  },
+  {
+    title: 'Address',
+    dataIndex: 'address',
+  },
+];
+const data = [];
+for (let i = 0; i < 46; i++) {
+  data.push({
+    key: i,
+    name: `Edward King ${i}`,
+    age: 32,
+    address: `London, Park Lane no. ${i}`,
+  });
+}
+
+
+{/* declaration de la liste */}
+
 
 const Cp1 = () => {
       
-   
-      
-      {/* Début images defilantes */}
 
-      const contentStyle = {
-        height: '160px',
-        position: 'relative',
-      };
-    
-      const overlayStyle = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 128, 0.5)', // Couleur bleu foncé avec opacité
-      };
-    
 
-      {/* Fin images defilantes */}
-                                                  
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
-  const history = useHistory();
- 
-  const handleBreadcrumbClick = (route) => {
-    history.push(route);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
   };
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+      {
+        key: 'odd',
+        text: 'Select Odd Row',
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return false;
+            }
+            return true;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+      {
+        key: 'even',
+        text: 'Select Even Row',
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return true;
+            }
+            return false;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+    ],
+  };
+
+
+
+
+
+      
+
+
+      const {
+        token: { colorBgContainer, borderRadiusLG },
+      } = theme.useToken();
+    
+      const history = useHistory();
+    
+      const handleBreadcrumbClick = (route) => {
+        history.push(route);
+      };
+
+
 
     return (
         <Layout style={{ background: '#001E32' }}>
@@ -101,15 +156,7 @@ const Cp1 = () => {
         <Layout style={{ background: '#001E32' }}>
           <Dashboardsider/>
   
-          {/* Corps de la page 1 */}
-          
-          <Layout style={{ padding: '0 24px 24px', backgroundColor:'#001E32' }}>
-            <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/connected')}>Home</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Thalès de Millet</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Espace éleves</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Cp1</font></Breadcrumb.Item>
-            </Breadcrumb>
+        
             <Content
               style={{
                 padding: 24,
@@ -119,17 +166,21 @@ const Cp1 = () => {
                 borderRadius: borderRadiusLG,
               }}
             >
-  
-               
-  
+             
+             
+            
             </Content>
             <br></br>
-           
+            
+          {/* Liste des eleves */}
 
+            return <Table rowSelection={rowSelection} columns={columns} dataSource={data} />;
+
+          {/* Fin Liste des eleves */}
           
           
   
-          </Layout>
+          
           
           
         </Layout>

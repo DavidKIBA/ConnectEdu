@@ -108,14 +108,10 @@ const Dashboard = () => {
         break;
     }
   };
-
  
   const handleBreadcrumbClick = (route) => {
     history.push(route);
-  };
-
-
-
+  }
 
   return (
     <Layout style={{ background: '#001E32' }}>
