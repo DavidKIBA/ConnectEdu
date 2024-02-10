@@ -25,6 +25,8 @@ import Niveauxcollege from './components/Niveauxcollege';
 import Niveauxlycee from './components/Niveauxlycee';
 import MessagePage from './pages/MessagesPage';
 import Cp1 from './pages/Elèves/Cp1';
+import Upload from './components/Uploadfiles';
+
 
 // fichiers css
 
@@ -40,6 +42,7 @@ import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
 import './css/Dashboard.css';
 import './css/Espacemembres.css';
+import Uploadfiles from './components/Uploadfiles';
 
 
 
@@ -72,6 +75,8 @@ const App = () => {
         <Route path="/niveauxlycee" exact component={Niveauxlycee} />
         <Route path="/MessagePage" exact component={MessagePage} />
         <Route path="/cp1" exact component={Cp1} />
+        <Route path="/uploadfiles" exact component={Uploadfiles} />
+
 
         <Route component={Error} />
       </Switch>

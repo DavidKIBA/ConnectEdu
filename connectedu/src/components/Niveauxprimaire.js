@@ -29,7 +29,8 @@ const Niveauxprimaire = () => {
     const dynamicArray = [/* Mettez vos données ici si nécessaire */];
     // Stocker ou traiter la variable de tableau comme nécessaire
     console.log(`${dynamicArrayName}: `, dynamicArray);
-    history.push(`./autre-page/${classe.key}`);
+    // history.push(`/cp1/ ${classe.key}`);
+    history.push('/cp1');
   };
 
   const handleChange = (newTargetKeys, direction, moveKeys) => {
