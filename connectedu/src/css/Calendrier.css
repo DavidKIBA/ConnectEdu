@@ -1,0 +1,78 @@
+
+/* Styles for the overall layout */
+body {
+    background-color: #ecf0f1; /* Light Gray */
+  }
+  
+  /* Styles for the header */
+  Header {
+    background-color: #3498db; /* Light Blue */
+    color: #ffffff; /* White */
+    text-align: center;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Styles for the sidebar */
+  Sider {
+    background-color: #3498db; /* Light Blue */
+  }
+  
+  /* Styles for the navigation menu */
+  Menu {
+    background-color: #3498db; /* Light Blue */
+  }
+  
+  /* Styles for menu items */
+  Menu.Item, SubMenu {
+    color: #ffffff; /* White */
+  }
+  
+  /* Styles for the content area */
+  Content {
+    margin: 16px;
+    background-color: #ffffff; /* White */
+  }
+  
+  /* Styles for the images */
+  img {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+  }
+  
+  /* Styles for the tabs */
+  Tabs {
+    background-color: #ffffff; /* White */
+  }
+  
+  /* Styles for the calendar */
+  Calendar {
+    background-color: #ffffff; /* White */
+  }
+  
+  /* Styles for buttons */
+  Button {
+    background-color: #2ecc71; /* Light Green */
+    color: #ffffff; /* White */
+  }
+  
+  /* Styles for text content */
+  div {
+    color: #34495e; /* Dark Gray */
+  }
+  
+  /* Styles for the horizontal bar */
+  hr {
+    border-color: #3498db; /* Light Blue */
+  }
+  
+  /* Styles for class elements (cp1, cp2, cp3, etc.) */
+  .cp1, .cp2, .ce1, .ce2, .cm1, .cm2, .6eme, .5eme, .4eme, .3eme, .second, .premiere, .terminale {
+    background-color: #3498db; /* Light Blue */
+    color: #ffffff; /* White */
+    padding: 8px;
+    margin: 4px;
+  }
+  
