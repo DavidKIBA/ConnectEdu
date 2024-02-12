@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState , Component } from 'react';
+import { Modal, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 import Dashboardmenu from '../components/Dashboardmenu';
+import ModalDroitsUtilisation from '../components/ModalDroitsUtilisation';
 
 import {
     UserOutlined,
@@ -68,6 +70,19 @@ const verticalMenuItems = [
   
 
 const Dashboard = () => {
+
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  
+  };
+
 
       
       {/* Début images defilantes */}
@@ -473,6 +488,8 @@ const Dashboard = () => {
         
         
       </Layout>
+      <Button onClick={openModal}>Voir les droits d'utilisation</Button>
+      <ModalDroitsUtilisation visible={modalVisible} onClose={closeModal} />
     </Layout>
   );
 };
