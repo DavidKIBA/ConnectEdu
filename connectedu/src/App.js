@@ -73,7 +73,6 @@ const App = () => {
         <Route path="/niveauxprescolaire" exact component={Niveauxprescolaire} />
         <Route path="/niveauxcollege" exact component={Niveauxcollege} />
         <Route path="/niveauxlycee" exact component={Niveauxlycee} />
-        <Route path="/MessagePage" exact component={MessagePage} />
         <Route path="/cp1" exact component={Cp1} />
         <Route path="/uploadfiles" exact component={Uploadfiles} />
         
