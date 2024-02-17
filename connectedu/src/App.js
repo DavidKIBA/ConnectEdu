@@ -74,6 +74,7 @@ const App = () => {
         <Route path="/niveauxlycee" exact component={Niveauxlycee} />
         <Route path="/MessagePage" exact component={MessagePage} />
         <Route path="/cp1" exact component={Cp1} />
+        <Route path="/modalmembre" exact component={ModalDroitsUtilisation} />
         
 
         <Route component={Error} />
