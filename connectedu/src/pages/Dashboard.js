@@ -40,12 +40,6 @@ import {
 
 
 
-// Noms pour le menu horizontal
-// const horizontalMenuItems = ['DASHBOARD', "search" , 'À propos'].map((label, index) => ({
-//   key: String(index + 1),
-//   label: `${label}`,
-// }));
-
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { Meta } = Card;
