@@ -45,7 +45,13 @@ const { Search } = Input;
 
 
 const Dashboardmenu = () => {
-    
+
+        
+        const profile = useHistory();
+        const profil = () => {
+            page.push('/dashboard');
+        };
+
         const page = useHistory();
         const dashboard = () => {
             page.push('/dashboard');
@@ -68,7 +74,7 @@ const Dashboardmenu = () => {
 
     const menu = (
         <Menu>
-          <Menu.Item key="1">Mon Profil</Menu.Item>
+          <Menu.Item key="1" onClick={profil}>Mon Profil</Menu.Item>
           <Menu.Item key="2">Paramètres</Menu.Item>
           <Menu.Divider />
           <Menu.Item key="3" onClick={() => handleMenuClick1(3)}>Déconnexion</Menu.Item>

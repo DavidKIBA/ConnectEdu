@@ -27,6 +27,7 @@ import MessagePage from './pages/MessagesPage';
 import Cp1 from './pages/Elèves/Cp1';
 import Uploadfiles from './components/Uploadfiles';
 import Terms from './pages/Terms';
+import Calendrier from './pages/Calendrier';
 
 // fichiers css
 
@@ -77,6 +78,7 @@ const App = () => {
         <Route path="/cp1" exact component={Cp1} />
         <Route path="/uploadfiles" exact component={Uploadfiles} />
         <Route path="/terms" exact component={Terms} />
+        <Route path="/calendrier" exact component={Calendrier} />
         <Route component={Error} />
       </Switch>
     </Router>

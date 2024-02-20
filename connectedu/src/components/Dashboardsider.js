@@ -6,6 +6,9 @@ import { Affix } from 'antd';
 
 const { Sider } = Layout;
 
+const calendarIcone = () => {
+  window.open("http://localhost:3000/calendrier", "_blank");
+};
 
 const messageIcone = () => {
 
@@ -13,35 +16,20 @@ const messageIcone = () => {
 };
 
 
-const termsIcone = () => {
-
-  window.open("http://localhost:3000/terms", "_blank");
-};
-const calendarIcone = () => {
-  // Ajoutez votre logique pour le clic sur le bouton "Calendrier"
-};
-
-
-
 const settingsIcone = () => {
   // Ajoutez votre logique pour le clic sur le bouton "Paramètres"
 };
 
-const verticalMenuItems = [
-  { key: 'sub1', icon: React.createElement(UserOutlined), label: 'Thalès de Millet', options: ['Espaces eleves', 'Espaces parents', 'Espaces membres'] },
-  { key: '2', icon: <Badge><MessageOutlined /></Badge>, label: 'Messages', onClick: messageIcone },
-  { key: '3', icon: React.createElement(CalendarOutlined), label: 'Calendrier', onClick: calendarIcone },
-  { key: '4', icon: React.createElement(FileTextOutlined), label: 'Termes et conditions', onClick: termsIcone },
-  { key: '5', icon: React.createElement(SettingOutlined), label: 'Paramètres', onClick: settingsIcone },
-];
 
 const Dashboardsider = () => {
  
- 
+  const terms = useHistory();
+
+  const termsIcone = () =>{
+    terms.push("/terms")
+  };
 
   const history = useHistory();
-
-  
 
   const handleMenuClick = (label) => {
     switch (label) {
@@ -59,6 +47,15 @@ const Dashboardsider = () => {
         break;
     }
   };
+
+  const verticalMenuItems = [
+    { key: 'sub1', icon: React.createElement(UserOutlined), label: 'Thalès de Millet', options: ['Espaces eleves', 'Espaces parents', 'Espaces membres'] },
+    { key: '2', icon: <Badge><MessageOutlined /></Badge>, label: 'Messages', onClick: messageIcone },
+    { key: '3', icon: React.createElement(CalendarOutlined), label: 'Calendrier', onClick: calendarIcone },
+    { key: '4', icon: React.createElement(FileTextOutlined), label: 'Termes et conditions', onClick: termsIcone },
+    { key: '5', icon: React.createElement(SettingOutlined), label: 'Paramètres', onClick: settingsIcone },
+  ];
+  
 
   return (
     <Affix offsetLeft={0}>
