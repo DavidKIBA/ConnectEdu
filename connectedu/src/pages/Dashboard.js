@@ -66,7 +66,7 @@ const Dashboard = () => {
         color: '#fff',
         lineHeight: '160px',
         textAlign: 'center',
-        background: '#364d79',
+        background: '#001E32',
   
       }
     
@@ -120,20 +120,20 @@ const Dashboard = () => {
               padding: 24,
               margin: 0,
               minHeight: 280,
-              background: colorBgContainer,
+              background: "#001E32",
               borderRadius: borderRadiusLG,
             }}
           >
 
              {/* Statistique eleves */}
             
-             <Card bordered={false} >
+             <Card bordered={false}  style={{  backgroundColor:'#001E32' }}>
                     
-              <Row gutter={16}>
-              <Col span={4} style={{  backgroundColor:'white' }}>
+              <Row gutter={16}  style={{  backgroundColor:'#001E32' }}>
+              <Col span={4} style={{  backgroundColor:'#001E32' }}>
                 
                   <Statistic
-                    title="Primaire"
+                    title={<span style={{ color: '#3498DB' }}>Primaire</span>}
                     value={11.28}
                     precision={2}
                     valueStyle={{
@@ -146,7 +146,7 @@ const Dashboard = () => {
                     type="dashboard"
                     percent={11.28}
                     width={80}
-                    format={(percent) => `${percent}%`}
+                    format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
                     strokeColor={{
                       '0%': '#108ee9',
                       '100%': '#87d068',
@@ -158,7 +158,7 @@ const Dashboard = () => {
               <Col span={4}>
                
                   <Statistic
-                    title="Collège"
+                    title={<span style={{ color: '#3498DB' }}>Collège</span>}
                     value={9.3}
                     precision={2}
                     valueStyle={{
@@ -170,7 +170,7 @@ const Dashboard = () => {
                     type="dashboard"
                     percent={9.3}
                     width={80}
-                    format={(percent) => `${percent}%`}
+                    format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
                     strokeColor={{
                       '0%': '#108ee9',
                       '100%': '#87d068',
@@ -182,7 +182,7 @@ const Dashboard = () => {
               <Col span={4}>
                 
                 <Statistic
-                  title="Lycée"
+                  title={<span style={{ color: '#3498DB' }}>Lycée</span>}
                   value={11.28}
                   precision={2}
                   valueStyle={{
@@ -194,11 +194,12 @@ const Dashboard = () => {
                   type="dashboard"
                   percent={11.28}
                   width={80}
-                  format={(percent) => `${percent}%`}
+                  format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
                   strokeColor={{
                     '0%': '#108ee9',
                     '100%': '#87d068',
                   }}
+                  
                 />
               
             </Col>
@@ -302,7 +303,7 @@ const Dashboard = () => {
                     padding: 24,
                     margin: 0,
                     minHeight: 280,
-                    background: colorBgContainer,
+                    background:'#001E32',  
                     borderRadius: borderRadiusLG,
                   }}
                 >
@@ -375,7 +376,7 @@ const Dashboard = () => {
               padding: 24,
               margin: 0,
               minHeight: 280,
-              background: colorBgContainer,
+              background: '#001E32',
               borderRadius: borderRadiusLG,
             }}
           >

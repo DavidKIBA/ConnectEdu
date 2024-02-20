@@ -1,216 +1,121 @@
 import React, { useState } from 'react';
-
 import { useHistory } from 'react-router-dom';
 import Dashboardmenu from '../../components/Dashboardmenu';
 import Dashboardsider from '../../components/Dashboardsider';
-import Niveauxprescolaire from '../../components/Niveauxprescolaire';
-import Niveauxprimaire from '../../components/Niveauxprimaire';
-import Niveauxlycee from '../../components/Niveauxlycee';
-import Niveauxcollege from '../../components/Niveauxcollege';
 import Uploadfiles from '../../components/Uploadfiles';
+import { Layout, Breadcrumb, Table, Row, Col, Typography } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
-import {
-    UserOutlined,
-    MessageOutlined,
-    SettingOutlined,
-    CalendarOutlined,
-    FileTextOutlined,
-    ReloadOutlined,
-    TeamOutlined,
-    SearchOutlined,
-    ArrowDownOutlined, 
-    ArrowUpOutlined,
-    EditOutlined, EllipsisOutlined,
-  } from '@ant-design/icons';
-
-import {
-   Breadcrumb, 
-   Layout, 
-   Menu, 
-   theme, 
-   Input, 
-   Badge, 
-   Dropdown, 
-   Avatar,
-   Card, 
-   Col, 
-   Row, 
-   Statistic,
-   Progress,
-   Carousel,
-   Table,
-  } from 'antd';
-
-  import { Typography } from 'antd';
-
-
-
-
-const { Header, Content, Sider } = Layout;
-const { Search } = Input;
-const { Meta } = Card;
-const { TextArea } = Input;
-
-const { Title, Paragraph } = Typography;
-
-
-{/* definir les titres du tableau */}
+const { Header, Content } = Layout;
+const { Title } = Typography;
 
 const columns = [
   {
-    title: 'Name',
+    title: 'Nom et prénom',
     dataIndex: 'name',
   },
   {
     title: 'Age',
-    dataIndex: 'age',
+    dataIndex: 'date',
   },
   {
-    title: 'Address',
+    title: 'Adresse',
     dataIndex: 'address',
+  },
+  {
+    title: 'Numéro de téléphone',
+    dataIndex: 'phoneNumber',
+  },
+  {
+    title: 'Adresse e-mail',
+    dataIndex: 'email',
   },
 ];
 
-{/* fin definir les titres du tableau */}
-
-
-{/* debut definir les donnees du tableau */}
-
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
-
-{/* fin definir les donnees du tableau */}
-
-
+const generateData = () => {
+  const data = [];
+  for (let i = 0; i < 46; i++) {
+    data.push({
+      key: i,
+      name: `Dani Juldas ${i}`,
+      age: 32,
+      address: `Lycée Thomas Sankara. ${i}`,
+      phoneNumber: `123456789${i}`, // Exemple de numéro de téléphone généré
+      email: `user${i}@example.com`, // Exemple d'adresse e-mail générée
+    });
+  }
+  return data;
+};
 
 const Cp1 = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
 
+  const  handleBreadcrumbClick = () =>{
 
-  };
-
-{/* Debut mini lien des pages */}
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
- 
-  
+  }
   const history = useHistory();
 
-  const handleBreadcrumbClick = (route) => {
-    history.push(route);
+  const handleRowClick = (record) => {
+    history.push('/eleve'); // Rediriger vers une URL spécifique pour chaque enregistrement
   };
-
-{/* Fin mini lien des pages */}
 
   const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-      {
-        key: 'odd',
-        text: 'Select Odd Row',
-        onSelect: (changeableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return false;
-            }
-            return true;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-      {
-        key: 'even',
-        text: 'Select Even Row',
-        onSelect: (changeableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
-            if (index % 2 !== 0) {
-              return true;
-            }
-            return false;
-          });
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-    ],
-    
+    // Votre logique de sélection de ligne
   };
+
+  const data = generateData();
+
   return (
-         
     <Layout style={{ background: '#001E32' }}>
-
-    <Dashboardmenu/>
-
-       <Layout style={{ background: '#001E32' }}>
-
-          <Dashboardsider/>
-         
-         {/* Corps de la page 1 */}
-          
-         <Layout style={{ padding: '0 24px 24px', backgroundColor:'#001E32' }}>
-            
-            <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color:'#2ECC71' }}>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/connected')}>Home</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Thalès de Millet</Breadcrumb.Item>
-              <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Elèves</font></Breadcrumb.Item>
-            </Breadcrumb>
-
+      <Dashboardmenu />
+      <Layout style={{ background: '#001E32' }}>
+        <Dashboardsider />
+        <Layout style={{ padding: '0 24px 24px', backgroundColor: '#001E32', theme: 'dark' }}>
+          <Breadcrumb style={{ margin: '16px 0', cursor: 'pointer', color: '#2ECC71' }}>
+            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/connected')}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/list')}>Thalès de Millet</Breadcrumb.Item>
+            <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')}><font color='#3498DB'>Elèves</font></Breadcrumb.Item>
+          </Breadcrumb>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: '#fff',
+              borderRadius: '16px',
+            }}
+          >
+            <Title level={3} style={{ color: '#3498DB' }}>Classes</Title>
+            <Row>
+              <Col span={24}>col</Col>
+            </Row>
+            <Table
+              columns={columns}
+              dataSource={data}
+              onRow={(record, rowIndex) => ({
+                onClick: () => {
+                  handleRowClick(record);
+                },
+              })}
+              rowSelection={rowSelection}
+            />
+            <br />
+            <br />
             <Content
               style={{
                 padding: 24,
                 margin: 0,
                 minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
+                background: '#001E32',
+                borderRadius: '16px',
               }}
             >
-            <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-           
-            <br></br>
-            <br></br>
-            
-            <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-             
-             <Uploadfiles/>
-            
-            
-
+              <Uploadfiles />
             </Content>
-                
-
-            </Content>
-
-          </Layout>
-
-          {/* Fin Corps de la page 1 */}
-
-       </Layout>
+          </Content>
+        </Layout>
+      </Layout>
     </Layout>
   );
 };
+
 export default Cp1;

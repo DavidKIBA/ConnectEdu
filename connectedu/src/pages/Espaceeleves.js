@@ -110,77 +110,29 @@ const Espaceeleves = () => {
               <Breadcrumb.Item onClick={() => handleBreadcrumbClick('/app')} ><font color='#3498DB'>Elèves</font></Breadcrumb.Item>
             </Breadcrumb>
             <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG,
-              }}
-            >
-  
-               {/* Statistique eleves */}
-              
-               <Card bordered={false}>
-                     
-                <Row gutter={16}>
-                <Col span={4}>
-                  
-                    <Statistic
-                      title="Primaire"
-                      value={11.28}
-                      precision={2}
-                      valueStyle={{
-                        color: '#3f8600',
-                      
-                      }}
-                      suffix="%"
-                    />
-                    <Progress
-                      type="dashboard"
-                      percent={11.28}
-                      width={80}
-                      format={(percent) => `${percent}%`}
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
-                  
-                </Col>
-  
-                <Col span={4}>
-                 
-                    <Statistic
-                      title="Collège"
-                      value={9.3}
-                      precision={2}
-                      valueStyle={{
-                        color: '#cf1322',
-                      }}
-                      suffix="%"
-                    />
-                    <Progress
-                      type="dashboard"
-                      percent={9.3}
-                      width={80}
-                      format={(percent) => `${percent}%`}
-                      strokeColor={{
-                        '0%': '#108ee9',
-                        '100%': '#87d068',
-                      }}
-                    />
-                  
-                </Col>
-  
-                <Col span={4}>
-                  
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: "#001E32",
+              borderRadius: borderRadiusLG,
+            }}
+          >
+
+             {/* Statistique eleves */}
+            
+             <Card bordered={false}  style={{  backgroundColor:'#001E32' }}>
+                    
+              <Row gutter={16}  style={{  backgroundColor:'#001E32' }}>
+              <Col span={4} style={{  backgroundColor:'#001E32' }}>
+                
                   <Statistic
-                    title="Lycée"
+                    title={<span style={{ color: '#3498DB' }}>Primaire</span>}
                     value={11.28}
                     precision={2}
                     valueStyle={{
                       color: '#3f8600',
+                    
                     }}
                     suffix="%"
                   />
@@ -188,7 +140,7 @@ const Espaceeleves = () => {
                     type="dashboard"
                     percent={11.28}
                     width={80}
-                    format={(percent) => `${percent}%`}
+                    format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
                     strokeColor={{
                       '0%': '#108ee9',
                       '100%': '#87d068',
@@ -196,9 +148,58 @@ const Espaceeleves = () => {
                   />
                 
               </Col>
-  
-  
-              <Col>
+
+              <Col span={4}>
+               
+                  <Statistic
+                    title={<span style={{ color: '#3498DB' }}>Collège</span>}
+                    value={9.3}
+                    precision={2}
+                    valueStyle={{
+                      color: '#cf1322',
+                    }}
+                    suffix="%"
+                  />
+                  <Progress
+                    type="dashboard"
+                    percent={9.3}
+                    width={80}
+                    format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
+                    strokeColor={{
+                      '0%': '#108ee9',
+                      '100%': '#87d068',
+                    }}
+                  />
+                
+              </Col>
+
+              <Col span={4}>
+                
+                <Statistic
+                  title={<span style={{ color: '#3498DB' }}>Lycée</span>}
+                  value={11.28}
+                  precision={2}
+                  valueStyle={{
+                    color: '#3f8600',
+                  }}
+                  suffix="%"
+                />
+                <Progress
+                  type="dashboard"
+                  percent={11.28}
+                  width={80}
+                  format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
+                  strokeColor={{
+                    '0%': '#108ee9',
+                    '100%': '#87d068',
+                  }}
+                  
+                />
+              
+            </Col>
+
+
+            <Col>
                 
                 {/* Eleves */}
                     
@@ -226,8 +227,8 @@ const Espaceeleves = () => {
                     }
                   >
                     <Meta
-                      title="Elèves"
-                      description="2857 Comptes inscrits"
+                      title={<span style={{ color: '#fff' }}>Elèves</span>}
+                      description={<span style={{ color: '#fff' }}>2857 Comptes inscrits</span>}
                     />
                   </Card>
 
@@ -237,7 +238,7 @@ const Espaceeleves = () => {
 
             <Col>
                 
-                {/* Membres */}
+                {/* Parents */}
 
                 <Card
                     style={{ width: 190 , height:210, backgroundColor:'#3197d7',}}
@@ -263,22 +264,26 @@ const Espaceeleves = () => {
                     }
                   >
                     <Meta
-                      title="Parents"
-                      description="857 Comptes inscrits"
+                      title={<span style={{ color: '#fff' }}>Parents</span>}
+                      description={<span style={{ color: '#fff' }}>857 Comptes inscrits</span>}
                     />
                   </Card>
 
-                  {/* Fin Membres*/}
+                  {/* Fin Parents */}
            
             </Col>
-  
-              </Row>
-              </Card>
-              
-               {/* Fin Statistique eleves */}
-               
-  
-            </Content>
+            
+                        {/* <Title level={3} style={{ color:'#3197d7'}}>Statistiques des résultats des élèves</Title> */}
+        
+            </Row>
+            </Card>
+            
+             {/* Fin Statistique eleves */}
+             
+
+             
+
+          </Content>
             <br></br>
            {/* fin Corps de la page 1 */}
            <Title level={3} style={{ color: '#3197d7' }}>

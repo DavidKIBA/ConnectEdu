@@ -29,6 +29,7 @@ import Uploadfiles from './components/Uploadfiles';
 import Terms from './pages/Terms';
 import Calendrier from './pages/Calendrier';
 import Profile from './pages/Profile';
+import Eleve from './pages/Eleve';
 
 // fichiers css
 
@@ -43,6 +44,7 @@ import './css/Inscription4.css';
 import './css/ConnectedMenu.css';
 import './css/Dashboard.css';
 import './css/Espacemembres.css';
+import './css/Calendrier.css';
 
 
 
@@ -80,6 +82,7 @@ const App = () => {
         <Route path="/terms" exact component={Terms} />
         <Route path="/calendrier" exact component={Calendrier} />
         <Route path="/profile" exact component={Profile} />
+        <Route path="/eleve" exact component={Eleve} />
         <Route component={Error} />
       </Switch>
     </Router>
