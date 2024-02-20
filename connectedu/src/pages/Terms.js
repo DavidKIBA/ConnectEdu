@@ -152,6 +152,58 @@ const Terms = () => {
 
                 </Paragraph>
            
+                <Title level={4} style={{ color: '#2ECC71' }}>4. Support Technique</Title>
+            
+                <Paragraph>
+                4.1 ElemboTech fournira un support technique pour résoudre les problèmes liés à l'utilisation
+                de la plateforme.
+                </Paragraph>
+
+                <Paragraph>
+                4.2 Les demandes de support technique doivent être soumises conformément aux
+                procédures spécifiées par ElemboTech.
+                </Paragraph>
+
+                <Title level={4} style={{ color: '#2ECC71' }}>5. Confidentialité</Title>
+            
+                <Paragraph>
+                5.1 Vous acceptez de traiter toute information confidentielle obtenue lors de l'utilisation de la
+                plateforme avec le même degré de confidentialité que vous accordez à vos propres
+                informations confidentielles.
+                </Paragraph>
+
+                <Title level={4} style={{ color: '#2ECC71' }}>6. Responsabilités</Title>
+            
+                <Paragraph>
+                6.1 Vous êtes responsable de toutes les activités effectuées via votre compte sur la
+                plateforme.
+                </Paragraph>
+
+                <Paragraph>
+                6.2 ElemboTech ne peut être tenu responsable des pertes ou dommages résultant de votre
+                utilisation de la plateforme.
+                </Paragraph>
+
+                <Title level={4} style={{ color: '#2ECC71' }}>7. Modifications des Conditions d'Utilisation</Title>
+            
+                <Paragraph>
+                7.1 ElemboTech se réserve le droit de modifier ces conditions d'utilisation à tout moment.
+                Les modifications prendront effet dès leur publication sur la plateforme.
+                </Paragraph>
+
+                <Paragraph>
+                7.2 Il est de votre responsabilité de consulter régulièrement les conditions d'utilisation pour
+                prendre connaissance des éventuelles modifications.
+                </Paragraph>
+                
+                <Paragraph>
+                En utilisant la plateforme ConnectEdu, vous acceptez ces conditions d'utilisation. Si vous
+                n'acceptez pas ces conditions, veuillez ne pas utiliser la plateforme.
+                Dernière mise à jour : [Date de la Dernière Mise à Jour]
+                </Paragraph>
+
+
+
             <br></br>
             <br></br>
             
