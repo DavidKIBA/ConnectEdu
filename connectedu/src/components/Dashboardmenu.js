@@ -41,17 +41,15 @@ import {
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 
+const profil = () => {
+  window.open("http://localhost:3000/profile", "_blank")
+};
 
 
 
 const Dashboardmenu = () => {
 
         
-        const profile = useHistory();
-        const profil = () => {
-            page.push('/dashboard');
-        };
-
         const page = useHistory();
         const dashboard = () => {
             page.push('/dashboard');

@@ -28,11 +28,11 @@ import Cp1 from './pages/Elèves/Cp1';
 import Uploadfiles from './components/Uploadfiles';
 import Terms from './pages/Terms';
 import Calendrier from './pages/Calendrier';
+import Profile from './pages/Profile';
 
 // fichiers css
 
 import './css/Home.css';
-
 import './css/Connected.css';
 import './css/Inscription.css';
 import './css/Connexion.css';
@@ -79,6 +79,7 @@ const App = () => {
         <Route path="/uploadfiles" exact component={Uploadfiles} />
         <Route path="/terms" exact component={Terms} />
         <Route path="/calendrier" exact component={Calendrier} />
+        <Route path="/profile" exact component={Profile} />
         <Route component={Error} />
       </Switch>
     </Router>
