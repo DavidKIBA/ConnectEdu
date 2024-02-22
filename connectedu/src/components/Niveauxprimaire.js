@@ -22,6 +22,9 @@ const Niveauxprimaire = () => {
   const [disabled, setDisabled] = useState(false);
   const history = useHistory();
 
+
+
+
   const handleClick = (classe) => {
     console.log(`Clicked on button with key: ${classe.key}`);
     // Créer une variable de type tableau avec un nom dynamique
@@ -30,7 +33,7 @@ const Niveauxprimaire = () => {
     // Stocker ou traiter la variable de tableau comme nécessaire
     console.log(`${dynamicArrayName}: `, dynamicArray);
     // history.push(`/cp1/ ${classe.key}`);
-    history.push('/cp1');
+    window.open('http://localhost:3000/classe', "_blank");
   };
 
   const handleChange = (newTargetKeys, direction, moveKeys) => {

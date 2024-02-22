@@ -24,7 +24,7 @@ import Niveauxprescolaire from './components/Niveauxprescolaire';
 import Niveauxcollege from './components/Niveauxcollege';
 import Niveauxlycee from './components/Niveauxlycee';
 import MessagePage from './pages/MessagesPage';
-import Cp1 from './pages/Elèves/Cp1';
+import Classe from './pages/Elèves/Classe';
 import Uploadfiles from './components/Uploadfiles';
 import Terms from './pages/Terms';
 import Calendrier from './pages/Calendrier';
@@ -77,7 +77,7 @@ const App = () => {
         <Route path="/niveauxcollege" exact component={Niveauxcollege} />
         <Route path="/niveauxlycee" exact component={Niveauxlycee} />
         <Route path="/MessagePage" exact component={MessagePage} />
-        <Route path="/cp1" exact component={Cp1} />
+        <Route path="/classe" exact component={Classe} />
         <Route path="/uploadfiles" exact component={Uploadfiles} />
         <Route path="/terms" exact component={Terms} />
         <Route path="/calendrier" exact component={Calendrier} />

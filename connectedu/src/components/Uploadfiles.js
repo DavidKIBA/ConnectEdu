@@ -27,10 +27,10 @@ const Uploadfiles = () => (
     <p className="ant-upload-drag-icon">
       <InboxOutlined />
     </p>
-    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-    <p className="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibited from uploading company data or other
-      banned files.
+    <p className="ant-upload-text" style={{color:"#3498DB"}}>Cliquez ou faites glisser le fichier vers cette zone pour le télécharger</p>
+    <p className="ant-upload-hint" style={{color:"white"}}>
+    Prise en charge d'un téléchargement unique de fichier <span style={{color:"#2ECC71"}}>Excel (xlsx) </span>. Il est strictement interdit de télécharger des données d'entreprise ou autres
+       fichiers interdits.
     </p>
   </Dragger>
 );
