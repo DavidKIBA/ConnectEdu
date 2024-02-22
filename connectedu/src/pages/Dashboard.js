@@ -181,234 +181,185 @@ const Dashboard = () => {
 
 
              {/* Statistique eleves */}
-             <Title level={3} style={{color:"white"}}>Statistiques des examens</Title>
+             <Title level={3} style={{ color: "white" }}>Statistiques des examens</Title>
 
-             <Card bordered={false}  style={{  backgroundColor:'#001E32' }}>
-                    
-              <Row gutter={16}  style={{  backgroundColor:'#001E32' }}>
-              <Col span={4} style={{  backgroundColor:'#001E32' }}>
-                
-                  <Statistic
-                    title={<span style={{ color: '#3498DB' }}>Primaire</span>}
-                    value={11.28}
-                    precision={2}
-                    valueStyle={{
-                      color: '#3f8600',
-                    
-                    }}
-                    suffix="%"
+      <Card bordered={false} style={{ backgroundColor: '#001E32' }}>
+
+        <Row gutter={[16, 16]} style={{ backgroundColor: '#001E32' }}>
+          <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+
+            <Statistic
+              title={<span style={{ color: '#3498DB' }}>Primaire</span>}
+              value={11.28}
+              precision={2}
+              valueStyle={{
+                color: '#3f8600',
+              }}
+              suffix="%"
+            />
+            <Progress
+              type="dashboard"
+              percent={11.28}
+              width={80}
+              format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
+              strokeColor={{
+                '0%': '#108ee9',
+                '100%': '#87d068',
+              }}
+            />
+
+          </Col>
+
+          <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+
+            <Statistic
+              title={<span style={{ color: '#3498DB' }}>Collège</span>}
+              value={9.3}
+              precision={2}
+              valueStyle={{
+                color: '#cf1322',
+              }}
+              suffix="%"
+            />
+            <Progress
+              type="dashboard"
+              percent={9.3}
+              width={80}
+              format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
+              strokeColor={{
+                '0%': '#108ee9',
+                '100%': '#87d068',
+              }}
+            />
+
+          </Col>
+
+          <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+
+            <Statistic
+              title={<span style={{ color: '#3498DB' }}>Lycée</span>}
+              value={11.28}
+              precision={2}
+              valueStyle={{
+                color: '#3f8600',
+              }}
+              suffix="%"
+            />
+            <Progress
+              type="dashboard"
+              percent={11.28}
+              width={80}
+              format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
+              strokeColor={{
+                '0%': '#108ee9',
+                '100%': '#87d068',
+              }}
+            />
+
+          </Col>
+
+          <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+            <Card
+              style={{ width: '100%', height: 210, backgroundColor: '#2ECC71' }}
+              cover={
+                <div style={{ position: 'relative' }}>
+                  <img
+                    alt="example"
+                    src={process.env.PUBLIC_URL + '/images/élève.jpg'}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
-                  <Progress
-                    type="dashboard"
-                    percent={11.28}
-                    width={80}
-                    format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
-                    strokeColor={{
-                      '0%': '#108ee9',
-                      '100%': '#87d068',
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
+                      borderRadius: '5px 5px 0 0',
                     }}
                   />
-                
-              </Col>
-
-              <Col span={4}>
-               
-                  <Statistic
-                    title={<span style={{ color: '#3498DB' }}>Collège</span>}
-                    value={9.3}
-                    precision={2}
-                    valueStyle={{
-                      color: '#cf1322',
-                    }}
-                    suffix="%"
-                  />
-                  <Progress
-                    type="dashboard"
-                    percent={9.3}
-                    width={80}
-                    format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
-                    strokeColor={{
-                      '0%': '#108ee9',
-                      '100%': '#87d068',
-                    }}
-                  />
-                
-              </Col>
-
-              <Col span={4}>
-                
-                <Statistic
-                  title={<span style={{ color: '#3498DB' }}>Lycée</span>}
-                  value={11.28}
-                  precision={2}
-                  valueStyle={{
-                    color: '#3f8600',
-                  }}
-                  suffix="%"
-                />
-                <Progress
-                  type="dashboard"
-                  percent={11.28}
-                  width={80}
-                  format={(percent) => <span style={{ color: '#3498DB' }}>{percent}%</span>}
-                  strokeColor={{
-                    '0%': '#108ee9',
-                    '100%': '#87d068',
-                  }}
-                  
-                />
-              
-            </Col>
-
-
-            <Col>
-                
-                {/* Eleves */}
-                    
-                <Card
-                    style={{ width: 190 , height:210, backgroundColor:'#2ECC71',}}
-                    cover={
-                      <div style={{ position: 'relative' }}>
-                        <img
-                          alt="example"
-                          src={process.env.PUBLIC_URL + '/images/élève.jpg'}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
-                            borderRadius: '5px 5px 0 0',
-                          }}
-                        />
-                      </div>
-                    }
-                  >
-                    <Meta
-                      title={<span style={{ color: '#fff' }}>Elèves</span>}
-                      description={<span style={{ color: '#fff' }}>2857 Comptes inscrits</span>}
-                    />
-                  </Card>
-
-                  {/* Fin Eleves */}
-           
-            </Col>
-
-            <Col>
-                
-                {/* Parents */}
-
-                <Card
-                    style={{ width: 190 , height:210, backgroundColor:'#3197d7',}}
-                    cover={
-                      <div style={{ position: 'relative' }}>
-                        <img
-                          alt="example"
-                          src={process.env.PUBLIC_URL + '/images/parent.jpg'}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                        <div
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
-                            borderRadius: '5px 5px 0 0',
-                          }}
-                        />
-                      </div>
-                    }
-                  >
-                    <Meta
-                      title={<span style={{ color: '#fff' }}>Parents</span>}
-                      description={<span style={{ color: '#fff' }}>857 Comptes inscrits</span>}
-                    />
-                  </Card>
-
-                  {/* Fin Parents */}
-           
-            </Col>
-            
-                        {/* <Title level={3} style={{ color:'#3197d7'}}>Statistiques des résultats des élèves</Title> */}
-        
-            </Row>
+                </div>
+              }
+            >
+              <Meta
+                title={<span style={{ color: '#fff' }}>Elèves</span>}
+                description={<span style={{ color: '#fff' }}>2857 Comptes inscrits</span>}
+              />
             </Card>
-            
-             {/* Fin Statistique eleves */}
-             
+          </Col>
 
+          <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+            <Card
+              style={{ width: '100%', height: 210, backgroundColor: '#3197d7' }}
+              cover={
+                <div style={{ position: 'relative' }}>
+                  <img
+                    alt="example"
+                    src={process.env.PUBLIC_URL + '/images/parent.jpg'}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
+                      borderRadius: '5px 5px 0 0',
+                    }}
+                  />
+                </div>
+              }
+            >
+              <Meta
+                title={<span style={{ color: '#fff' }}>Parents</span>}
+                description={<span style={{ color: '#fff' }}>857 Comptes inscrits</span>}
+              />
+            </Card>
+          </Col>
+
+          <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
+            <Card
+              style={{ width: '100%', height: 210, backgroundColor: 'white' }}
+              cover={
+                <div style={{ position: 'relative' }}>
+                  <img
+                    alt="example"
+                    src={process.env.PUBLIC_URL + '/images/lycée.jpg'}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
+                      borderRadius: '5px 5px 0 0',
+                    }}
+                  />
+                </div>
+              }
+            >
+              <Meta
+                title={<span style={{ color: 'black' }}>Membres</span>}
+                description={<span style={{ color: 'black' }}>7 Comptes inscrits</span>}
+              />
+            </Card>
+          </Col>
+        </Row>
+
+      </Card>
+              
              
 
           </Content>
 
          {/* fin Corps de la page 1 */}
    
-
-    
-
-         {/* Corps de la page 2 */}
-
-
-         {/* Membres */}
-         {/* <Content
-                  style={{
-                    padding: 24,
-                    margin: 0,
-                    minHeight: 280,
-                    background:'#001E32',  
-                    borderRadius: borderRadiusLG,
-                  }}
-                >
-
-
-                  <Row gutter={20}>
-                    <Col flex="1">
-
-
-                    
-                     
-                      <Card
-                        style={{ width: 190, height: 210,  }}
-                        cover={
-                          <div style={{ position: 'relative' }}>
-                            <img
-                              alt="example"
-                              src={process.env.PUBLIC_URL + '/images/parent.jpg'}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
-                            <div
-                              style={{
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                width: '100%',
-                                height: '100%',
-                                backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
-                                borderRadius: '5px 5px 0 0',
-                              }}
-                            />
-                          </div>
-                        }
-                      >
-                        <Meta title="Membres"
-                        description="8 Comptes ajoutés" 
-                        />
-                      </Card>
-                     
-                    </Col>
-                  </Row>
-                </Content>; */}
-
-              {/* Fin Membres */}
-
-          {/* Fin du corps de la page 2*/}
-
 
           {/*corps de la page 3*/}
           
