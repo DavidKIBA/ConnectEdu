@@ -55,7 +55,7 @@ const Cp1 = () => {
   const history = useHistory();
 
   const handleRowClick = (record) => {
-    history.push('/eleve'); // Rediriger vers une URL spécifique pour chaque enregistrement
+    window.open("http://localhost:3000/eleve", "_blank") // Rediriger vers une URL spécifique pour chaque enregistrement
   };
 
   const rowSelection = {

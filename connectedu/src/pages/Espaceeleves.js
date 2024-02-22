@@ -42,14 +42,6 @@ import {
 
 
 
-
-
-// Noms pour le menu horizontal
-// const horizontalMenuItems = ['DASHBOARD', "search" , 'À propos'].map((label, index) => ({
-//   key: String(index + 1),
-//   label: `${label}`,
-// }));
-
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
 const { Meta } = Card;
@@ -118,11 +110,56 @@ const Espaceeleves = () => {
               borderRadius: borderRadiusLG,
             }}
           >
+            
+         {/* presentation */}
+
+
+         <Row gutter={20}>
+                    <Col flex="1">
+                      
+                         
+             <div>
+            <div style={{ position: 'relative', height: '160px', borderRadius: '5px 5px 5px 5px'}}>
+              <img
+                alt="presentation"
+                src={process.env.PUBLIC_URL + '/images/dashboard.png'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px 5px 5px 5px' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur de l'overlay
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}
+              >
+                <h1 style={{ color: '#fff', margin: 0 }}>
+                  L'école à portée des mains
+                          
+                </h1>
+              </div>
+            </div>
+          </div>
+
+          </Col>
+          </Row>
+           
+           <br></br>
+             {/* fin presentation */}
+
 
              {/* Statistique eleves */}
             
              <Card bordered={false}  style={{  backgroundColor:'#001E32' }}>
-                    
+             <h3 style={{ color: '#fff', margin: 0 }}>
+                  Statistiques des resultats d'examen            
+                </h3>   
               <Row gutter={16}  style={{  backgroundColor:'#001E32' }}>
               <Col span={4} style={{  backgroundColor:'#001E32' }}>
                 

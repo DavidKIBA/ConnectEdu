@@ -31,12 +31,13 @@ import {
    Col, 
    Row, 
    Statistic,
+   Button,
    Progress,
    Carousel,
  
   } from 'antd';
 
-  import { Typography } from 'antd';
+  import { Typography, Divider} from 'antd';
 
 
 
@@ -47,25 +48,22 @@ const { TextArea } = Input;
 
 const { Title, Paragraph } = Typography;
 
-   
+{/* carrousel */}
 
+const contentStyle: React.CSSProperties = {
+  margin: 0,
+  height: '160px',
+  color: '#fff',
+  lineHeight: '160px',
+  textAlign: 'center',
+  background: '#364d79',
+};  
+
+{/* carrousel */}
 
 const Dashboard = () => {
 
       
-      {/* Début images defilantes */}
-
-      const contentStyle = {
-        width: '160px',
-        color: '#fff',
-        lineHeight: '160px',
-        textAlign: 'center',
-        background: '#001E32',
-  
-      }
-    
-
-      {/* Fin images defilantes */}
                                                   
 
   const {
@@ -78,6 +76,24 @@ const Dashboard = () => {
   const handleBreadcrumbClick = (route) => {
     history.push(route);
   }
+
+
+
+    {/* activités récentes */}
+
+    const handleActivityClick = () =>{
+
+    }
+
+    {/* activités récentes */}
+
+  {/* carrousel */}
+
+    const onChange = (currentSlide: number) => {
+      console.log(currentSlide);
+    };
+
+    {/* fin carrousel */}
 
   return (
     <Layout style={{ background: '#001E32' }}>
@@ -118,9 +134,55 @@ const Dashboard = () => {
               borderRadius: borderRadiusLG,
             }}
           >
+            
+
+              {/* presentation */}
+
+
+         <Row gutter={20}>
+                    <Col flex="1">
+                      
+                         
+             <div>
+            <div style={{ position: 'relative', height: '160px', borderRadius: '5px 5px 5px 5px'}}>
+              <img
+                alt="presentation"
+                src={process.env.PUBLIC_URL + '/images/dashboard.png'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px 5px 5px 5px' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur de l'overlay
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}
+              >
+                <h1 style={{ color: '#fff', margin: 0 }}>
+                  L'école à portée des mains
+                          
+                </h1>
+              </div>
+            </div>
+          </div>
+
+          </Col>
+          </Row>
+           
+           <br></br>
+             {/* fin presentation */}
+
+
 
              {/* Statistique eleves */}
-            
+             <Title level={3} style={{color:"white"}}>Statistiques des examens</Title>
+
              <Card bordered={false}  style={{  backgroundColor:'#001E32' }}>
                     
               <Row gutter={16}  style={{  backgroundColor:'#001E32' }}>
@@ -219,7 +281,7 @@ const Dashboard = () => {
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
+                            backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
                             borderRadius: '5px 5px 0 0',
                           }}
                         />
@@ -256,7 +318,7 @@ const Dashboard = () => {
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
+                            backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
                             borderRadius: '5px 5px 0 0',
                           }}
                         />
@@ -288,11 +350,13 @@ const Dashboard = () => {
          {/* fin Corps de la page 1 */}
    
 
-          <br></br>
+    
 
          {/* Corps de la page 2 */}
 
-         <Content
+
+         {/* Membres */}
+         {/* <Content
                   style={{
                     padding: 24,
                     margin: 0,
@@ -301,31 +365,14 @@ const Dashboard = () => {
                     borderRadius: borderRadiusLG,
                   }}
                 >
+
+
                   <Row gutter={20}>
                     <Col flex="1">
-                      <Title level={3}  style={{ color:'#3197d7'}}>Actualités de ConnectEdu</Title>
-                      <Paragraph>
-                        <TextArea
-                          autoSize={{ minRows: 3, maxRows: 5 }}
-                          value="Lorem ipsum dolor sit amet, consectetur 
-                          adipiscing elit. Sed do eiusmod tempor incididunt 
-                          ut labore et dolore magna aliqua. Ut enim ad minim 
-                          veniam.
-                          
-                          Lorem ipsum dolor sit amet, consectetur 
-                          adipiscing elit. Sed do eiusmod tempor incididunt 
-                          ut labore et dolore magna aliqua. Ut enim ad minim 
-                          veniam.
-                          
-                          Lorem ipsum dolor sit amet, consectetur 
-                          adipiscing elit. Sed do eiusmod tempor incididunt 
-                          ut labore et dolore magna aliqua. Ut enim ad minim 
-                          veniam."
-                        />
-                      </Paragraph>
-                    </Col>
-                    <Col flex="1">
-                      {/* Membres */}
+
+
+                    
+                     
                       <Card
                         style={{ width: 190, height: 210,  }}
                         cover={
@@ -342,7 +389,7 @@ const Dashboard = () => {
                                 left: 0,
                                 width: '100%',
                                 height: '100%',
-                                backgroundColor: 'rgba(46, 204, 113, 0.5)', // Couleur avec opacité
+                                backgroundColor: 'rgba(0, 30, 50, 0.7)', // Couleur avec opacité
                                 borderRadius: '5px 5px 0 0',
                               }}
                             />
@@ -353,15 +400,15 @@ const Dashboard = () => {
                         description="8 Comptes ajoutés" 
                         />
                       </Card>
-                      {/* Fin Membres */}
+                     
                     </Col>
                   </Row>
-                </Content>;
+                </Content>; */}
 
-       
+              {/* Fin Membres */}
+
           {/* Fin du corps de la page 2*/}
 
-           <br></br>
 
           {/*corps de la page 3*/}
           
@@ -374,50 +421,204 @@ const Dashboard = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <div>
-                <Title level={3}>Activités récentes</Title>
-                        {/* Votre contenu ici */}
-                        <div style={{ display: 'flex' }}>
-                            <div style={{ flex: 1, marginRight: 16 }}>
-                              <Card>
-                                <Title level={3}>Div 1</Title>
-                                <Paragraph>
-                                  Contenu de la première div avec du code Ant Design.
-                                </Paragraph>
-                              </Card>
-                            </div>
-                            <div style={{ flex: 1, marginRight: 16 }}>
-                              <Card>
-                                <Title level={3}>Div 2</Title>
-                                <Paragraph>
-                                  Contenu de la deuxième div avec du code Ant Design.
-                                </Paragraph>
-                              </Card>
-                            </div>
-                            <div style={{ flex: 1 }}>
-                              <Card>
-                                {/* <Title level={3}>Div 3</Title> */}
-                                
-                              </Card>
-                            </div>
-                          </div>
+
+
+
+
+
+   {/* Activites recentes */}
+            
+
+   <div>
+      <style>
+        {`
+          .activity-card .ant-card-cover > img {
+            height: 90px; /* Hauteur fixe de l'image */
+            object-fit: cover; /* Remplir l'espace de manière proportionnelle */
+            margin-bottom: 8px; /* Marge interne en bas */
+          }
+        `}
+      </style>
+      <Title level={3} style={{color:"white"}}>Activités récentes</Title>
+      <Divider />
+      <Row gutter={[10, 10]}>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+          <Card
+            className="activity-card"
+            cover={<img alt="Activité 1" src={process.env.PUBLIC_URL + '/images/primaire.jpg'} />}
+            actions={[
+              <Button type="primary" onClick={() => handleActivityClick(1)}>Voir l'activité</Button>
+            ]}
+          >
+          </Card>
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+          <Card
+            className="activity-card"
+            cover={<img alt="Activité 2" src={process.env.PUBLIC_URL + '/images/collège.jpg'} />}
+            actions={[
+              <Button type="primary" onClick={() => handleActivityClick(2)}>Voir l'activité</Button>
+            ]}
+          >
+          </Card>
+        </Col>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+          <Card
+            className="activity-card"
+            cover={<img alt="Activité 3" src={process.env.PUBLIC_URL + '/images/lycée.jpg'} />}
+            actions={[
+              <Button type="primary" onClick={() => handleActivityClick(3)}>Voir l'activité</Button>
+            ]}
+          >
+          </Card>
+        </Col>
+      </Row>
+    </div>
+
+   {/* fin Activites recentes */}
+      <br></br>
+
+      <Title level={3} style={{color:"white"}}>Actualités</Title>
+
+      <Carousel afterChange={onChange} autoplay autoplaySpeed={5000}>
+
+          <div>
+            <div style={{ position: 'relative', height: '160px', borderRadius: "5px 5px 5px 5px"  }}>
+              <img
+                alt="carousel 1"
+                src={process.env.PUBLIC_URL + '/images/élève.jpg'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "5px 5px 5px 5px"  }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couleur de l'overlay
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  borderRadius: "5px 5px 5px 5px" 
+                }}
+              >
+                <h3 style={{ color: '#fff', margin: 0 }}>
+                  Lorem ipsum dolor sit amet, consectetur 
+                          adipiscing elit. Sed do eiusmod tempor incididunt 
+                          ut labore et dolore magna aliqua. Ut enim ad minim 
+                          veniam.
+                          
+                </h3>
+              </div>
             </div>
+          </div>
+          <div>
+            <div style={{ position: 'relative', height: '160px', borderRadius: "5px 5px 5px 5px"  }}>
+              <img
+                alt="carousel 2"
+                src={process.env.PUBLIC_URL + '/images/parent.jpg'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "5px 5px 5px 5px"  }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couleur de l'overlay
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  borderRadius: "5px 5px 5px 5px" 
+                }}
+              >
+                <h3 style={{ color: '#fff', margin: 0 }}>
+                  Lorem ipsum dolor sit amet, consectetur 
+                          adipiscing elit. Sed do eiusmod tempor incididunt 
+                          ut labore et dolore magna aliqua. Ut enim ad minim 
+                          veniam.
+                          
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style={{ position: 'relative', height: '160px', borderRadius: "5px 5px 5px 5px"  }}>
+              <img
+                alt="carousel 3"
+                src={process.env.PUBLIC_URL + '/images/lycée.jpg'}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "5px 5px 5px 5px"  }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couleur de l'overlay
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  borderRadius: "5px 5px 5px 5px" 
+                }}
+              >
+                <h3 style={{ color: '#fff', margin: 0 }}>
+                  Lorem ipsum dolor sit amet, consectetur 
+                          adipiscing elit. Sed do eiusmod tempor incididunt 
+                          ut labore et dolore magna aliqua. Ut enim ad minim 
+                          veniam.
+                          
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div>
+          <div style={{ position: 'relative', height: '160px', borderRadius: "5px 5px 5px 5px" }}>
+            <img
+              alt="carousel 4"
+              src={process.env.PUBLIC_URL + '/images/collège.jpg'}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: "5px 5px 5px 5px" }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Couleur de l'overlay
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                borderRadius: "5px 5px 5px 5px",
+              }}
+            >
+              <h3 style={{ color: '#fff', margin: 0 }}>
+                Lorem ipsum dolor sit amet, consectetur 
+                          adipiscing elit. Sed do eiusmod tempor incididunt 
+                          ut labore et dolore magna aliqua. Ut enim ad minim 
+                          veniam.
+                          
+              </h3>
+            </div>
+          </div>
+        </div>
+
+   </Carousel>
+
                          </Content>
-                              <Carousel autoplay style={{width:'190'}}>
-                                  <div>
-                                    <h3 style={contentStyle}>1</h3>
-                                  </div>
-                                  <div>
-                                    <h3 style={contentStyle}>2</h3>
-                                  </div>
-                                  <div>
-                                    <h3 style={contentStyle}>3</h3>
-                                  </div>
-                                  <div>
-                                    <h3 style={contentStyle}>4</h3>
-                                  </div>
-                                </Carousel>
+                             
           {/* Fin du corps de la page 3*/}
+
+ 
+
 
         </Layout>
         
@@ -428,3 +629,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+ 
