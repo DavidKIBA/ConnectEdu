@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const Contact = () => {
+const Contact = (props) => {
+
+     const [Compteur,  setCompteur] = useState(1);
+
+     const onChange =() => {
+        setCompteur(Compteur + 1);
+     }
     return (
         <div>
-            Contact
+            <form>
+               {Compteur} <button type='buton' onClick={onChange}>Augmenter</button>
+            </form>
         </div>
     );
 };

@@ -229,7 +229,7 @@ const Eleve = () => {
                   {/* Contenu de votre page */}
                   <h1>Tutoriel de prise en main</h1>
                   <p>Ce tutoriel est un guide vous donnant les indications 
-                    sur l'importation des listes d'élèves de chaque classe.</p>
+                    sur le renseignement des champs du bulletun de l'élève. </p>
                 </Card>
               </div>
               {/* Tutoriel */}
