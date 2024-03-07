@@ -100,7 +100,7 @@ CREATE TABLE Appreciacions(
     id_appreciacion INTEGER PRIMARY KEY AUTOINCREMENT,
     eleve FOREIGN KEY (id_eleve) REFERENCES Eleves(id_eleve) ON DELETE CASCADE NOT NULL,
     progression_eleve VARCHAR(255) NOT NULL,
-    comportement VARCHAR(255) NOT NULL,
+    comportement VARCHAR(255) NOT NULL, 
     assiduite VARCHAR(255) NOT NULL,
 );
 

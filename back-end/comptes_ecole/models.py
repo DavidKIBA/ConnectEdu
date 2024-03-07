@@ -24,9 +24,6 @@ class Ecoles(TenantMixin):
         verbose_name = ('Ecole')
         verbose_name_plural = ('Ecoles')
  
-
-
-
     def __str__(self):
         return self.nom
     

@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 BASE_DOMAIN = 'localhost'
 
@@ -40,6 +40,7 @@ SHARED_APPS = (
     'django_tenants',  # mandatory
     'comptes_ecole',  # you must list the app where your tenant model resides in
     'utilisateurs',
+    'contacts',
 
     'django.contrib.contenttypes',
 
@@ -50,16 +51,18 @@ SHARED_APPS = (
     'django.contrib.admin',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     
 )
 
 TENANT_APPS = (
     # your tenant-specific apps
-    'eleves',
     'gestion_ecole',
+    'gestion_ecole_2'
+
 )
 
 INSTALLED_APPS = list(SHARED_APPS) + \
@@ -70,9 +73,11 @@ TENANT_MODEL = "comptes_ecole.Ecoles"  # app.Model
 TENANT_DOMAIN_MODEL = "comptes_ecole.Domain"  # app.Model
 
 MIDDLEWARE = [
+    # 'connectedu.middleware_schema.TenantMainMiddleware',
     'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -80,15 +85,36 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8111",
+    "http://localhost:8080",
+]
+
+
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "niveau",
+)
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ]
+}
+
+SIMPLE_JWT = {
+  # It will work instead of the default serializer(TokenObtainPairSerializer).
+  "TOKEN_OBTAIN_SERIALIZER": "utilisateurs.serializers.MyTokenObtainPairSerializer",
+  # ...
 }
 
 ROOT_URLCONF = 'connectedu.urls'
@@ -101,8 +127,8 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.debug',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],

@@ -22,16 +22,4 @@ class EcoleSerializer(serializers.ModelSerializer):
         fields = ('nom', 'email', 'telephone_1', 'telephone_2', 'adresse', 'ville_residence', 'logo', 'date_creation', 'document', 
                   'nom_responsable', 'prenom_responsable', 'email_responsable')
         
-    # def create(self, validated_data):
-
-    #     nom = validated_data.pop('nom_responsable')
-    #     prenom = validated_data.pop('prenom_responsable')
-    #     email = validated_data.pop('email_responsable')
-
-    #     reponsable = User.objects.create(username=f"{nom}-OG", first_name=nom, last_name=prenom, email=email, 
-    #                                      password="P@blo 2003")
-
-    #     return Ecoles.objects.create(**validated_data)
-
-
    
