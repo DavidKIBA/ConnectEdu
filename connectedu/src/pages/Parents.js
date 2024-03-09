@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Dashboardmenu from '../../components/Dashboardmenu';
-import Dashboardsider from '../../components/Dashboardsider';
-import Uploadfiles from '../../components/Uploadfiles';
+import Dashboardmenu from '../components/Dashboardmenu';
+import Dashboardsider from '../components/Dashboardsider';
+import Uploadfiles from '../components/Uploadfiles';
 import { 
   Layout, 
   Card,
@@ -27,12 +27,11 @@ const { Title } = Typography;
 
 const generateData = () => {
   const data = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < 30; i++) {
     data.push({
       key: i,
-      name: `Dani Juldas ${i}`,
-      age: 32,
-      address: `Lycée Thomas Sankara. ${i}`,
+      nom: `Dani Juldas`,
+      address: ` Thomas Sankara`,
       phoneNumber: `123456789${i}`, // Exemple de numéro de téléphone généré
       email: `user${i}@example.com`, // Exemple d'adresse e-mail générée
     });
@@ -40,7 +39,7 @@ const generateData = () => {
   return data;
 };
 
-const Classe = () => {
+const Parents = () => {
   const history = useHistory();
   const [data, setData] = useState(generateData());
   const [modalVisible, setModalVisible] = useState(false);
@@ -104,10 +103,7 @@ const Classe = () => {
       title: 'Nom et prénom',
       dataIndex: 'name',
     },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-    },
+   
     {
       title: 'Adresse',
       dataIndex: 'address',
@@ -141,7 +137,7 @@ const Classe = () => {
 
   const handleRowClick = (record, event) => {
     if (!event.target.closest('button')) {
-      history.push('/eleve'); // Redirige vers la page '/eleve' lors du clic sur une ligne
+      window.open('http://localhost:3000/parent', '_blank'); // Redirige vers la page '/eleve' lors du clic sur une ligne
     }
   };
 
@@ -197,7 +193,7 @@ const onFinish = (values) => {
               borderRadius: '16px',
             }}
           >
-            <Title level={3} style={{ color: '#3498DB' }}>Classes</Title>
+            <Title level={3} style={{ color: '#3498DB' }}>Parents d'élèves</Title>
             <Row>
               <Col span={24}>col</Col>
             </Row>
@@ -477,7 +473,7 @@ const onFinish = (values) => {
     );
   };
   
-  export default Classe;
+  export default Parents;
   
 
 

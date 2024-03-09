@@ -38,6 +38,7 @@ import {
   } from 'antd';
 
   import { Typography, Divider} from 'antd';
+import TabCyclePrimaire from '../components/TabCyclePrimaire';
 
 
 
@@ -157,7 +158,7 @@ const Espaceparents = () => {
 
 
              {/* Statistique eleves */}
-             <Title level={3} style={{ color: "white" }}>Statistiques des examens</Title>
+             <Title level={3} style={{ color: "#001E32" }}>Statistiques des examens</Title>
 
       <Card bordered={false} style={{ backgroundColor: '#001E32' }}>
 
@@ -330,10 +331,12 @@ const Espaceparents = () => {
 
       </Card>
               
-             
+      <TabCyclePrimaire/>
 
           </Content>
+              
 
+         
          {/* fin Corps de la page 1 */}
    
 
@@ -350,7 +353,7 @@ const Espaceparents = () => {
           >
 
 
-
+            
 
             </Content>
   

@@ -30,6 +30,10 @@ import Terms from './pages/Terms';
 import Calendrier from './pages/Calendrier';
 import Profile from './pages/Profile';
 import Eleve from './pages/Eleve';
+import TabCyclePrimaire from './components/TabCyclePrimaire';
+import TabCycleLycee from './components/TabCycleLycee';
+import TabCycleCollege from './components/TabCycleCollege';
+import Parents from './pages/Parents';
 
 // fichiers css
 
@@ -45,6 +49,7 @@ import './css/ConnectedMenu.css';
 import './css/Dashboard.css';
 import './css/Espacemembres.css';
 import './css/Calendrier.css';
+
 
 
 
@@ -83,6 +88,10 @@ const App = () => {
         <Route path="/calendrier" exact component={Calendrier} />
         <Route path="/profile" exact component={Profile} />
         <Route path="/eleve" exact component={Eleve} />
+        <Route path="/tabcycleprimaire" exact component={TabCyclePrimaire} />
+        <Route path="/tabcyclecollege" exact component={TabCycleCollege} />
+        <Route path="/tabcyclelycee" exact component={TabCycleLycee} />
+        <Route path="/parents" exact component={Parents} />
         <Route component={Error} />
       </Switch>
     </Router>
