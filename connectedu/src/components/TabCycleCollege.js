@@ -89,9 +89,9 @@ const TabCycleCollege = () => {
 
   const columns = [
    
-    { title: 'Classe', dataIndex: 'name' },
-    { title: 'Age', dataIndex: 'age' },
-    { title: 'Adresse', dataIndex: 'address' },
+    { title: 'Classe', dataIndex: 'classe' },
+    { title: 'Effectif', dataIndex: 'effectif' },
+    { title: 'Enseignant', dataIndex: 'enseignant' },
     { title: 'Numéro de téléphone', dataIndex: 'phoneNumber' },
     { title: 'Adresse e-mail', dataIndex: 'email' },
     {
@@ -115,7 +115,7 @@ const TabCycleCollege = () => {
 
   const handleRowClick = (record, event) => {
     if (!event.target.closest('button')) {
-      history.push('/eleve'); // Redirige vers la page '/eleve' lors du clic sur une ligne
+        window.open('http://localhost:3000/parents', '_blank');  // Redirige vers la page '/eleve' lors du clic sur une ligne
     }
   };
 
@@ -131,7 +131,7 @@ const TabCycleCollege = () => {
        
         <Layout>
           <Content>
-            <Title level={3}>Classes du primaire</Title>
+            <Title level={3}>Classes du Collège</Title>
             <Row>
               <Col span={24}>col</Col>
             </Row>
@@ -162,31 +162,31 @@ const TabCycleCollege = () => {
           name="addEditForm"
           onFinish={handleSave}
           initialValues={{
-            name: '',
-            age: '',
-            address: '',
+            classe: '',
+            effectif: '',
+            enseignant: '',
             phoneNumber: '',
             email: ''
           }}
         >
           <Form.Item
-            name="name"
-            label="Nom et prénom"
-            rules={[{ required: true, message: 'Veuillez saisir le nom et prénom!' }]}
+            name="classe"
+            label="Classe"
+            rules={[{ required: true, message: 'Veuillez saisir la classe!' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="age"
-            label="Age"
-            rules={[{ required: true, message: 'Veuillez saisir l\'âge!' }]}
+            name="effectif"
+            label="Effectif"
+            rules={[{ required: true, message: 'Veuillez saisir l\'effectif!' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name="address"
-            label="Adresse"
-            rules={[{ required: true, message: 'Veuillez saisir l\'adresse!' }]}
+            name="enseignant"
+            label="Prof principal"
+            rules={[{ required: true, message: 'Veuillez saisir l\'enseignant!' }]}
           >
             <Input />
           </Form.Item>

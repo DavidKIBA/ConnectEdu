@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Dashboardmenu from '../components/Dashboardmenu';
 import Dashboardsider from '../components/Dashboardsider';
 import {
+    
     UserOutlined,
     MessageOutlined,
     SettingOutlined,
@@ -19,6 +20,7 @@ import {
 
 
 import {
+   Tabs,
    Breadcrumb, 
    Layout, 
    Menu, 
@@ -39,7 +41,8 @@ import {
 
   import { Typography, Divider} from 'antd';
 import TabCyclePrimaire from '../components/TabCyclePrimaire';
-
+import TabCycleLycee from '../components/TabCycleLycee';
+import TabCycleCollege from '../components/TabCycleCollege';
 
 
 const { Header, Content, Sider } = Layout;
@@ -52,7 +55,32 @@ const { Title, Paragraph } = Typography;
 
 
 const Espaceparents = () => {
-      
+
+  {/* Tabs cycles */}
+
+  const onChange = (key) => {
+    console.log(key);
+  };
+  const items = [
+    {
+      key: '1',
+      label: 'Primaire',
+      children:  <TabCyclePrimaire/>,
+    },
+    {
+      key: '2',
+      label: 'Collège',
+      children: <TabCycleCollege/>,
+    },
+    {
+      key: '3',
+      label: 'Lycée',
+      children: <TabCycleLycee/>,
+    },
+  ];
+
+   {/* Fin Tabs cycles */}
+
       const handleActivityClick = () => {
 
       }
@@ -330,8 +358,14 @@ const Espaceparents = () => {
         </Row>
 
       </Card>
-              
-      <TabCyclePrimaire/>
+
+      
+         {/* Tabs des cycles */}
+   
+          <Tabs defaultActiveKey="1" items={items} onChange={onChange} /> 
+         
+
+         {/* Fin Tabs des cycles */}
 
           </Content>
               
