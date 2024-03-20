@@ -25,14 +25,15 @@ const Home = () => {
 
     return (
     <div className="home-container">
-      <Image
+      <img
              className="background-image"
              src={process.env.PUBLIC_URL + '/images/homeimage.jpg'}
              alt="Accueil"
+             
+             
           />
      
-      <div className="overlay"></div>
- 
+      {/* <div className="overlay"></div>   */}
       <div>
         
           <Menu/>
@@ -148,3 +149,13 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+// L'école à porté de mainDécouvrez ce que ConnectEdu peut faire
+// pour vous :
+// Gérez facilement vos étudiants, des admissions
+// à la progression académique.
+
+// Facilitez la communication avec les parents
+// grâce à notre système de ....

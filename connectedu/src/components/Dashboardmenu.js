@@ -66,7 +66,7 @@ const Dashboardmenu = () => {
       { key: '3', icon: <ReloadOutlined /> },
       { key: '3', icon: <SettingOutlined />, label: 'Paramètres' },
       { key: '4', icon: <Badge count={3} onClick={messageicone} overflowCount={99}><MessageOutlined /></Badge>, label: 'Messages' },
-      { key: '5', icon: <TeamOutlined />, label: 'Rejoindre la communauté' },
+      
       ];
 
 
