@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import { ThemeProvider , useTheme} from './components/ThemeContext';
 // importation des pages
 import Home from './pages/Home';
 import About from './pages/About';
@@ -34,6 +34,8 @@ import TabCyclePrimaire from './components/TabCyclePrimaire';
 import TabCycleLycee from './components/TabCycleLycee';
 import TabCycleCollege from './components/TabCycleCollege';
 import Parents from './pages/Parents';
+import Parametres from './pages/parametres/Parametres';
+
 
 // fichiers css
 
@@ -58,10 +60,11 @@ import './css/Calendrier.css';
 
 const App = () => {
   return (
+    <ThemeProvider>
     <Router>
       {/* Définir les routes */}
   
-      <Switch>
+      <Switch> 
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
         <Route path="/inscription" exact component={Inscription} />
@@ -92,9 +95,11 @@ const App = () => {
         <Route path="/tabcyclecollege" exact component={TabCycleCollege} />
         <Route path="/tabcyclelycee" exact component={TabCycleLycee} />
         <Route path="/parents" exact component={Parents} />
+        <Route path="/parametres" exact component={Parametres} />
         <Route component={Error} />
       </Switch>
     </Router>
+    </ThemeProvider>
   );
 };
 

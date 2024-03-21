@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Layout, Menu, Badge, Button } from 'antd';
-import { UserOutlined, MessageOutlined, SettingOutlined, CalendarOutlined, FileTextOutlined } from '@ant-design/icons';
+import { Layout, Menu, Badge, Button, Drawer } from 'antd';
+import { UserOutlined, MessageOutlined, SettingOutlined, CalendarOutlined, FileTextOutlined, MenuOutlined } from '@ant-design/icons';
 import { Affix } from 'antd';
 
 const { Sider } = Layout;
 
 const Dashboardsider = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false); // State pour contrôler la visibilité du Drawer
   const history = useHistory();
 
   const terms = useHistory();
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  const toggleDrawer = () => {
+    setDrawerVisible(!drawerVisible);
   };
 
   const calendarIcone = () => {
@@ -25,7 +30,7 @@ const Dashboardsider = () => {
   };
 
   const settingsIcone = () => {
-    // Ajoutez votre logique pour le clic sur le bouton "Paramètres"
+    window.open("http://localhost:3000/Parametres", "_blank");
   };
 
   const termsIcone = () => {
@@ -62,13 +67,12 @@ const Dashboardsider = () => {
         theme='dark'
         width={collapsed ? 80 : 200}
         collapsed={collapsed}
-        onCollapse={toggleCollapsed}
         style={{
           background: '#001E32',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between', // Aligner les éléments avec un espace entre eux
-          height: '100vh', // Hauteur maximale
+          justifyContent: 'space-between',
+          height: '100vh',
         }}
       >
         <Menu
@@ -104,12 +108,54 @@ const Dashboardsider = () => {
             </React.Fragment>
           ))}
         </Menu>
-        <div style={{ alignSelf: 'flex-end' }}> {/* Alignement à droite */}
+        <div style={{ alignSelf: 'flex-end' }}>
           <Button type="text" onClick={toggleCollapsed} style={{ color: 'white', fontSize: '24px' }}>
-            {collapsed ? '>' : '<'}
+            <MenuOutlined />
           </Button>
         </div>
       </Sider>
+      <Drawer
+        title="Menu"
+        placement="top"
+        closable={false}
+        onClose={toggleDrawer}
+        visible={drawerVisible}
+        key="top"
+      >
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          defaultOpenKeys={['sub1']}
+          style={{
+            borderRight: 0,
+          }}
+        >
+          {verticalMenuItems.map((item) => (
+            <React.Fragment key={item.key}>
+              {item.options ? (
+                <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
+                  {item.options.map((option) => (
+                    <Menu.Item key={option} onClick={() => handleMenuClick(option)}>
+                      {`${option}`}
+                    </Menu.Item>
+                  ))}
+                </Menu.SubMenu>
+              ) : (
+                <Menu.Item key={item.key} icon={item.icon} onClick={() => {
+                  if (item.onClick) {
+                    item.onClick();
+                  } else {
+                    handleMenuClick(item.label);
+                  }
+                }}>
+                  {item.label}
+                </Menu.Item>
+              )}
+            </React.Fragment>
+          ))}
+        </Menu>
+      </Drawer>
     </Affix>
   );
 };
