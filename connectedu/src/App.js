@@ -33,6 +33,7 @@ import Eleve from './pages/Eleve';
 import TabCyclePrimaire from './components/TabCyclePrimaire';
 import TabCycleLycee from './components/TabCycleLycee';
 import TabCycleCollege from './components/TabCycleCollege';
+import Anonces from './pages/Anonces';
 import Parents from './pages/Parents';
 
 // fichiers css
@@ -91,6 +92,7 @@ const App = () => {
         <Route path="/tabcycleprimaire" exact component={TabCyclePrimaire} />
         <Route path="/tabcyclecollege" exact component={TabCycleCollege} />
         <Route path="/tabcyclelycee" exact component={TabCycleLycee} />
+        <Route path="/Anonces" exact component={Anonces} />
         <Route path="/parents" exact component={Parents} />
         <Route component={Error} />
       </Switch>

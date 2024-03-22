@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import { Layout, Menu, Tabs, Calendar, Badge, Button } from 'antd';
+import { Layout, Menu, Tabs, Calendar, Badge, Button, Modal, Form, Input, DatePicker } from 'antd';
 import { CalendarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
+import { EXAMENS, DEVOIRS } from './Anonces';
+
 import '../css/Calendrier.css';
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 const { TabPane } = Tabs;
+const { TextArea } = Input;
 
 // Définition des types d'événements
 const EVENT_TYPES = {
-  WARNING: 'warning',
-  SUCCESS: 'success',
-  ERROR: 'error'
-};
-
-// Messages d'événements
-const EVENT_MESSAGES = {
-  WARNING: 'Salut.',
-  SUCCESS: 'Examen.',
-  ERROR: 'Error.'
+  DEVOIR: 'devoir',
+  EXAMEN: 'examen'
 };
 
 const Calendrier = () => {
@@ -28,7 +23,11 @@ const Calendrier = () => {
   const [showCalendars, setShowCalendars] = useState(false);
   const [selectedSection, setSelectedSection] = useState(null);
   const [selectedTab, setSelectedTab] = useState('devoirs');
-  const [calendarData, setCalendarData] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
+  const [form] = Form.useForm();
+  const [selectedDate, setSelectedDate] = useState(null); // Ajout de l'état pour stocker la date sélectionnée
+
+  const history = useHistory();
 
   const handleMenuClick = (key, section) => {
     console.log('Selected Menu:', key);
@@ -49,113 +48,146 @@ const Calendrier = () => {
     setSelectedTab(key);
   };
 
-  const getListData = (value) => {
-    let listData;
-    switch (value.date()) {
-      case 8:
-        listData = [
-          { type: EVENT_TYPES.WARNING, content: EVENT_MESSAGES.WARNING },
-          { type: EVENT_TYPES.SUCCESS, content: EVENT_MESSAGES.SUCCESS }
-        ];
-        break;
-      case 10:
-        listData = [
-          { type: EVENT_TYPES.WARNING, content: EVENT_MESSAGES.WARNING },
-          { type: EVENT_TYPES.SUCCESS, content: EVENT_MESSAGES.SUCCESS },
-          { type: EVENT_TYPES.ERROR, content: EVENT_MESSAGES.ERROR }
-        ];
-        break;
-      case 15:
-        listData = [
-          { type: EVENT_TYPES.WARNING, content: EVENT_MESSAGES.WARNING },
-          { type: EVENT_TYPES.SUCCESS, content: "evenement pour des examens de fin d'année......" },
-          { type: EVENT_TYPES.ERROR, content: 'bonjour chers etudiants ' },
-          { type: EVENT_TYPES.ERROR, content: 'devoirs' },
-          { type: EVENT_TYPES.ERROR, content: 'math' },
-        ];
-        break;
-      default:
-        listData = [];
-    }
-    return listData;
+  const handleDateSelect = (value) => {
+    console.log('Selected Date:', value);
+    setSelectedDate(value); // Mettre à jour la date sélectionnée
+    setModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setModalVisible(false);
+  };
+
+  const handleModalSubmit = () => {
+    form.validateFields().then((values) => {
+      console.log('Form values:', values);
+      // Ajouter la logique pour sauvegarder les devoirs/examens dans la base de données
+      setModalVisible(false);
+    });
+  };
+
+  const contentStyle = {
+    padding: 24,
+    margin: 0,
+    minHeight: 280,
+    background: "#001E32",
+    borderRadius: 8,
   };
 
   const dateCellRender = (value) => {
     const listData = getListData(value);
     return (
-      <ul className="events">
+      <div>
         {listData.map((item) => (
-          <li key={item.content}>
+          <div key={item.content} style={{ marginBottom: 5 }}>
             <Badge status={item.type} text={item.content} />
-          </li>
+          </div>
         ))}
-      </ul>
+        <div style={{ marginTop: 8 }}>
+          <Button type="primary" size="small" onClick={() => handleDateSelect(value)}>Planifier</Button>
+        </div>
+      </div>
     );
   };
 
-  const history = useHistory();
+  // Fonction pour obtenir les données de la liste pour une date donnée
+  const getListData = (value) => {
+    // Logique pour obtenir les devoirs/examens à partir des variables fixes
+    const currentDate = value.date();
+    const examensOnDate = EXAMENS.filter(examen => examen.date === currentDate);
+    const devoirsOnDate = DEVOIRS.filter(devoir => devoir.date === currentDate);
+    
+    return [...examensOnDate, ...devoirsOnDate];
+  };
 
-  const handleReturnToMenu = () => {
-    // Utilisez l'objet history pour rediriger vers la page du tableau de bord
+  // Logique pour se déconnecter
+  const handleLogout = () => {
+    // Gérer la déconnexion ici
+    window.location.href = 'http://localhost:3000/';
+  };
+
+  const handleReturnToDashboard = () => {
     history.push('/dashboard');
   };
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={135} theme="light" style={{ position: 'fixed', height: '100vh' }}>
-        <Menu mode="vertical" theme="light" defaultSelectedKeys={['1']} onClick={(e) => handleMenuClick(e.key, e.item.props.section)}>
-          <Menu.Item key="1" icon={<CalendarOutlined />} section="Primaire">
-            <span style={{ color: '#001F3F' }}>Primaire</span>
+      <Sider width={135} theme="dark" style={{ position: 'fixed', height: '100vh' }}>
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={['dashboard']}
+          onClick={(e) => handleMenuClick(e.key, e.item.props.section)}
+          style={{
+            borderRight: 0,
+          }}
+        >
+          <Menu.Item key="dashboard" icon={<ArrowLeftOutlined />} onClick={handleReturnToDashboard}>
+            <span style={{ color: '#FFFFFF' }}>Dashboard</span>
           </Menu.Item>
-          <SubMenu key="sub1" title="Classes">
-            <Menu.Item key="cp1" section="Primaire"><span style={{ color: '#001F3F' }}>CP1</span></Menu.Item>
-            <Menu.Item key="cp2" section="Primaire"><span style={{ color: '#001F3F' }}>CP2</span></Menu.Item>
-            <Menu.Item key="ce1" section="Primaire"><span style={{ color: '#001F3F' }}>CE1</span></Menu.Item>
-            <Menu.Item key="ce2" section="Primaire"><span style={{ color: '#001F3F' }}>CE2</span></Menu.Item>
-            <Menu.Item key="cm1" section="Primaire"><span style={{ color: '#001F3F' }}>CM1</span></Menu.Item>
-            <Menu.Item key="cm2" section="Primaire"><span style={{ color: '#001F3F' }}>CM2</span></Menu.Item>
+          <Menu.Item key="1" icon={<CalendarOutlined />} section="Primaire">
+            <span style={{ color: '#FFFFFF' }}>Primaire</span>
+          </Menu.Item>
+          <SubMenu key="sub1" title="Classes" icon={<CalendarOutlined />}>
+            <Menu.Item key="cp1" section="Primaire">
+              <span style={{ color: '#FFFFFF' }}>CP1</span>
+            </Menu.Item>
+            <Menu.Item key="cp2" section="Primaire">
+              <span style={{ color: '#FFFFFF' }}>CP2</span>
+            </Menu.Item>
+            <Menu.Item key="ce1" section="Primaire">
+              <span style={{ color: '#FFFFFF' }}>CE1</span>
+            </Menu.Item>
+            <Menu.Item key="ce2" section="Primaire">
+              <span style={{ color: '#FFFFFF' }}>CE2</span>
+            </Menu.Item>
+            <Menu.Item key="cm1" section="Primaire">
+              <span style={{ color: '#FFFFFF' }}>CM1</span>
+            </Menu.Item>
+            <Menu.Item key="cm2" section="Primaire">
+              <span style={{ color: '#FFFFFF' }}>CM2</span>
+            </Menu.Item>
           </SubMenu>
 
           <Menu.Item key="2" icon={<CalendarOutlined />} section="Collège">
-            <span style={{ color: '#001F3F' }}>Collège</span>
+            <span style={{ color: '#FFFFFF' }}>Collège</span>
           </Menu.Item>
-          <SubMenu key="sub2" title="Classes">
-            <Menu.Item key="6eme" section="Collège"><span style={{ color: '#001F3F' }}>6ème</span></Menu.Item>
-            <Menu.Item key="5eme" section="Collège"><span style={{ color: '#001F3F' }}>5ème</span></Menu.Item>
-            <Menu.Item key="4eme" section="Collège"><span style={{ color: '#001F3F' }}>4ème</span></Menu.Item>
-            <Menu.Item key="3eme" section="Collège"><span style={{ color: '#001F3F' }}>3ème</span></Menu.Item>
+          <SubMenu key="sub2" title="Classes" icon={<CalendarOutlined />}>
+            <Menu.Item key="6eme" section="Collège">
+              <span style={{ color: '#FFFFFF' }}>6ème</span>
+            </Menu.Item>
+            <Menu.Item key="5eme" section="Collège">
+              <span style={{ color: '#FFFFFF' }}>5ème</span>
+            </Menu.Item>
+            <Menu.Item key="4eme" section="Collège">
+            <span style={{ color: '#FFFFFF' }}>4ème</span>
+            </Menu.Item>
+            <Menu.Item key="3eme" section="Collège">
+            <span style={{ color: '#FFFFFF' }}>3ème</span>
+            </Menu.Item>
           </SubMenu>
 
           <Menu.Item key="3" icon={<CalendarOutlined />} section="Lycée">
-            <span style={{ color: '#001F3F' }}>Lycée</span>
+          <span style={{ color: '#FFFFFF' }}>Lycée</span>
           </Menu.Item>
-          <SubMenu key="sub3" title="Classes">
-            <Menu.Item key="second" section="Lycée"><span style={{ color: '#001F3F' }}>Second</span></Menu.Item>
-            <Menu.Item key="premiere" section="Lycée"><span style={{ color: '#001F3F' }}>Première</span></Menu.Item>
-            <Menu.Item key="terminale" section="Lycée"><span style={{ color: '#001F3F' }}>Terminale</span></Menu.Item>
+          <SubMenu key="sub3" title="Classes" icon={<CalendarOutlined />}>
+            <Menu.Item key="second" section="Lycée">
+              <span style={{ color: '#FFFFFF' }}>Second</span>
+            </Menu.Item>
+            <Menu.Item key="premiere" section="Lycée">
+              <span style={{ color: '#FFFFFF' }}>Première</span>
+            </Menu.Item>
+            <Menu.Item key="terminale" section="Lycée">
+              <span style={{ color: '#FFFFFF' }}>Terminale</span>
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: 135 }}>
-        <Header style={{ background: '#fff', textAlign: 'center', padding: 0 }}>
-          <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#001F3F' }}>Calendrier</div>
+        <Header style={{ background: '#001F3F', textAlign: 'center', padding: 0 }}>
+          <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#FFFFFF' }}>Calendrier</div>
         </Header>
-        <Content style={{ margin: '16px' }}>
-          <Link to="/dashboard">
-            <Button 
-              type="primary" 
-              icon={<ArrowLeftOutlined />} 
-              style={{ 
-                marginBottom: '16px', 
-                backgroundColor: '#001F3F', // Couleur bleu de nuit
-                borderColor: '#001F3F', // Couleur de bordure bleu de nuit
-                color: '#FFFFFF' // Couleur du texte (blanc)
-              }}
-            >
-              Retour
-            </Button>
-          </Link>
-
+        <Content style={contentStyle}>
           {showImage && selectedSection && (
             <img
               src={process.env.PUBLIC_URL + `/images/${selectedSection.toLowerCase()}.jpg`}
@@ -165,13 +197,37 @@ const Calendrier = () => {
           )}
           {showCalendars && (
             <Tabs onChange={handleTabChange} activeKey={selectedTab}>
-              <TabPane tab={<span style={{ color: '#001F3F' }}>Calendrier des devoirs ({selectedClass})</span>} key="devoirs">
+              <TabPane tab={<span style={{ color: '#FFFFFF' }}>Calendrier ({selectedClass})</span>} key="devoirs">
                 <Calendar dateCellRender={dateCellRender} />
                 <div>Contenu du calendrier des devoirs pour {selectedClass}</div>
-              </TabPane>
-              <TabPane tab={<span style={{ color: '#001F3F' }}>Calendrier des examens ({selectedClass})</span>} key="examens">
-                <Calendar dateCellRender={dateCellRender} />
-                <div>Contenu du calendrier des examens pour {selectedClass}</div>
+                <Modal
+                  title="Planifier un événement"
+                  visible={modalVisible}
+                  onCancel={handleModalCancel}
+                  onOk={handleModalSubmit}
+                  destroyOnClose={true}
+                >
+                  <Form
+                    form={form}
+                    layout="vertical"
+                    name="planification-evenement"
+                  >
+                    <Form.Item
+                      name="date"
+                      label="Date"
+                      rules={[{ required: true, message: 'Veuillez sélectionner une date!' }]}
+                    >
+                      <DatePicker style={{ width: '100%' }} />
+                    </Form.Item>
+                    <Form.Item
+                      name="evenement"
+                      label="Événement"
+                      rules={[{ required: true, message: 'Veuillez saisir un événement!' }]}
+                    >
+                      <TextArea rows={4} />
+                    </Form.Item>
+                  </Form>
+                </Modal>
               </TabPane>
             </Tabs>
           )}
@@ -182,3 +238,4 @@ const Calendrier = () => {
 };
 
 export default Calendrier;
+
