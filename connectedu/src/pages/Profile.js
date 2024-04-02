@@ -14,12 +14,24 @@ import {
   UploadOutlined
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import {  useTheme } from '../components/ThemeContext';
 
 const { Header, Sider, Content } = Layout;
 const { Title, Paragraph } = Typography;
 const { confirm } = Modal;
 
 const Profile = () => {
+
+  // Utilisez le hook useTheme pour accéder à l'état du thème et à la fonction toggleTheme
+  const { darkMode } = useTheme();
+
+  // Utilisez l'état du thème pour définir les styles en fonction du mode sombre ou clair
+  const profileStyle = {
+    background: darkMode ? '#1f1f1f' : '#ffffff', // Définissez la couleur de fond en fonction du thème
+    color: darkMode ? '#ffffff' : '#000000', // Définissez la couleur du texte en fonction du thème
+  };
+
+
   // États pour gérer l'affichage des différentes sections et le formulaire d'ajout de compte invité
   const [showAccountInfo, setShowAccountInfo] = useState(false);
   const [showPrivacyInfo, setShowPrivacyInfo] = useState(false);
@@ -156,7 +168,7 @@ const Profile = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider>
+      <Sider style={profileStyle}>
         <div className="logo" />
         <Menu theme="dark" mode="vertical" defaultSelectedKeys={['1']}>
           <Menu.Item key="1" icon={<DashboardOutlined />}>

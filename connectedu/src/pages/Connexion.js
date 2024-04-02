@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState} from "react";
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
 import { Layout, Form, Input, Button, Image, Checkbox } from 'antd';
@@ -13,6 +14,11 @@ const Connexion = () => {
       };
      
      // fonction logique de connexion ici
+
+     const [username, setUsername] = useState("");
+     const [password, setPassword] = useState("")
+
+
      const connexion = useHistory();
       const homeconnected = (e) => {
          e.preventDefault();
@@ -44,10 +50,10 @@ const Connexion = () => {
            <Form name="login-form" className="login-form">
              <h2>Connexion</h2>
              <Form.Item
-               name="matricule"
+               name="username"
                rules={[{ required: true, message: 'Veuillez entrer votre numéro matricule!' }]}
              >
-               <Input prefix={<UserOutlined />} placeholder="Numéro Matricule" />
+               <Input prefix={<UserOutlined />} placeholder="User name" />
              </Form.Item>
              <Form.Item
                name="password"

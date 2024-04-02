@@ -97,6 +97,7 @@ footer {
   .info {
     flex: 1;
     max-width: 200px; /* Ajustez la largeur selon vos besoins */
+    color: white;
   }
   
   .links {

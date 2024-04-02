@@ -177,6 +177,19 @@ const Parametres = () => {
               </div>
             )}
           </div>
+
+          {/* Bouton d'activation de dark et white */}
+          <div>
+              <h1>Paramètres</h1>
+              <label htmlFor="themeSwitch">Mode Sombre</label>
+              <input
+                id="themeSwitch"
+                type="checkbox"
+                checked={darkMode}
+                onChange={toggleTheme}
+              />
+            </div>
+            
         </Content>
       </Layout>
       {/* Modal pour ajouter un compte invité */}

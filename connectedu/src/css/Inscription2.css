@@ -1,77 +1,49 @@
+/* Container principal */
 .home-container {
-    position: relative;
-  }
-  
-  .background-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .titreinscription{
-    position: absolute;
-    margin-top: -650px;
-    margin-left: 100px;
-    font-family:  Montserrat;
-    color: white;
-    font-size: 3pc;
-  }
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #001e32b6; /* Couleur bleu de nuit avec opacité */
-  }
-  
-  .content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  
-  .logo {
-    width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
-  }
-  
-  .menu {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  
-  .menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .menu li {
-    margin: 0 10px;
-    color: white;
-    font-size: 16px;
-  }
+/* Image de fond */
+.background-image {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Pour placer l'image en arrière-plan */
+}
 
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Couleur semi-transparente */
+}
 
-  /* formulaire */
+/* Menu */
+.menu {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
 
-
+/* Formulaire */
 .registration-container {
   position: absolute;
-  top: 500px;
-  left: 100px;
-  width: 700px;
-  transform: translate(0%, -50%);
-  background-color: rgba(52, 73, 94, 0.7);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .registration-form {
@@ -79,75 +51,29 @@
   flex-direction: column;
 }
 
-.registration-form h2 {
-  margin-bottom: 20px;
-}
-
-.form-line {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
 .form-group {
-  flex: 1;
-  margin-right: 10px;
-}
-
-label {
-  margin-bottom: 8px;
-  display: block;
-  color: #FFFFFF; /* Couleur du texte en blanc */
-}
-
-input {
-  padding: 8px;
-  margin-bottom: 16px;
-  border: 1px solid #3498DB;
-  border-radius: 5px;
-  outline: none;
+  margin-bottom: 20px;
 }
 
 .button-container {
-    display: flex;
-    justify-content: space-between; /* Aligne les boutons à gauche et à droite */
-  }
-  
-button {
-    background-color: #3498DB;
-    color: #FFFFFF;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    outline: none;
-    width: 100px;
-    align-self: self-end;
-  }
-  
-button:hover {
-  background-color: #2ECC71;
+  display: flex;
+  justify-content: space-between;
 }
 
+/* Barre de progression */
 .progress-bar {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
 .progress-step {
-  width: 20px;
+  width: 30px;
   height: 5px;
-  background-color: #FFFFFF;
-  margin: 0 5px;
-  border-radius: 2px;
+  background-color: #ccc;
+  border-radius: 5px;
 }
 
-.progress-step.completed {
-  background-color: #2ECC71;
-}
-
-h2{
-  color: #2ECC71;
-  font-family: 'Roboto', sans-serif;
+.completed {
+  background-color: #007bff; /* Couleur de progression complétée */
 }

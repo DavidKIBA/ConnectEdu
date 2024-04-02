@@ -19,44 +19,36 @@
  
 .titre1{
   position: absolute;
-  margin-top: -600px;
+  margin-top: -450px;
   margin-left: 100px;
   font-family:  Montserrat;
-  color: white;
+  color: #2ECC71;
   font-size: 4pc;
 }
 
 .titre2{
   position: absolute;
-  margin-top: -480px;
+  margin-top: -300px;
   margin-left: 100px;
   font-family:  Montserrat;
   color: white;
   font-size: 2pc;
 }
 
-.tiret{
+.tire3{
   position: absolute;
-  margin-top: -480px;
+  margin-top: -280px;
   margin-left: 100px;
   width: 100px;
   height: 5px;
   color: #ffffff;
 }
 
-.titre3{
-  position: absolute;
-  margin-top: -400px;
-  margin-left: 100px;
-  font-family:  Montserrat;
-  color: white;
-  font-size: 2pc;
-}
 
 .liste{
   position: absolute;
-  margin-top: -330px;
-  margin-left: 150px;
+  margin-top: -200px;
+  margin-left: 250px;
   font-family:  Montserrat;
   color: white;
   font-size: 1pc;
@@ -64,10 +56,10 @@
 
 .voirplus{
   position: absolute;
-  margin-top: -180px;
+  margin-top: -80px;
   width: 80px;
   height: 30px;
-  margin-left: 170px;
+  margin-left: 250px;
   border-radius: 5px;
   color: white;
   align-items: center;
@@ -138,14 +130,14 @@
 }
 
 .form-container {
-  flex: 1;
+
   background-color: #2ecc71;
   color: #fff;
   padding: 20px;
 }
 
 form {
-  display: flex;
+
   flex-direction: column;
 }
 
