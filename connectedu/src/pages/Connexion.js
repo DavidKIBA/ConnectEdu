@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import jwt_decode from 'jwt-decode'
 import {useState} from "react";
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
@@ -17,13 +19,24 @@ const Connexion = () => {
 
      const [username, setUsername] = useState("");
      const [password, setPassword] = useState("")
-
-
+     
      const connexion = useHistory();
-      const homeconnected = (e) => {
+      const homeconnected = async (e) => {
          e.preventDefault();
          // Ajoutez votre logique de connexion ici
-         connexion.push("/connected");
+         try{
+            const response = await axios.post("lien du back-end", {
+                username : username,
+                password : password
+         });
+          const token = response.data.success; // recuperer le token
+          localStorage.setItem("token", token) // stocker le token dans le local storage
+          connexion.push("/connected");
+         } catch (error) {
+          alert('Erreur lors de la connexion :', error);
+        }
+         
+         
        };
 
      return (
@@ -51,12 +64,16 @@ const Connexion = () => {
              <h2>Connexion</h2>
              <Form.Item
                name="username"
+               value={username}
+               onChange={(e) => setUsername(e.target.value)} 
                rules={[{ required: true, message: 'Veuillez entrer votre numéro matricule!' }]}
              >
                <Input prefix={<UserOutlined />} placeholder="User name" />
              </Form.Item>
              <Form.Item
                name="password"
+               value={password} 
+               onChange={(e) => setPassword(e.target.value)} 
                rules={[{ required: true, message: 'Veuillez entrer votre mot de passe!' }]}
              >
                <Input.Password prefix={<LockOutlined />} placeholder="Mot de passe" />
