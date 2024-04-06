@@ -13,15 +13,17 @@ const Inscription = () => {
   // État local pour stocker les données du formulaire
 
     const [formData ,setFormData]= useState ({
-    schoolName : "",
-    localAddress : "",
-    residenceCity : "",
-    creationDate : "",
-    phoneNumber1 : "",
-    phoneNumber2 : "",
-    email : "",
-    confirmEmail : "",
-    schoolLogo : ""
+    nom : "",
+    adresse: "",
+    ville_residence : "",
+    date_creation : new Date(),
+    telephone_1 : "",
+    telephone_2 : "",
+    email_ecole: "",
+    // logo : "",
+    nom_responsable : "",
+    prenom_responsable : "",
+    email_responsable: ""
 
    });
 
@@ -42,7 +44,17 @@ const Inscription = () => {
       e.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
       try {
         // Envoie une requête POST à l'API d'inscription avec les données du formulaire
-        const response = await axios.post('http://votre-url-backend/inscription/', formData);
+        const response = await axios.post('http://192.168.1.3:8000/inscription/ecole/'
+        ,
+         JSON.stringify(formData), // Convertir formData en JSON
+         {
+          headers: {
+            'Content-Type': 'application/json' // Spécifiez le type de contenu ici
+          }
+        
+        }
+        );
+        console.log(formData);
         if (response.status === 201){
           // Gérer l'inscription réussie
           alert('Inscription réussie:', response.data);
@@ -77,50 +89,70 @@ const Inscription = () => {
           <h2>Entrez les informations de l'école</h2>
 
           <div className="form-group">
-            <label htmlFor="schoolName">Nom de l'école:</label>
-            <input type="text" id="schoolName" name="schoolName" value={formData.schoolName} onChange={handleChange} required />
+            <label htmlFor="nom">Nom de l'école:</label>
+            <input type="text" id="nom" name="nom" value={formData.nom} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="nom_responsable ">Nom du responsable:</label>
+            <input type="text" id="nom_responsable" name="nom_responsable" value={formData.nom_responsable} onChange={handleChange} required />
           </div>
 
           <div className="form-group">
-            <label htmlFor="localAddress">Adresse local:</label>
-            <input type="text" id="localAddress" name="localAddress" value={formData.localAddress} onChange={handleChange} required />
+            <label htmlFor="prenom_responsable ">Prenom du responsable:</label>
+            <input type="text" id="prenom_responsable" name="prenom_responsable" value={formData.prenom_responsable} onChange={handleChange} required />
+          </div>
+        
+          
+          <div className="form-group">
+            <label htmlFor="email_responsable">Adresse mail du responsable:</label>
+            <input type="email" id="email_responsable" name="email_responsable" value={formData.email_responsable} onChange={handleChange} required />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="adresse_ecole">Adresse local:</label>
+            <input type="text" id="adresse_ecole" name="adresse" value={formData.adresse} onChange={handleChange} required />
           </div>
      
           <div className="form-group">
-            <label htmlFor="residenceCity">Ville de résidence:</label>
-            <input type="text" id="residenceCity" name="residenceCity" value={formData.residenceCity} onChange={handleChange} required />
+            <label htmlFor="ville_residence">Ville de résidence:</label>
+            <input type="text" id="ville_residence" name="ville_residence" value={formData.ville_residence} onChange={handleChange} required />
           </div>
 
           <div className="form-group">
-            <label htmlFor="creationDate">Date de création:</label>
-            <input type="date" id="creationDate" name="creationDate" value={formData.creationDate} onChange={handleChange} required />
+            <label htmlFor="date_creation">Date de création :</label>
+            <input 
+              type="date" 
+              id="date_creation" 
+              name="date_creation" 
+              value={formData.date_creation} 
+              onChange={handleChange} 
+              required 
+              aria-label="Date de création"
+              aria-required="true"
+            />
+            
           </div>
 
           <div className="form-group">
-            <label htmlFor="phoneNumber">Numéro de téléphone 1:</label>
-            <input type="tel" id="phoneNumber1" name="phoneNumber1" value={formData.phoneNumber1} onChange={handleChange} required />
+            <label htmlFor="telephone_1">Numéro de téléphone 1:</label>
+            <input type="text" id="telephone_1" name="telephone_1" value={formData.telephone_1} onChange={handleChange} required />
           </div>
 
           <div className="form-group">
-            <label htmlFor="phoneNumber">Numéro de téléphone 2:</label>
-            <input type="tel" id="phoneNumber2" name="phoneNumber2" value={formData.phoneNumber2} onChange={handleChange} required />
+            <label htmlFor="telephone_2">Numéro de téléphone 2:</label>
+            <input type="text" id="telephone_2" name="telephone_2" value={formData.telephone_2} onChange={handleChange}/>
           </div>
 
 
           <div className="form-group">
-            <label htmlFor="email">Adresse mail:</label>
-            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+            <label htmlFor="email_ecole">Adresse mail:</label>
+            <input type="email" id="email_ecole" name="email_ecole" value={formData.email_ecole} onChange={handleChange} required />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="confirmEmail">Confirmation d'adresse mail:</label>
-            <input type="email" id="confirmEmail" name="confirmEmail"  required />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="schoolLogo">Logo de l'école:</label>
-            <input type="file" id="schoolLogo" name="schoolLogo" value={formData.schoolLogo} onChange={handleChange} accept="image/*" />
-          </div>
+          {/* <div className="form-group">
+            <label htmlFor="logo_ecole">Logo de l'école:</label>
+            <input type="file" id="logo_ecole" name="logo" value={formData.logo} onChange={handleChange} accept="image/*" />
+          </div> */}
 
           <button type="submit">Continuer</button>
         </form>

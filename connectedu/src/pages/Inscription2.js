@@ -47,17 +47,17 @@ const Inscription2 = () => {
             <div className="form-line">
               <div className="form-group">
                 <label htmlFor="schoolName">Nom du responsable:</label>
-                <input type="text" id="respName" name="respName" required />
+                <input type="text" id="nom_responsable" name="nom_responsable" required />
               </div>
     
               <div className="form-group">
                 <label htmlFor="localAddress">Adresse:</label>
-                <input type="text" id="respAddress" name="respAddress" required />
+                <input type="text" id="adresse" name="adresse" required />
               </div>
     
               <div className="form-group">
                 <label htmlFor="residenceCity">Ville de résidence:</label>
-                <input type="text" id="residenceCity" name="residenceCity" required />
+                <input type="text" id="ville_residence" name="ville_residence" required />
               </div>
             </div>
     
@@ -65,12 +65,12 @@ const Inscription2 = () => {
     
               <div className="form-group">
                 <label htmlFor="phoneNumber">Numéro de téléphone:</label>
-                <input type="number" id="respPhone" name="respPhone" required />
+                <input type="number" id="telephone_responsable" name="telephone_responsable" required />
               </div>
     
               <div className="form-group">
                 <label htmlFor="email">Adresse mail:</label>
-                <input type="email" id="email" name="email" required />
+                <input type="email" id=" email_responsable" name=" email_responsable" required />
               </div>
 
               <div className="form-group">
