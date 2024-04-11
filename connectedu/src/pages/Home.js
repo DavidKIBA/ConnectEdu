@@ -186,7 +186,7 @@ const Home = () => {
           name="InputNumber"
           rules={[{ required: true, message: 'Please input!' }]}
         >
-          <InputNumber style={{ width: '100%' }} />
+          <InputNumber style={{ width: '100%'}} />
         </Form.Item>
 
         <Form.Item

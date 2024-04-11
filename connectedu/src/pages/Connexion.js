@@ -4,11 +4,66 @@ import jwt_decode from 'jwt-decode'
 import {useState} from "react";
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
-import { Layout, Form, Input, Button, Image, Checkbox } from 'antd';
+import { Layout, Form, Modal, Input, Button, Image, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const Connexion = () => {
+       // declaration du modal
+        const [isModalOpen, setIsModalOpen] = useState(false);
+        const showModal = () => {
+          setIsModalOpen(true);
+        };
 
+        const [adressmail, seTadressemail] = useState({
+          email : ""
+        })
+        
+        const handChange = (e) => {
+          const {name, value} = e.target;
+          seTadressemail(preventState => ({
+            ...preventState, 
+            [name]: value
+          }));
+
+         
+       
+        };
+
+        const handleOk = async (e) =>{
+           try {
+            const response = await axios.post("http://192.168.1.3:8000/utilisateur/reset-password/", 
+            JSON.stringify(adressmail), // Convertir formData en JSON
+            {
+             headers: {
+               'Content-Type': 'application/json' // Spécifiez le type de contenu ici
+             }
+          }
+          );
+          console.log(adressmail);
+          if (response.status === 200) {
+            // L'élément est déjà inscrit
+            alert("verifier votre boite gmail");
+            setIsModalOpen(false);
+           
+            } else {
+                // Autre cas de figure, gestion des erreurs, etc.
+                setIsModalOpen(false);
+            }
+           }  catch (error) {
+            // Gérer l'erreur
+            alert('Erreur', error);
+           }
+          
+        };
+
+          
+          
+        
+
+        const handleCancel = () => {
+          setIsModalOpen(false);
+        };
+     
      // fonction retour vers la page inscription
      const inscription = useHistory();
       const RetourSignin = () => {
@@ -36,8 +91,8 @@ const Connexion = () => {
           alert('Erreur lors de la connexion :', error);
         }
          
-         
-       };
+      };  
+
 
      return (
        <div>
@@ -83,9 +138,16 @@ const Connexion = () => {
                  <Checkbox>Se souvenir de moi</Checkbox>
                </Form.Item>
 
-               <a className="login-form-forgot" href="#">
+               <Button className="login-form-forgot" style={{ backgroundColor: 'transparent', border: 'none' }} onClick={showModal}>
                  Mot de passe oublié?
-               </a>
+               </Button>
+               <Modal title="Entrer votre adresse mail" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                  <Form className='reset-password'>
+                    <Form.Item > 
+                       <input type='email' name="email" value={adressmail.email} onChange={handChange} placeholder="adresse mail"/>
+                    </Form.Item>
+                  </Form>
+                </Modal>
              </Form.Item>
 
              <Form.Item>
@@ -99,27 +161,8 @@ const Connexion = () => {
            </Form>
          </div>
        </div>
+      
      );
 };
 
 export default Connexion;
-
-
-
-// <div>
-//           <Image
-//             width='100%'
-//             src={process.env.PUBLIC_URL + '/images/connexionimage.jpg'}
-//           />
-//         <div className=''>
-//           <Form className='loginForm'>
-//             <Form.Item label='Email' name={'myEmail'}>
-//               <Input placeholder='Enter your email'/>
-//             </Form.Item>
-//             <Form.Item label='Password' name={'myPassword'}>
-//               <Input placeholder='Enter your password'/>
-//             </Form.Item>
-//           </Form>
-
-//         </div>
-//       </div>

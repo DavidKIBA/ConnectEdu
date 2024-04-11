@@ -35,6 +35,7 @@ import TabCycleLycee from './components/TabCycleLycee';
 import TabCycleCollege from './components/TabCycleCollege';
 import Parents from './pages/Parents';
 import Parametres from './pages/parametres/Parametres';
+import Resetpassword from './pages/Resetpassword';
 
 
 // fichiers css
@@ -96,6 +97,7 @@ const App = () => {
         <Route path="/tabcyclelycee" exact component={TabCycleLycee} />
         <Route path="/parents" exact component={Parents} />
         <Route path="/parametres" exact component={Parametres} />
+        <Route path="/reset-password/:token" exact component={Resetpassword} />
         <Route component={Error} />
       </Switch>
     </Router>

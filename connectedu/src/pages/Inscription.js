@@ -20,7 +20,7 @@ const Inscription = () => {
     telephone_1 : "",
     telephone_2 : "",
     email_ecole: "",
-    // logo : "",
+    //logo : "",
     nom_responsable : "",
     prenom_responsable : "",
     email_responsable: ""
@@ -148,8 +148,8 @@ const Inscription = () => {
             <label htmlFor="email_ecole">Adresse mail:</label>
             <input type="email" id="email_ecole" name="email_ecole" value={formData.email_ecole} onChange={handleChange} required />
           </div>
-
-          {/* <div className="form-group">
+{/* 
+        <div className="form-group">
             <label htmlFor="logo_ecole">Logo de l'école:</label>
             <input type="file" id="logo_ecole" name="logo" value={formData.logo} onChange={handleChange} accept="image/*" />
           </div> */}
