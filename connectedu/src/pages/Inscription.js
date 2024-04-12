@@ -1,7 +1,7 @@
 import React  from 'react';
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
-import { Typography } from 'antd';
+import { Typography,  message } from 'antd';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -20,7 +20,7 @@ const Inscription = () => {
     telephone_1 : "",
     telephone_2 : "",
     email_ecole: "",
-    //logo : "",
+    logo : null,
     nom_responsable : "",
     prenom_responsable : "",
     email_responsable: ""
@@ -37,19 +37,30 @@ const Inscription = () => {
       
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData(prevState => ({
+      ...prevState, 
+      logo: file
+    }));
+  };
 
   // Fonction pour soumettre le formulaire d'inscription
 
   const handleSubmit = async (e) => {
       e.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
       try {
+         const formDataToSend = new FormData();
+          for (const key in formData) {
+            formDataToSend.append(key, formData[key]);
+      }
         // Envoie une requête POST à l'API d'inscription avec les données du formulaire
         const response = await axios.post('http://192.168.1.3:8000/inscription/ecole/'
         ,
-         JSON.stringify(formData), // Convertir formData en JSON
+        formDataToSend, 
          {
           headers: {
-            'Content-Type': 'application/json' // Spécifiez le type de contenu ici
+            'Content-Type': 'multipart/form-data' // Spécifiez le type de contenu ici
           }
         
         }
@@ -57,11 +68,11 @@ const Inscription = () => {
         console.log(formData);
         if (response.status === 201){
           // Gérer l'inscription réussie
-          alert('Inscription réussie:', response.data);
+          message.access('Inscription réussie:', response.data);
           continuer.push('/inscription2');
         } else {
           // Gérer l'échec de l'inscription
-          alert("Echec de l'inscription:", response.data);
+          message.error("Echec de l'inscription:", response.data);
         }
        } catch (error) {
           // Gérer l'erreur
@@ -148,11 +159,11 @@ const Inscription = () => {
             <label htmlFor="email_ecole">Adresse mail:</label>
             <input type="email" id="email_ecole" name="email_ecole" value={formData.email_ecole} onChange={handleChange} required />
           </div>
-{/* 
+ 
         <div className="form-group">
             <label htmlFor="logo_ecole">Logo de l'école:</label>
-            <input type="file" id="logo_ecole" name="logo" value={formData.logo} onChange={handleChange} accept="image/*" />
-          </div> */}
+            <input type="file" id="logo_ecole" name="logo" value={formData.logo} onChange={handleFileChange} accept="image/*" />
+          </div> 
 
           <button type="submit">Continuer</button>
         </form>

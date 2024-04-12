@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode'
 import {useState} from "react";
 import Menu from '../components/Menu';
 import { useHistory } from 'react-router-dom';
-import { Layout, Form, Modal, Input, Button, Image, Checkbox } from 'antd';
+import { Layout, Form, Modal, Input, Button, Image, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const Connexion = () => {
@@ -42,7 +42,7 @@ const Connexion = () => {
           console.log(adressmail);
           if (response.status === 200) {
             // L'élément est déjà inscrit
-            alert("verifier votre boite gmail");
+            message.success("verifier votre boite gmail");
             setIsModalOpen(false);
            
             } else {
@@ -51,7 +51,8 @@ const Connexion = () => {
             }
            }  catch (error) {
             // Gérer l'erreur
-            alert('Erreur', error);
+            message.error('Erreur', error);
+         
            }
           
         };
@@ -84,8 +85,12 @@ const Connexion = () => {
                 username : username,
                 password : password
          });
-          const token = response.data.success; // recuperer le token
-          localStorage.setItem("token", token) // stocker le token dans le local storage
+          const token = response.data; // recuperer le token
+           localStorage.setItem("access", token.access);  // stocker le token dans le local storage
+           localStorage.setItem("refresh", token.refresh);  // stocker le token dans le local storage
+        
+          console.log(response)
+          console.log(token);
           connexion.push("/connected");
          } catch (error) {
           alert('Erreur lors de la connexion :', error);
