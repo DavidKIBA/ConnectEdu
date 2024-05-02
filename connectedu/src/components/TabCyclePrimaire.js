@@ -4,6 +4,10 @@ import Dashboardmenu from '../components/Dashboardmenu';
 import Dashboardsider from '../components/Dashboardsider';
 import { Layout, Card, Breadcrumb, Table, Button, Row, Col, Typography, Form, Input, Popconfirm, message, Modal, Checkbox } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -24,6 +28,15 @@ const generateData = () => {
 };
 
 const TabCyclePrimaire = () => {
+
+  // Récupérer le token JWT du localStorage
+  const token = localStorage.getItem('access');
+  
+  // Décoder le token JWT pour obtenir les informations de l'utilisateur
+  const decodedToken = jwtDecode(token);
+  const schema_name = decodedToken.schema_name
+
+  
   const history = useHistory();
   const [data, setData] = useState(generateData());
   const [modalVisible, setModalVisible] = useState(false);

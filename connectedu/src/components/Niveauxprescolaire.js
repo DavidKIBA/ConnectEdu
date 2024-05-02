@@ -1,20 +1,35 @@
-import React, { useState } from 'react';
-import { Switch, Transfer, Button, Typography } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Switch, Transfer, Button, Typography } from "antd";
+import { useHistory } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const { Title } = Typography;
 
 const mockClasses = [
-  { key: '0', title: 'garderie', description: 'Description de garderie', disabled: false },
-  { key: '1', title: 'P1', description: 'Description de P1', disabled: false },
-  { key: '2', title: 'P2', description: 'Description de P2', disabled: false },
-  { key: '3', title: 'P3', description: 'Description de P3', disabled: false },
+  {
+    key: "0",
+    title: "garderie",
+    description: "Description de garderie",
+    disabled: false,
+  },
+  { key: "1", title: "P1", description: "Description de P1", disabled: false },
+  { key: "2", title: "P2", description: "Description de P2", disabled: false },
+  { key: "3", title: "P3", description: "Description de P3", disabled: false },
   // ... Ajoutez d'autres classes selon vos besoin
 ];
 
-const oriTargetKeys = mockClasses.filter((classe) => !classe.disabled).map((classe) => classe.key);
+const oriTargetKeys = mockClasses
+  .filter((classe) => !classe.disabled)
+  .map((classe) => classe.key);
 
 const Niveauxprescolaire = () => {
+  // Récupérer le token JWT du localStorage
+  const token = localStorage.getItem("access");
+
+  // Décoder le token JWT pour obtenir les informations de l'utilisateur
+  const decodedToken = jwtDecode(token);
+  const schema_name = decodedToken.schema_name;
+
   const [targetKeys, setTargetKeys] = useState(oriTargetKeys);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [disabled, setDisabled] = useState(false);
@@ -24,28 +39,30 @@ const Niveauxprescolaire = () => {
     console.log(`Clicked on button with key: ${classe.key}`);
     // Créer une variable de type tableau avec un nom dynamique
     const dynamicArrayName = `array_${classe.key}`;
-    const dynamicArray = [/* Mettez vos données ici si nécessaire */];
+    const dynamicArray = [
+      /* Mettez vos données ici si nécessaire */
+    ];
     // Stocker ou traiter la variable de tableau comme nécessaire
     console.log(`${dynamicArrayName}: `, dynamicArray);
-    history.push(`/autre-page/${classe.key}`);
+    window.open("http://localhost:3000/classe", "_blank");
   };
 
   const handleChange = (newTargetKeys, direction, moveKeys) => {
     setTargetKeys(newTargetKeys);
-    console.log('targetKeys: ', newTargetKeys);
-    console.log('direction: ', direction);
-    console.log('moveKeys: ', moveKeys);
+    console.log("targetKeys: ", newTargetKeys);
+    console.log("direction: ", direction);
+    console.log("moveKeys: ", moveKeys);
   };
 
   const handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-    console.log('sourceSelectedKeys: ', sourceSelectedKeys);
-    console.log('targetSelectedKeys: ', targetSelectedKeys);
+    console.log("sourceSelectedKeys: ", sourceSelectedKeys);
+    console.log("targetSelectedKeys: ", targetSelectedKeys);
   };
 
   const handleScroll = (direction, e) => {
-    console.log('direction:', direction);
-    console.log('target:', e.target);
+    console.log("direction:", direction);
+    console.log("target:", e.target);
   };
 
   const handleDisable = (checked) => {
@@ -54,11 +71,10 @@ const Niveauxprescolaire = () => {
 
   return (
     <>
-      
       <br></br>
       <Transfer
         dataSource={mockClasses}
-        titles={['Prescolaires', 'Classes sélectionnées']}
+        titles={["Prescolaires", "Classes sélectionnées"]}
         targetKeys={targetKeys}
         selectedKeys={selectedKeys}
         onChange={handleChange}

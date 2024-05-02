@@ -1,41 +1,41 @@
-*{
+* {
   padding: 0%;
+  scrollbar-width: none;
 }
 
 .home-container {
-    position: relative;
-  }
-  
-  .background-image {
-    width: 100%;
-    height: auto;
-    background-size: cover !important;
-   
-  }
-  
-  .logo {
-    width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
-  }
- 
-.titre1{
+  position: absolute;
+}
+
+/* .background-image {
+  width: 100%;
+  height: auto;
+  background-size: cover !important;
+} */
+
+.logo {
+  width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
+}
+/*
+.titre1 {
   position: absolute;
   margin-top: -450px;
   margin-left: 100px;
-  font-family:  Montserrat;
-  color: #2ECC71;
+  font-family: Montserrat;
+  color: #2ecc71;
   font-size: 4pc;
 }
 
-.titre2{
+.titre2 {
   position: absolute;
   margin-top: -300px;
   margin-left: 100px;
-  font-family:  Montserrat;
+  font-family: Montserrat;
   color: white;
   font-size: 2pc;
 }
 
-.tire3{
+.tire3 {
   position: absolute;
   margin-top: -280px;
   margin-left: 100px;
@@ -43,18 +43,17 @@
   height: 5px;
   color: #ffffff;
 }
-
-
-.liste{
+*/
+.liste {
   position: absolute;
   margin-top: -200px;
   margin-left: 250px;
-  font-family:  Montserrat;
+  font-family: Montserrat;
   color: white;
   font-size: 1pc;
 }
 
-.voirplus{
+.voirplus {
   position: absolute;
   margin-top: -80px;
   width: 80px;
@@ -66,12 +65,10 @@
   align-content: center;
   text-align: center;
   padding: 2px;
-  background-color: #2ECC71;
-  border-color: #2ECC71;
+  background-color: #2ecc71;
+  border-color: #2ecc71;
 }
-
-
-
+/* 
 .devises {
   display: flex;
   width: 100%;
@@ -79,7 +76,7 @@
 
 .devise1 {
   flex: 1;
-  background-color: #3498DB;
+  background-color: #3498db;
   color: #ffffff;
   padding: 10px;
   text-align: center;
@@ -88,7 +85,7 @@
 
 .devise2 {
   flex: 1;
-  background-color: #2ECC71;
+  background-color: #2ecc71;
   color: #ffffff;
   padding: 10px;
   text-align: center;
@@ -97,19 +94,16 @@
 
 .devise3 {
   flex: 1;
-  background-color: #3498DB;
+  background-color: #3498db;
   color: #ffffff;
   padding: 10px;
   text-align: center;
   font-family: Roboto, sans-serif;
-}
-
-
+} */
 
 /* formulaire */
 
-
-.contact-container {
+/* .contact-container {
   display: flex;
   justify-content: space-between;
   padding: 10px;
@@ -167,15 +161,15 @@ button {
 .iconedevise{
   width: 50px;
   height: auto;
-}
+} */
 
-.presence{
+.presence {
   text-align: center;
   font-size: 1.5pc;
   font-family: Roboto, sans-serif;
 }
 
-.pays{
+.pays {
   text-align: center;
   font-family: Roboto, sans-serif;
 }

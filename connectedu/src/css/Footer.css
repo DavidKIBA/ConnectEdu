@@ -1,112 +1,44 @@
-/* Footer.css */
-footer {
-    background-color: #34495E;
-    color: #ECF0F1;
-    padding: 20px;
-  }
-  
-  .newsletter {
-    max-width: 600px;
-  }
-  
-  .newsletter h3 {
-    color: #3498DB;
-  }
-  
-  .newsletter form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .newsletter label {
-    margin-bottom: 16px;
-  }
-  
-  .newsletter input {
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ECF0F1;
-    border-radius: 4px;
-  }
-  
-  .newsletter button {
-    padding: 10px;
-    background-color: #2ECC71;
-    color: #ECF0F1;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .terms {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .terms input {
-    margin-right: 8px;
-  }
-  
-  .info,
-  .links,
-  .copyright {
-    margin-top: 20px;
-  }
-  
-  .links a {
-    margin-right: 10px;
-    color: #ECF0F1;
-    text-decoration: none;
-  }
-  
-  .links a:hover {
-    text-decoration: underline;
-  }
-  
-  
-
-.main{
-  background-color: #34495E;
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: rgb(19, 25, 49);
 }
 
+.newsletter,
+.info,
+.links {
+  flex: 1 1 100px; /* Ajustez la taille des éléments selon vos besoins */
+  margin: 10px;
+}
+
+.links a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+/* Ajoutez des media queries pour rendre le footer responsive */
+@media screen and (max-width: 768px) {
   .footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 20px;
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .newsletter {
-    flex: 1;
-    max-width: 300px; /* Ajustez la largeur selon vos besoins */
-  }
-  
-  .newsletter form {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .newsletter label,
-  .newsletter input,
-  .newsletter button {
-    margin-bottom: 10px;
-  }
-  
-  
-  .info {
-    flex: 1;
-    max-width: 200px; /* Ajustez la largeur selon vos besoins */
-    color: white;
-  }
-  
+
+  .newsletter,
+  .info,
   .links {
-    flex: 1;
-    max-width: 200px; /* Ajustez la largeur selon vos besoins */
-  }
-  
-  .copyright {
+    width: 100%;
     text-align: center;
-    color: white;
   }
-  
+}
+
+.newsletter input[type="email"] {
+  width: 100%; /* Définissez la largeur à 100% pour le rendre responsive */
+  max-width: 250px; /* Définissez une largeur maximale pour limiter sa taille */
+}
+
+.newsletter button[type="submit"] {
+  width: 100%; /* Définissez la largeur à 100% pour le rendre responsive */
+  max-width: 200px; /* Définissez une largeur maximale pour limiter sa taille */
+}
