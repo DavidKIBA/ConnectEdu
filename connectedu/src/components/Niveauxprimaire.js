@@ -1,41 +1,50 @@
-import React, { useState } from "react";
-import { Switch, Transfer, Button, Typography } from "antd";
-import { useHistory } from "react-router-dom";
-
-const { Title } = Typography;
+import { useState } from "react";
+import { Transfer, Button } from "antd";
 
 const mockClasses = [
-  { key: "0", title: "CP1", description: "Description de CP1", disabled: true },
-  { key: "1", title: "CP2", description: "Description de CP2", disabled: true },
-  { key: "2", title: "CE1", description: "Description de CE1", disabled: true },
-  { key: "3", title: "CE2", description: "Description de CE2", disabled: true },
-  { key: "4", title: "CM1", description: "Description de CM1", disabled: true },
-  { key: "5", title: "CM2", description: "Description de CM2", disabled: true },
+  {
+    key: "1",
+    title: "CP1",
+    description: "Description de CP1",
+    disabled: false,
+  },
+  {
+    key: "2",
+    title: "CP2",
+    description: "Description de CP2",
+    disabled: false,
+  },
+  {
+    key: "3",
+    title: "CE1",
+    description: "Description de CE1",
+    disabled: false,
+  },
+  {
+    key: "4",
+    title: "CE2",
+    description: "Description de CE2",
+    disabled: false,
+  },
+  {
+    key: "5",
+    title: "CM1",
+    description: "Description de CM1",
+    disabled: false,
+  },
+  {
+    key: "6",
+    title: "CM2",
+    description: "Description de CM2",
+    disabled: false,
+  },
   // ... Ajoutez d'autres classes selon vos besoin
 ];
 
-const oriTargetKeys = mockClasses
-  .filter((classe) => !classe.disabled)
-  .map((classe) => classe.key);
-
 const Niveauxprimaire = () => {
-  const [targetKeys, setTargetKeys] = useState(false);
+  const [targetKeys, setTargetKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [disabled, setDisabled] = useState(false);
-  const history = useHistory();
-
-  const handleClick = (classe) => {
-    console.log(`Clicked on button with key: ${classe.key}`);
-    // Créer une variable de type tableau avec un nom dynamique
-    const dynamicArrayName = `array_${classe.key}`;
-    const dynamicArray = [
-      /* Mettez vos données ici si nécessaire */
-    ];
-    // Stocker ou traiter la variable de tableau comme nécessaire
-    console.log(`${dynamicArrayName}: `, dynamicArray);
-    // history.push(`/cp1/ ${classe.key}`);
-    window.open("http://localhost:3000/classe", "_blank");
-  };
 
   const handleChange = (newTargetKeys, direction, moveKeys) => {
     setTargetKeys(newTargetKeys);
@@ -55,16 +64,17 @@ const Niveauxprimaire = () => {
     console.log("target:", e.target);
   };
 
-  const handleDisable = (checked) => {
-    setDisabled(checked);
+  const handleClick = (classe) => {
+    console.log(`Clicked on button with key: ${classe.key}`);
+    window.open("http://localhost:3000/classe", "_blank");
   };
 
   return (
     <>
-      <br></br>
+      <br />
       <Transfer
         dataSource={mockClasses}
-        titles={["Primaire", "Classes sélectionnées"]}
+        titles={["Prescolaires", "Classes sélectionnées"]}
         targetKeys={targetKeys}
         selectedKeys={selectedKeys}
         onChange={handleChange}
@@ -77,9 +87,7 @@ const Niveauxprimaire = () => {
         )}
         disabled={disabled}
         oneWay
-        style={{
-          marginBottom: 16,
-        }}
+        style={{ marginBottom: 16 }}
       />
     </>
   );

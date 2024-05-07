@@ -17,7 +17,7 @@ import axios from "axios";
 const { Sider } = Layout;
 
 const Dashboardsider = () => {
-  const [infosEcole, setInfosEcole] = useState(null);
+  const [infosEcole, setInfosEcole] = useState({});
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -30,10 +30,13 @@ const Dashboardsider = () => {
 
         // Extraire le schéma_name de la charge utile du JWT
         const schema_name = decodedToken.schema_name;
+        const schema = schema_name.replace("_", "-");
+        console.log("Schema Name:", schema);
 
         // Envoyer une requête HTTP pour obtenir les informations de l'utilisateur après l'authentification
         const response = await axios.get(
-          `http://${schema_name}.192.168.1.3:8000/ecole/`,
+          "http://thales.192.168.1.3:8000/ecole/",
+          console.log("reussi"),
           {
             // Inclure le token JWT dans l'en-tête Authorization de la requête
             headers: {
@@ -43,10 +46,12 @@ const Dashboardsider = () => {
         );
 
         // Extraire le nom de l'utilisateur à partir des données reçues
-        const { nom } = response.data;
+        const adresse = response.data;
 
         // Mettre à jour l'état avec le nom de l'utilisateur
-        setInfosEcole(nom);
+        setInfosEcole({ adresse });
+
+        console.log(response.data);
       } catch (error) {
         console.error(
           "Erreur lors de la récupération des informations de l'utilisateur:",
@@ -109,7 +114,7 @@ const Dashboardsider = () => {
     {
       key: "sub1",
       icon: <UserOutlined />,
-      label: "Thalès de Millet",
+      label: infosEcole?.adresse || "Chargement...",
       options: ["Espaces eleves", "Espaces parents", "Espaces membres"],
     },
     {

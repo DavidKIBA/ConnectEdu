@@ -58,7 +58,7 @@ const Connexion = () => {
     } catch (error) {
       // Gérer l'erreur
       message.error("Erreur", error);
-    }
+    }     
   };
 
   const handleCancel = () => {
