@@ -1,9 +1,24 @@
 import { useState, useEffect } from "react";
 import { Transfer, Button } from "antd";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // Assurez-vous d'importer correctement jwtDecode
 import axios from "axios";
 
 const Niveauxprescolaire = () => {
+  // Fonction pour gérer les clics sur les boutons des classes
+  const handleClick = (classe) => {
+    const newClass = {
+      libelle: classe.title,
+      numero: 1,
+    };
+
+    localStorage.setItem(`classe_${classe.key}`, JSON.stringify(newClass));
+    // Stocker la clé de la classe sélectionnée
+    localStorage.setItem("selectedClasseKey", classe.key);
+
+    console.log(`Clicked on button with key: ${classe.key}`);
+    window.open("http://localhost:3000/classe", "_blank");
+  };
+
   // Mock des classes
   const mockClasses = [
     {
@@ -30,7 +45,7 @@ const Niveauxprescolaire = () => {
       description: "Description de P3",
       disabled: false,
     },
-    // ... Ajoutez d'autres classes selon vos besoin
+    // ... Ajoutez d'autres classes selon vos besoins
   ];
 
   // État pour les clés cibles, les clés sélectionnées et l'état de désactivation
@@ -45,19 +60,20 @@ const Niveauxprescolaire = () => {
     console.log("direction: ", direction);
     console.log("moveKeys: ", moveKeys);
 
-    // Si une classe a été retirée du tableau de droite (direction === "left")
+    // Récupérer le token JWT du local storage
+    const token = localStorage.getItem("access");
+
+    // Décoder le JWT pour obtenir les informations sur l'utilisateur
+    const decodedToken = jwtDecode(token);
+
+    // Extraire le schéma_name de la charge utile du JWT
+    const schema_name = decodedToken.schema_name;
+    const id_ecole = decodedToken.id;
+    const schema = schema_name.replace("_", "-");
+
     if (direction === "left") {
+      // Si une classe a été retirée du tableau de droite (direction === "left")
       try {
-        // Récupérer le token JWT du local storage
-        const token = localStorage.getItem("access");
-
-        // Décoder le JWT pour obtenir les informations sur l'utilisateur
-        const decodedToken = jwtDecode(token);
-
-        // Extraire le schéma_name de la charge utile du JWT
-        const schema_name = decodedToken.schema_name;
-        console.log("Schema Name:", schema_name);
-
         // Récupérer les clés des classes retirées du tableau de droite
         const removedKeys = moveKeys.map(
           (key) => mockClasses.find((item) => item.key === key).key
@@ -66,9 +82,8 @@ const Niveauxprescolaire = () => {
         // Supprimer les classes correspondantes de la base de données
         for (const key of removedKeys) {
           await axios.delete(
-            `http://${schema_name}.192.168.1.3:8000/ecole/niveau/${key}`,
+            `http://${schema}.localhost:8000/ecole/niveau/${key}`,
             {
-              // Inclure le token JWT dans l'en-tête Authorization de la requête
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -85,16 +100,6 @@ const Niveauxprescolaire = () => {
     } else if (direction === "right") {
       // Si une classe a été ajoutée au tableau de droite (direction === "right")
       try {
-        // Récupérer le token JWT du local storage
-        const token = localStorage.getItem("access");
-
-        // Décoder le JWT pour obtenir les informations sur l'utilisateur
-        const decodedToken = jwtDecode(token);
-
-        // Extraire le schéma_name de la charge utile du JWT
-        const schema_name = decodedToken.schema_name;
-        console.log("Schema Name:", schema_name);
-
         // Récupérer les clés des classes ajoutées au tableau de droite
         const addedKeys = moveKeys.map(
           (key) => mockClasses.find((item) => item.key === key).key
@@ -104,18 +109,29 @@ const Niveauxprescolaire = () => {
         for (const key of addedKeys) {
           const classe = mockClasses.find((item) => item.key === key);
           await axios.post(
-            `http://${schema_name}.192.168.1.3:8000/ecole/niveau/`,
+            `http://${schema}.localhost:8000/ecole/niveau/`,
             {
               libelle: classe.title,
-              numero: classe.key,
+              numero: 1, // Le numéro sera toujours 1
             },
             {
-              // Inclure le token JWT dans l'en-tête Authorization de la requête
               headers: {
                 Authorization: `Bearer ${token}`,
+                niveau: classe.title,
               },
             }
           );
+          // const storeClassInLocalStorage = (classe) => {
+          //   const newClass = {
+          //     libelle: classe.title,
+          //     numero: 1,
+          //   };
+
+          //   localStorage.setItem(
+          //     `classe_${classe.key}`,
+          //     JSON.stringify(newClass)
+          //   );
+          // };
         }
 
         // Afficher un message pour confirmer l'ajout
@@ -155,6 +171,7 @@ const Niveauxprescolaire = () => {
           <Button
             type={targetKeys.includes(classe.key) ? "primary" : "default"}
             style={{ marginBottom: 8 }}
+            onClick={() => handleClick(classe)}
           >
             {classe.title}
           </Button>

@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import Dashboardmenu from "../../components/Dashboardmenu";
-import Dashboardsider from "../../components/Dashboardsider";
-import Uploadfiles from "../../components/Uploadfiles";
 import {
   Layout,
-  Card,
   Breadcrumb,
   Table,
   Button,
@@ -17,34 +13,83 @@ import {
   Popconfirm,
   message,
   Modal,
-  Checkbox,
+  Card, // Assurez-vous d'importer Card ici
 } from "antd";
-
-import { UserOutlined } from "@ant-design/icons";
-import { jwtDecode } from "jwt-decode";
-import { useEffect } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import Dashboardmenu from "../../components/Dashboardmenu";
+import Dashboardsider from "../../components/Dashboardsider";
+import Uploadfiles from "../../components/Uploadfiles";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const generateData = () => {
   const data = [];
-
   return data;
 };
 
-const Classe = () => {
+const Classe = ({ classKey }) => {
+  const [classeData, setClasseData] = useState(null);
+
+  useEffect(() => {
+    const selectedClasseKey = localStorage.getItem("selectedClasseKey");
+    if (selectedClasseKey) {
+      const storedClasseData = localStorage.getItem(
+        `classe_${selectedClasseKey}`
+      );
+      if (storedClasseData) {
+        const parsedClasseData = JSON.parse(storedClasseData);
+        setClasseData(parsedClasseData);
+      }
+    }
+  }, []);
+
+  const [infosEcole, setInfosEcole] = useState({});
   const history = useHistory();
   const [data, setData] = useState(generateData());
   const [modalVisible, setModalVisible] = useState(false);
   const [editingKey, setEditingKey] = useState("");
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [form] = Form.useForm();
+  const [classe, setClasse] = useState(null);
 
-  const handleBreadcrumbClick = () => {
-    // Logique de redirection
-  };
+  useEffect(() => {
+    const storedClass = localStorage.getItem(`classe_${classKey}`);
+    if (storedClass) {
+      setClasse(JSON.parse(storedClass));
+    }
+  }, [classKey]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("access");
+        const decodedToken = jwtDecode(token);
+        const schemaname = decodedToken.schema_name;
+        const niveau_id = decodedToken.id;
+        const schema = schemaname.replace("_", "-");
+
+        const response = await axios.get(
+          `http://${schema}.localhost:8000/ecole/niveau/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setInfosEcole(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des informations de l'école:",
+          error
+        );
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleDelete = (key) => {
     setData((prevData) =>
@@ -141,13 +186,13 @@ const Classe = () => {
 
   const handleRowClick = (record, event) => {
     if (!event.target.closest("button")) {
-      history.push("/eleve"); // Redirige vers la page '/eleve' lors du clic sur une ligne
+      history.push("/eleve");
     }
   };
 
-  {
-    /* message  */
-  }
+  const handleBreadcrumbClick = (path) => {
+    history.push(path);
+  };
 
   const layout = {
     labelCol: {
@@ -158,7 +203,6 @@ const Classe = () => {
     },
   };
 
-  /* eslint-désactiver aucun modèle-curly-in-string*/
   const validateMessages = {
     required: "${label} is required!",
     types: {
@@ -169,15 +213,10 @@ const Classe = () => {
       range: "${label} must be between ${min} and ${max}",
     },
   };
-  /* eslint-désactiver aucun modèle-curly-in-string */
 
   const onFinish = (values) => {
     console.log(values);
   };
-
-  {
-    /* fin message */
-  }
 
   return (
     <Layout style={{ background: "#001E32" }}>
@@ -200,10 +239,12 @@ const Classe = () => {
               Home
             </Breadcrumb.Item>
             <Breadcrumb.Item onClick={() => handleBreadcrumbClick("/list")}>
-              Thalès de Millet
+              {infosEcole.nom}
             </Breadcrumb.Item>
             <Breadcrumb.Item onClick={() => handleBreadcrumbClick("/app")}>
-              <span style={{ color: "#3498DB" }}>Elèves</span>
+              <span style={{ color: "#3498DB" }}>
+                {classeData ? classeData.libelle : "Classe non trouvée"}
+              </span>
             </Breadcrumb.Item>
           </Breadcrumb>
           <Content
@@ -215,12 +256,16 @@ const Classe = () => {
               borderRadius: "16px",
             }}
           >
-            <Title level={3} style={{ color: "#3498DB" }}>
-              Classes
-            </Title>
-            <Row>
-              <Col span={24}>col</Col>
-            </Row>
+            {classeData ? (
+              <Title level={3} style={{ color: "#3498DB" }}>
+                {classeData.libelle} {classeData.numero}
+              </Title>
+            ) : (
+              <Row>
+                <Col span={24}>Classe non trouvée</Col>
+              </Row>
+            )}
+
             <Button
               type="primary"
               onClick={handleAdd}
@@ -288,7 +333,7 @@ const Classe = () => {
               </div>
               {/* Tutoriel */}
             </Content>
-            <br></br>
+            <br />
             <Content
               style={{
                 padding: 24,
@@ -300,10 +345,10 @@ const Classe = () => {
             >
               <Uploadfiles />
 
-              <br></br>
+              <br />
             </Content>
 
-            <br></br>
+            <br />
             {/* fin message */}
 
             <Content

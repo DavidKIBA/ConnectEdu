@@ -1,11 +1,12 @@
 /* Menu.css */
 
-.menu {
+.menu1 {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px; /* Ajoute un espace autour des éléments du menu */
   margin-left: 30px;
+  position: fixed;
   z-index: 2;
 }
 

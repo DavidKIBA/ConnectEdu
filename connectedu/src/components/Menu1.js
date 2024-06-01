@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 import {
   AppstoreOutlined,
   MailOutlined,
@@ -32,7 +33,7 @@ const Menu1 = () => {
     setCurrent(e.key);
   };
   return (
-    <Menu
+    <Menu className="menu1"
       onClick={onClick}
       selectedKeys={[current]}
       mode="horizontal"

@@ -9,13 +9,12 @@ const { Title } = Typography;
 
 const Inscription = () => {
   const continuer = useHistory();
-  // État local pour stocker les données du formulaire
 
   const [formData, setFormData] = useState({
     nom: "",
     adresse: "",
     ville_residence: "",
-    date_creation: new Date(),
+    date_creation: "",
     telephone_1: "",
     telephone_2: "",
     email_ecole: "",
@@ -24,8 +23,6 @@ const Inscription = () => {
     prenom_responsable: "",
     email_responsable: "",
   });
-
-  // Fonction de gestion des changements dans les champs du formulaire
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,36 +40,31 @@ const Inscription = () => {
     }));
   };
 
-  // Fonction pour soumettre le formulaire d'inscription
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
+    e.preventDefault();
     try {
       const formDataToSend = new FormData();
       for (const key in formData) {
         formDataToSend.append(key, formData[key]);
       }
-      // Envoie une requête POST à l'API d'inscription avec les données du formulaire
+
       const response = await axios.post(
-        "http://192.168.1.3:8000/inscription/ecole/",
+        "http://localhost:8000/inscription/ecole/",
         formDataToSend,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Spécifiez le type de contenu ici
+            "Content-Type": "multipart/form-data",
           },
         }
       );
-      console.log(formData);
+
       if (response.status === 201) {
-        // Gérer l'inscription réussie
-        message.access("Inscription réussie:", response.data);
+        message.success("Inscription réussie:", response.data);
         continuer.push("/inscription2");
       } else {
-        // Gérer l'échec de l'inscription
         message.error("Echec de l'inscription:", response.data);
       }
     } catch (error) {
-      // Gérer l'erreur
       alert("Erreur", error);
     }
   };
@@ -105,7 +97,7 @@ const Inscription = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="nom_responsable ">Nom du responsable:</label>
+            <label htmlFor="nom_responsable">Nom du responsable:</label>
             <input
               type="text"
               id="nom_responsable"
@@ -117,7 +109,7 @@ const Inscription = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="prenom_responsable ">Prenom du responsable:</label>
+            <label htmlFor="prenom_responsable">Prenom du responsable:</label>
             <input
               type="text"
               id="prenom_responsable"
@@ -143,7 +135,7 @@ const Inscription = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="adresse_ecole">Adresse local:</label>
+            <label htmlFor="adresse_ecole">Adresse locale:</label>
             <input
               type="text"
               id="adresse_ecole"
@@ -175,8 +167,6 @@ const Inscription = () => {
               value={formData.date_creation}
               onChange={handleChange}
               required
-              aria-label="Date de création"
-              aria-required="true"
             />
           </div>
 
@@ -221,7 +211,6 @@ const Inscription = () => {
               type="file"
               id="logo_ecole"
               name="logo"
-              value={formData.logo}
               onChange={handleFileChange}
               accept="image/*"
             />

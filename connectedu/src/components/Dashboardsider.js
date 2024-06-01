@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Layout, Menu, Badge, Button, Drawer } from "antd";
+import { Layout, Menu, Badge, Button, Drawer, Avatar } from "antd";
 import {
   UserOutlined,
   MessageOutlined,
@@ -11,64 +11,45 @@ import {
 } from "@ant-design/icons";
 import { Affix } from "antd";
 import { jwtDecode } from "jwt-decode";
-import { useEffect } from "react";
 import axios from "axios";
 
 const { Sider } = Layout;
 
 const Dashboardsider = () => {
   const [infosEcole, setInfosEcole] = useState({});
+  const [collapsed, setCollapsed] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Récupérer le token JWT du local storage
         const token = localStorage.getItem("access");
-
-        // Décoder le JWT pour obtenir les informations sur l'utilisateur
         const decodedToken = jwtDecode(token);
+        const ecole_id = decodedToken.id_ecole;
+        const schemaname = decodedToken.schema_name;
+        const schema = schemaname.replace("_", "-");
 
-        // Extraire le schéma_name de la charge utile du JWT
-        const schema_name = decodedToken.schema_name;
-        const schema = schema_name.replace("_", "-");
-        console.log("Schema Name:", schema);
-
-        // Envoyer une requête HTTP pour obtenir les informations de l'utilisateur après l'authentification
         const response = await axios.get(
-          "http://thales.192.168.1.3:8000/ecole/",
-          console.log("reussi"),
+          `http://${schema}.localhost:8000/info-ecole/${ecole_id}/`,
           {
-            // Inclure le token JWT dans l'en-tête Authorization de la requête
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
 
-        // Extraire le nom de l'utilisateur à partir des données reçues
-        const adresse = response.data;
-
-        // Mettre à jour l'état avec le nom de l'utilisateur
-        setInfosEcole({ adresse });
-
-        console.log(response.data);
+        setInfosEcole(response.data);
       } catch (error) {
         console.error(
-          "Erreur lors de la récupération des informations de l'utilisateur:",
+          "Erreur lors de la récupération des informations de l'école:",
           error
         );
       }
     };
 
-    // Appeler la fonction fetchUserData lors du chargement de la page du tableau de bord
     fetchUserData();
   }, []);
-
-  const [collapsed, setCollapsed] = useState(false);
-  const [drawerVisible, setDrawerVisible] = useState(false); // State pour contrôler la visibilité du Drawer
-  const history = useHistory();
-
-  const terms = useHistory();
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -76,22 +57,6 @@ const Dashboardsider = () => {
 
   const toggleDrawer = () => {
     setDrawerVisible(!drawerVisible);
-  };
-
-  const calendarIcone = () => {
-    window.open("http://localhost:3000/calendrier", "_blank");
-  };
-
-  const messageIcone = () => {
-    window.open("http://localhost:3000/MessagePage", "_blank");
-  };
-
-  const settingsIcone = () => {
-    window.open("http://localhost:3000/Parametres", "_blank");
-  };
-
-  const termsIcone = () => {
-    terms.push("/terms");
   };
 
   const handleMenuClick = (label) => {
@@ -110,11 +75,27 @@ const Dashboardsider = () => {
     }
   };
 
+  const calendarIcone = () => {
+    window.open("http://localhost:3000/calendrier", "_blank");
+  };
+
+  const messageIcone = () => {
+    window.open("http://localhost:3000/MessagePage", "_blank");
+  };
+
+  const settingsIcone = () => {
+    window.open("http://localhost:3000/Parametres", "_blank");
+  };
+
+  const termsIcone = () => {
+    history.push("/terms");
+  };
+
   const verticalMenuItems = [
     {
       key: "sub1",
-      icon: <UserOutlined />,
-      label: infosEcole?.adresse || "Chargement...",
+      icon: <Avatar src={infosEcole.logo} />,
+      label: infosEcole.nom,
       options: ["Espaces eleves", "Espaces parents", "Espaces membres"],
     },
     {

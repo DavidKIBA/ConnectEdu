@@ -58,7 +58,7 @@ const Connexion = () => {
     } catch (error) {
       // Gérer l'erreur
       message.error("Erreur", error);
-    }     
+    }
   };
 
   const handleCancel = () => {
@@ -81,7 +81,7 @@ const Connexion = () => {
     e.preventDefault();
     // Ajoutez votre logique de connexion ici
     try {
-      const response = await axios.post("http://192.168.1.3:8000/api/token/", {
+      const response = await axios.post("http://localhost:8000/api/token/", {
         username: username,
         password: password,
       });

@@ -73,15 +73,16 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div>
+        <Menu1 />
+      </div>
       <img
         className="image"
         src={process.env.PUBLIC_URL + "/images/homeimage.jpg"}
         alt="Accueil"
       />
       {/* <div className="overlay"></div>   */}
-      <div>
-        <Menu1 />
-      </div>
+      
       {/* <Title className="titre1">ConnectEdu</Title>
       <Title level={2} className="titre2">
         Découvrez ce que ConnectEdu peut faire pour vous :
