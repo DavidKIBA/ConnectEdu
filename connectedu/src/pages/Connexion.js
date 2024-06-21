@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useState } from "react";
-import Menu from "../components/Menu1";
+import Menu1 from "../components/Menu1";
 import { useHistory } from "react-router-dom";
 import {
   Layout,
@@ -99,9 +99,13 @@ const Connexion = () => {
 
   return (
     <div>
+      <div className="menu1">
+        <Menu1 />
+      </div>
       <Image
         width="100%"
         src={process.env.PUBLIC_URL + "/images/connexionimage.jpg"}
+        className="image"
       />
       <Layout>
         <div className="overlay">
@@ -111,10 +115,6 @@ const Connexion = () => {
           {/* ... autres éléments de contenu ... */}
         </div>
       </Layout>
-
-      <div>
-        <Menu />
-      </div>
 
       {/* formulaire */}
       <div className="login-container">

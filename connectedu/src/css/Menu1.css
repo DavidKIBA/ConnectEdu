@@ -1,73 +1,61 @@
-/* Menu.css */
-
-.menu1 {
+header {
   display: flex;
-  justify-content: center;
+  align-content: space-between;
   align-items: center;
-  padding: 10px; /* Ajoute un espace autour des éléments du menu */
-  margin-left: 30px;
-  position: fixed;
-  z-index: 2;
+  background-color: #3498db00;
+  height: 80px;
+  padding: 0 2rem;
 }
 
-.liens {
-  margin-left: 360px;
+nav a {
+  margin: 0 2rem;
 }
 
-.menu-items {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  margin: 0; /* Supprime la marge par défaut de la liste */
-  padding: 0; /* Supprime le rembourrage par défaut de la liste */
-}
-
-a {
-  text-decoration: none;
-  font-family: "Roboto", sans-serif;
-  color: rgb(255, 255, 255);
-  padding: 20px; /* Ajoute un peu de rembourrage pour rendre les liens plus cliquables */
-}
-
-.isActiveLink {
-  font-weight: bold;
-  color: rgb(49, 151, 215);
-}
-
-.inscription {
+nav a:hover {
   color: #2ecc71;
-  font-weight: bold;
 }
 
-.signin-button {
-  display: flex;
-  align-items: center;
-  padding: 6px 10px; /* Ajustez le rembourrage selon vos besoins */
-  background-color: #2ecc71; /* Utilisez la couleur de fond que vous avez mentionnée */
-  color: #ffffff; /* Utilisez la couleur de texte souhaitée */
+header .nav-btn {
+  padding: 5px;
   cursor: pointer;
-  border-radius: 3px;
-  width: 75px;
+  background-color: transparent;
+  visibility: hidden;
+  opacity: 0;
+  font-size: 1.8rem;
 }
 
-.signin-button:hover {
-  background-color: rgb(49, 151, 215); /* Couleur de survol */
-}
+@media only screen and (max-width: 882px) {
+  header .nav-btn {
+    visibility: visible;
+    opacity: 1;
+  }
 
-/* Ajoutez des styles pour les écrans de petite taille (mobile) */
-@media screen and (max-width: 767px) {
-  .menu {
+  header nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: auto;
+    width: auto;
+    display: flex;
+    align-items: center;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 10px; /* Ajoute un espace autour des éléments du menu pour les écrans mobiles */
-    margin-left: 0;
+    justify-content: center;
+    gap: 1.5rem;
+    background-color: #3498db;
+    transition: 1s;
+    transform: translateY(-100vh);
   }
 
-  .liens {
-    margin-left: 0;
+  header .responsive_nav {
+    transform: none;
   }
 
-  a {
-    padding: 10px; /* Réduisez le padding des liens pour les écrans mobiles */
+  nav .nav-close-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+  }
+  nav a {
+    font-size: 1.5rem;
   }
 }
