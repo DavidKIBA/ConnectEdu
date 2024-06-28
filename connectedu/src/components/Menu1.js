@@ -1,8 +1,18 @@
 import React from "react";
 import { useRef } from "react";
+import { useHistory } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Menu1 = (props) => {
+  // fonction de redirection du boutton vers la page about
+  const inscription = useHistory();
+  const Inscription = () => {
+    inscription.push("/inscription");
+  };
+  const connexion = useHistory();
+  const Connexion = () => {
+    connexion.push("/connexion");
+  };
   const navRef = useRef();
 
   const showNavbar = () => {
@@ -14,8 +24,12 @@ const Menu1 = (props) => {
       <nav ref={navRef}>
         <a href="#">Home</a>
         <a href="#">About</a>
-        <a href="#">contact</a>
-        <a href="#">inscription</a>
+        <a href="#" onClick={Inscription}>
+          inscription
+        </a>
+        <a href="#" onClick={Connexion}>
+          signin
+        </a>
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>

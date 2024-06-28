@@ -104,7 +104,7 @@ const Connexion = () => {
       </div>
       <Image
         width="100%"
-        src={process.env.PUBLIC_URL + "/images/connexionimage.jpg"}
+        src={process.env.PUBLIC_URL + "/images/élève.jpg"}
         className="image"
       />
       <Layout>

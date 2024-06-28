@@ -1,7 +1,7 @@
 // Home.js
 import React from "react";
 import { useHistory } from "react-router-dom"; // pour rediriger les bouttons sur d'autres pages
-import Menu1 from "../components/Menu1";
+import Menu from "../components/Menu1";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import {
@@ -28,10 +28,12 @@ import {
   IdcardOutlined,
 } from "@ant-design/icons";
 
-import { Card } from "antd";
+import { Card, Layout } from "antd";
+import Item from "antd/es/list/Item";
 
 const { Meta } = Card;
 const { Title } = Typography;
+const { Header, Sider, Content } = Layout;
 
 const cardStyle: React.CSSProperties = {
   width: 620,
@@ -44,6 +46,31 @@ const imgStyle: React.CSSProperties = {
 
 const Home = () => {
   // formulaire de contact
+
+  const layoutStyle = {
+    width: "80vw", // Ajustez la largeur selon vos besoins
+    minWidth: "300px", // Assurez-vous qu'il ne devienne pas trop étroit
+    background: "#fff",
+    padding: "24px",
+    borderRadius: "8px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+  };
+
+  const headerStyle = {
+    textAlign: "center",
+    padding: "16px 0",
+    fontSize: "24px",
+    fontWeight: "bold",
+    background: "#001529",
+    color: "#fff",
+    borderRadius: "8px 8px 0 0",
+  };
+
+  const contentStyle = {
+    padding: "24px",
+    fontSize: "16px",
+    textAlign: "center",
+  };
 
   const { RangePicker } = DatePicker;
 
@@ -73,39 +100,121 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div className="photo">
+        <img
+          className="background-image"
+          src={process.env.PUBLIC_URL + "/images/homeimage.jpg"}
+          alt="Accueil"
+        />
+      </div>
+      <Menu />
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <div>
-        <Menu1 />
+        <Title className="titre1">ConnectEdu</Title>
+        <br></br>
+        <Title level={2} className="titre2">
+          Découvrez ce que ConnectEdu peut faire pour vous :
+        </Title>
+        <br></br>
+        <Title level={2} className="titre2">
+          L'école à portée des mains
+        </Title>
+        <div className="liste">
+          <ul>
+            <li className="ligne">
+              Gérez facilement vos étudiants, des admissions <br />à la
+              progression académique.
+            </li>{" "}
+            <br />
+            <li className="ligne">
+              Facilitez la communication avec les parents <br />
+              grâce à notre système de ....
+            </li>
+          </ul>
+        </div>
+        <button className="voirplus" onClick={Voirplus}>
+          Voir plus
+        </button>{" "}
       </div>
-      <img
-        className="image"
-        src={process.env.PUBLIC_URL + "/images/homeimage.jpg"}
-        alt="Accueil"
-      />
-      {/* <div className="overlay"></div>   */}
-      
-      {/* <Title className="titre1">ConnectEdu</Title>
-      <Title level={2} className="titre2">
-        Découvrez ce que ConnectEdu peut faire pour vous :
-      </Title>
-      <Title level={2} className="titre2">
-        L'école à portée des mains
-      </Title> */}
-      {/* <div className="liste">
-        <ul>
-          <li className="ligne">
-            Gérez facilement vos étudiants, des admissions <br />à la
-            progression académique.
-          </li>{" "}
-          <br />
-          <li className="ligne">
-            Facilitez la communication avec les parents <br />
-            grâce à notre système de ....
-          </li>
-        </ul>
+      {/* fin description */}
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "50vh",
+        }}
+      >
+        <Flex gap="middle" wrap>
+          <Layout style={layoutStyle}>
+            <Header style={headerStyle}>Laissez-nous un message</Header>
+            <Content style={contentStyle}>
+              <Form
+                {...formItemLayout}
+                variant="filled"
+                style={{ maxWidth: 1000 }}
+              >
+                <Form.Item
+                  label="E-mail"
+                  name="Input"
+                  rules={[{ required: true, message: "Please input!" }]}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  label="Tel"
+                  name="InputNumber"
+                  rules={[{ required: true, message: "Please input!" }]}
+                >
+                  <InputNumber style={{ width: "100%" }} />
+                </Form.Item>
+
+                <Form.Item
+                  label="Objet"
+                  name="Mentions"
+                  rules={[{ required: true, message: "Please input!" }]}
+                >
+                  <Mentions style={{ width: "100%" }} />
+                </Form.Item>
+
+                <Form.Item
+                  label="Message"
+                  name="TextArea"
+                  rules={[{ required: true, message: "Please input!" }]}
+                >
+                  <Input.TextArea style={{ width: "100%" }} />
+                </Form.Item>
+
+                <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+                  <Button type="primary" htmlType="submit">
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Content>
+          </Layout>
+        </Flex>
       </div>
-      <button className="voirplus" onClick={Voirplus}>
-        Voir plus
-      </button>{" "} */}
       {/* devises de ConnectEdu */}
       {/* <div className="devises">
         <div className="devise3">
@@ -141,82 +250,24 @@ const Home = () => {
         </div>
       </div>
       <br></br> */}
-      {/* formulaire de contact */}
-      {/* <Card
-        hoverable
-        style={{ ...cardStyle, width: "100%" }} // Définissez la largeur sur 100%
-        styles={{ body: { padding: 0, overflow: "hidden" } }}
-      >
-        <Flex justify="space-between">
-          <img
-            alt="avatar"
-            src="/images/dashboard.png"
-            style={{ ...imgStyle, width: "50%" }} // Ajustez la largeur de l'image à 50% de la carte
-          />
-          <Flex
-            vertical
-            align="flex-start"
-            justify="space-between"
-            style={{ padding: 32, width: "50%" }}
-          >
-            <Typography.Title
-              level={3}
-              style={{ textAlign: "left", marginBottom: 16 }}
-            >
-              Contact
-            </Typography.Title>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
 
-            <Form
-              {...formItemLayout}
-              variant="filled"
-              style={{ maxWidth: 1000 }}
-            >
-              <Form.Item
-                label="E-mail"
-                name="Input"
-                rules={[{ required: true, message: "Please input!" }]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="Tel"
-                name="InputNumber"
-                rules={[{ required: true, message: "Please input!" }]}
-              >
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
-
-              <Form.Item
-                label="Objet"
-                name="Mentions"
-                rules={[{ required: true, message: "Please input!" }]}
-              >
-                <Mentions style={{ width: "100%" }} />
-              </Form.Item>
-
-              <Form.Item
-                label="Message"
-                name="TextArea"
-                rules={[{ required: true, message: "Please input!" }]}
-              >
-                <Input.TextArea style={{ width: "100%" }} />
-              </Form.Item>
-
-              <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </Flex>
-        </Flex>
-      </Card>{" "} */}
-      {/* <br></br>
       <div className="presence">Présent dans plus de 20 pays d’Afrique</div>
       <div className="pays">Congo, RDC, Guinée Bissau, Tchad, ...</div>
-      <br></br> */}
+      <br></br>
       {/* footer*/}
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
+
       <Footer />
     </div>
   );

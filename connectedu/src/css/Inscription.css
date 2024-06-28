@@ -1,15 +1,3 @@
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Couleur de l'overlay */
-}
-
-
-
 .inscription-container {
   position: relative;
   width: 100%;
@@ -20,26 +8,15 @@
   height: 100%;
   background-size: cover;
   background-repeat: repeat;
-  height: 100vh;
   position: relative;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
- height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .form-container {
   position: absolute;
   top: 100%;
-  left: 50%;
+
   transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 600px;
+  width: 100%;
   background-color: rgba(52, 73, 94, 0.7);
   padding: 20px;
   border-radius: 10px;
@@ -47,12 +24,21 @@
 }
 
 .registration-form {
- 
   position: absolute;
   top: 100%;
-  width: 50%;
-  left: 50%;
+  width: 100%;
+  align-items: center;
   flex-direction: column;
+}
+
+.col {
+  display: flex;
+
+  align-items: center;
+}
+
+.col1 {
+  align-content: space-between;
 }
 
 .form-group {
@@ -63,19 +49,15 @@
   font-weight: bold;
 }
 
-input[type="text"],
-input[type="date"],
-input[type="tel"],
-input[type="email"],
-input[type="file"] {
-  width: 100%;
+input {
+  width: 80%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 button[type="submit"] {
-  width: 100%;
+  width: 80%;
   padding: 10px;
   background-color: #007bff;
   color: #fff;
@@ -84,8 +66,22 @@ button[type="submit"] {
   cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
-  .form-container {
-    width: 90%;
+@media only screen and (max-width: 882px) {
+  .col {
+    display: block;
+
+    align-items: center;
+  }
+
+  input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    color: #007bff;
+  }
+
+  .label {
+    color: #007bff;
   }
 }

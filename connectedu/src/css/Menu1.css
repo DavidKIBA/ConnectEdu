@@ -3,12 +3,21 @@ header {
   align-content: space-between;
   align-items: center;
   background-color: #3498db00;
-  height: 80px;
+  height: 100px;
   padding: 0 2rem;
+  margin-top: 5px;
+}
+
+header h3 {
+  margin-right: 30%;
+  margin-top: 5px;
 }
 
 nav a {
-  margin: 0 2rem;
+  margin-top: 5px;
+  margin: 2 5rem;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
 }
 
 nav a:hover {
