@@ -13,7 +13,7 @@ import {
   Popconfirm,
   message,
   Modal,
-  Card, // Assurez-vous d'importer Card ici
+  Card,
 } from "antd";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -56,6 +56,7 @@ const Classe = ({ classKey }) => {
 
   useEffect(() => {
     const storedClass = localStorage.getItem(`classe_${classKey}`);
+
     if (storedClass) {
       setClasse(JSON.parse(storedClass));
     }
@@ -64,39 +65,72 @@ const Classe = ({ classKey }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        const storedClass = localStorage.getItem(`classe_${classKey}`);
         const token = localStorage.getItem("access");
         const decodedToken = jwtDecode(token);
         const schemaname = decodedToken.schema_name;
-        const niveau_id = decodedToken.id;
         const schema = schemaname.replace("_", "-");
 
         const response = await axios.get(
-          `http://${schema}.localhost:8000/ecole/niveau/`,
+          `http://${schema}.localhost:8000/ecole/eleve`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              niveau: classeData.libelle,
             },
           }
         );
 
         setInfosEcole(response.data);
+        console.log("API response:", response.data);
+        console.log("classe:", classeData.libelle);
+
+        // Transforme les données pour les adapter au tableau
+        const formattedData = response.data.map((item, index) => ({
+          key: item.id,
+          id: item.id,
+          matricule: item.matricule,
+          nom: item.nom,
+          prenom: item.prenom,
+          telephone: item.telephone,
+          adresse: item.adresse,
+        }));
+        setData(formattedData);
       } catch (error) {
         console.error(
-          "Erreur lors de la récupération des informations de l'école:",
+          "Erreur lors de la récupération des informations de la classe:",
           error
         );
       }
     };
 
-    fetchUserData();
-  }, []);
+    if (classeData) {
+      fetchUserData();
+    }
+  }, [classKey, classeData]);
 
-  const handleDelete = (key) => {
-    setData((prevData) =>
-      prevData.filter((item) => !selectedRowKeys.includes(item.key))
-    );
-    setSelectedRowKeys([]);
-    message.success("Enregistrement(s) supprimé(s) avec succès");
+  const handleDelete = async (key) => {
+    const token = localStorage.getItem("access");
+    const decodedToken = jwtDecode(token);
+    const schemaname = decodedToken.schema_name;
+    const schema = schemaname.replace("_", "-");
+
+    try {
+      await axios.delete(
+        `http://${schema}.localhost:8000/ecole/eleve/${key}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setData((prevData) => prevData.filter((item) => item.key !== key));
+      setSelectedRowKeys([]);
+      message.success("Enregistrement(s) supprimé(s) avec succès");
+    } catch (error) {
+      console.error("Erreur lors de la suppression:", error);
+      message.error("Erreur lors de la suppression");
+    }
   };
 
   const handleEdit = (record) => {
@@ -116,54 +150,109 @@ const Classe = ({ classKey }) => {
     setModalVisible(false);
   };
 
-  const handleSave = (values) => {
-    const newData = [...data];
-    const index = newData.findIndex((item) => item.key === editingKey);
-    if (index > -1) {
-      newData[index] = { ...newData[index], ...values };
-      setData(newData);
-      setEditingKey("");
-      message.success("Enregistrement modifié avec succès");
-    } else {
-      setData([...data, { ...values, key: data.length }]);
-      message.success("Enregistrement ajouté avec succès");
-    }
-    setModalVisible(false);
-  };
+  const handleSave = async (values) => {
+    const token = localStorage.getItem("access");
+    const decodedToken = jwtDecode(token);
+    const schemaname = decodedToken.schema_name;
+    const schema = schemaname.replace("_", "-");
 
-  const onSelectChange = (selectedKeys) => {
-    setSelectedRowKeys(selectedKeys);
+    const data = {
+      matricule: values.Matricule,
+      nom: values.Nom,
+      prenom: values.Prenom,
+      adresse: values.Adresse,
+      telephone: values.Telephone,
+    };
+
+    if (editingKey) {
+      // Mise à jour de l'élève existant
+      try {
+        const response = await axios.patch(
+          `http://${schema}.localhost:8000/ecole/eleve/${editingKey}/`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const newData = [...data];
+        const index = newData.findIndex((item) => item.key === editingKey);
+        if (index > -1) {
+          newData[index] = { ...newData[index], ...response.data };
+          setData(newData);
+          setEditingKey("");
+          message.success("Enregistrement modifié avec succès");
+        }
+        setModalVisible(false);
+      } catch (error) {
+        console.error("Erreur lors de la mise à jour:", error);
+        message.error("Erreur lors de la mise à jour");
+      }
+    } else {
+      // Insertion d'un nouvel élève
+      try {
+        const response = await axios.post(
+          `http://${schema}.localhost:8000/ecole/eleve/`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setData([...data, { ...response.data, key: response.data.id }]);
+        message.success("Enregistrement ajouté avec succès");
+        setModalVisible(false);
+      } catch (error) {
+        console.error("Erreur lors de l'ajout:", error);
+        message.error("Erreur lors de l'ajout");
+      }
+    }
   };
 
   const rowSelection = {
     selectedRowKeys,
-    onChange: onSelectChange,
+    onChange: (selectedKeys) => setSelectedRowKeys(selectedKeys),
   };
 
   const columns = [
     {
-      title: "Nom et prénom",
-      dataIndex: "name",
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: "Age",
-      dataIndex: "age",
+      title: "Matricule",
+      dataIndex: "matricule",
+      key: "matricule",
     },
     {
-      title: "Adresse",
-      dataIndex: "address",
+      title: "Nom",
+      dataIndex: "nom",
+      key: "nom",
+    },
+    {
+      title: "Prénom",
+      dataIndex: "prenom",
+      key: "prenom",
     },
     {
       title: "Numéro de téléphone",
-      dataIndex: "phoneNumber",
+      dataIndex: "telephone",
+      key: "telephone",
     },
     {
-      title: "Adresse e-mail",
-      dataIndex: "email",
+      title: "Adresse",
+      dataIndex: "adresse",
+      key: "adresse",
     },
     {
       title: "Actions",
       dataIndex: "action",
+      key: "action",
       render: (_, record) => (
         <div>
           <Button type="link" onClick={() => handleEdit(record)}>
@@ -186,7 +275,8 @@ const Classe = ({ classKey }) => {
 
   const handleRowClick = (record, event) => {
     if (!event.target.closest("button")) {
-      history.push("/eleve");
+      localStorage.setItem("selectedEleveId", record.id);
+      window.open(`/eleve/${record.id}`, "_blank");
     }
   };
 
@@ -290,6 +380,7 @@ const Classe = ({ classKey }) => {
                     handleRowClick(record, event);
                   },
                 })}
+                rowKey={(record) => record.key}
                 rowSelection={{ ...rowSelection, checkStrictly: true }}
                 scroll={{ x: true }}
               />
@@ -304,7 +395,6 @@ const Classe = ({ classKey }) => {
                 borderRadius: "16px",
               }}
             >
-              {/* Tutoriel */}
               <div style={{ padding: "20px" }}>
                 <Card
                   cover={
@@ -323,7 +413,6 @@ const Classe = ({ classKey }) => {
                     </video>
                   }
                 >
-                  {/* Contenu de votre page */}
                   <h1>Tutoriel de prise en main</h1>
                   <p>
                     Ce tutoriel est un guide vous donnant les indications sur
@@ -331,9 +420,8 @@ const Classe = ({ classKey }) => {
                   </p>
                 </Card>
               </div>
-              {/* Tutoriel */}
             </Content>
-            <br />
+
             <Content
               style={{
                 padding: 24,
@@ -344,12 +432,8 @@ const Classe = ({ classKey }) => {
               }}
             >
               <Uploadfiles />
-
               <br />
             </Content>
-
-            <br />
-            {/* fin message */}
 
             <Content
               style={{
@@ -363,7 +447,6 @@ const Classe = ({ classKey }) => {
               <Title level={4} style={{ color: "white", textAlign: "center" }}>
                 Envoyer un message groupé à tous les parents d'élèves.
               </Title>
-
               <Form
                 {...layout}
                 name="nest-messages"
@@ -403,7 +486,7 @@ const Classe = ({ classKey }) => {
                   rules={[
                     {
                       required: true,
-                      message: "Veuillez entrer votre message !", // Ajoutez un message d'erreur
+                      message: "Veuillez entrer votre message !",
                     },
                   ]}
                 >
@@ -421,7 +504,6 @@ const Classe = ({ classKey }) => {
                 </Form.Item>
               </Form>
             </Content>
-            {/* fin message */}
 
             <Modal
               title={editingKey ? "Modifier un élève" : "Ajouter un élève"}
@@ -434,36 +516,46 @@ const Classe = ({ classKey }) => {
                 name="addEditForm"
                 onFinish={handleSave}
                 initialValues={{
-                  name: "",
-                  age: "",
-                  address: "",
-                  phoneNumber: "",
-                  email: "",
+                  Matricule: "",
+                  Nom: "",
+                  Prenom: "",
+                  Telephone: "",
+                  Adresse: "",
                 }}
               >
                 <Form.Item
-                  name="name"
-                  label="Nom et prénom"
+                  name="Matricule"
+                  label="Matricule"
                   rules={[
                     {
                       required: true,
-                      message: "Veuillez saisir le nom et prénom!",
+                      message: "Veuillez saisir le numéro matricule",
                     },
                   ]}
                 >
                   <Input />
                 </Form.Item>
+
                 <Form.Item
-                  name="age"
-                  label="Age"
+                  name="Nom"
+                  label="Nom"
                   rules={[
-                    { required: true, message: "Veuillez saisir l'âge!" },
+                    { required: true, message: "Veuillez saisir le nom!" },
                   ]}
                 >
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  name="address"
+                  name="Prenom"
+                  label="Prenom"
+                  rules={[
+                    { required: true, message: "Veuillez saisir le Prenom!" },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="Adresse"
                   label="Adresse"
                   rules={[
                     { required: true, message: "Veuillez saisir l'adresse!" },
@@ -472,7 +564,7 @@ const Classe = ({ classKey }) => {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  name="phoneNumber"
+                  name="Telephone"
                   label="Numéro de téléphone"
                   rules={[
                     {
@@ -483,18 +575,7 @@ const Classe = ({ classKey }) => {
                 >
                   <Input />
                 </Form.Item>
-                <Form.Item
-                  name="email"
-                  label="Adresse e-mail"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Veuillez saisir l'adresse e-mail!",
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+
                 <Form.Item>
                   <Button type="primary" htmlType="submit">
                     {editingKey ? "Modifier" : "Ajouter"}
@@ -503,89 +584,6 @@ const Classe = ({ classKey }) => {
               </Form>
             </Modal>
           </Content>
-          <Modal
-            title={editingKey ? "Modifier un élève" : "Ajouter un élève"}
-            visible={modalVisible}
-            onCancel={handleCancel}
-            footer={null}
-          >
-            <Form
-              form={form}
-              name="addEditForm"
-              onFinish={handleSave}
-              initialValues={{
-                name: "",
-                age: "",
-                address: "",
-                phoneNumber: "",
-                email: "",
-              }}
-            >
-              <Form.Item
-                name="name"
-                label="Nom et prénom"
-                rules={[
-                  {
-                    required: true,
-                    message: "Veuillez saisir le nom et prénom!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="age"
-                label="Age"
-                rules={[{ required: true, message: "Veuillez saisir l'âge!" }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="address"
-                label="Adresse"
-                rules={[
-                  { required: true, message: "Veuillez saisir l'adresse!" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="phoneNumber"
-                label="Numéro de téléphone"
-                rules={[
-                  {
-                    required: true,
-                    message: "Veuillez saisir le numéro de téléphone!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="email"
-                label="Adresse e-mail"
-                rules={[
-                  {
-                    required: true,
-                    message: "Veuillez saisir l'adresse e-mail!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  {editingKey ? "Modifier" : "Ajouter"}
-                </Button>
-              </Form.Item>
-            </Form>
-          </Modal>
-          <Popconfirm
-            title="Êtes-vous sûr de vouloir supprimer les enregistrements sélectionnés ?"
-            onConfirm={handleDelete}
-            okText="Oui"
-            cancelText="Non"
-          ></Popconfirm>
         </Layout>
       </Layout>
     </Layout>

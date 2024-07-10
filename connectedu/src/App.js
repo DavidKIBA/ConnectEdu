@@ -89,7 +89,7 @@ const App = () => {
           <Route path="/terms" exact component={Terms} />
           <Route path="/calendrier" exact component={Calendrier} />
           <Route path="/profile" exact component={Profile} />
-          <Route path="/eleve" exact component={Eleve} />
+          <Route path="/eleve/:id" exact component={Eleve} />
           <Route path="/tabcycleprimaire" exact component={TabCyclePrimaire} />
           <Route path="/tabcyclecollege" exact component={TabCycleCollege} />
           <Route path="/tabcyclelycee" exact component={TabCycleLycee} />

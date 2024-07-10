@@ -1,36 +1,21 @@
 import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
-
+import axios from "axios";
 const Footer = () => {
   // inscription a la news letter
-  const [loading, setLoading] = useState(false);
-
   const onFinish = async (values) => {
-    setLoading(true);
     try {
-      const response = await fetch(
-        "http://192.168.1.3:8000/contact/news-letters/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: values.email }),
-        }
+      const response = await axios.post(
+        "http://localhost:8000/contact/news-letters/",
+        values
       );
-      if (response.ok) {
-        message.success("Inscription à la newsletter réussie !");
-      } else {
-        const data = await response.json();
-        message.error(
-          data.message || "Erreur lors de l'inscription à la newsletter"
-        );
+      if (response.status === 200) {
+        message.success("Inscription à la newsletter réussie!");
       }
     } catch (error) {
-      console.error("Erreur lors de la requête API:", error);
-      message.error("Une erreur s'est produite, veuillez réessayer.");
+      message.error("Erreur lors de l'inscription à la newsletter.");
+      console.error("Error subscribing to newsletter:", error);
     }
-    setLoading(false);
   };
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -65,7 +50,7 @@ const Footer = () => {
               <label htmlFor="terms">J'accepte les termes et conditions</label>
             </div>
             <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-              <Button type="primary" htmlType="submit" loading={loading}>
+              <Button type="primary" htmlType="submit">
                 S'inscrire
               </Button>
             </Form.Item>

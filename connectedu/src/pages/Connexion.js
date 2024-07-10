@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import { jwt_decode } from "jwt-decode";
 import { useState } from "react";
 import Menu1 from "../components/Menu1";
 import { useHistory } from "react-router-dom";

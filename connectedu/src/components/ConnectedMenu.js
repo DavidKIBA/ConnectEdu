@@ -1,11 +1,45 @@
 import React from "react";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { useHistory } from "react-router-dom"; // pour rediriger les bouttons sur d'autres pages
 import { FaUser } from "react-icons/fa"; // importer l'icone utilisateur
+import { FaBars, FaTimes } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const ConnectedMenu = () => {
+  const [infosEcole, setInfosEcole] = useState({});
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("access");
+        const decodedToken = jwtDecode(token);
+        const ecole_id = decodedToken.id_ecole;
+        const schemaname = decodedToken.schema_name;
+        const schema = schemaname.replace("_", "-");
+
+        const response = await axios.get(
+          `http://${schema}.localhost:8000/ecole/info/${ecole_id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setInfosEcole(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des informations de l'école:",
+          error
+        );
+      }
+    };
+
+    fetchUserData();
+  }, []);
   // gerer l'etat d'ouverture et fermeture du menu du profil
 
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -19,6 +53,12 @@ const ConnectedMenu = () => {
   const signout = useHistory();
   const Signout = () => {
     signout.push("/");
+  };
+
+  const navRef = useRef();
+
+  const showNavbar = () => {
+    navRef.current.classList.toggle("responsive_nav");
   };
 
   return (
@@ -46,7 +86,7 @@ const ConnectedMenu = () => {
 
           <li>
             <NavLink to="/dashboard" className="dashboard">
-              Tableau de bord
+              Dashboard
             </NavLink>
           </li>
           <li>
@@ -68,7 +108,7 @@ const ConnectedMenu = () => {
               <button className="profile-button" onClick={toggleMenu}>
                 <div className="profile-picture">
                   <img
-                    src={process.env.PUBLIC_URL + "/images/eunice.jpg"}
+                    src={infosEcole.logo}
                     alt="Profile"
                     className="profile-image"
                   />

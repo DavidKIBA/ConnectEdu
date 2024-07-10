@@ -44,7 +44,7 @@ const Uploadfiles = () => {
       const schema = schema_name.replace("_", "-");
 
       // Construction de l'URL pour envoyer les données
-      const url = `http://${schema}.localhost:8000/ecole/v1/eleve-create/`;
+      const url = `http://${schema}.localhost:8000/ecole/create-eleve-excel/`;
 
       // Activation de l'état de chargement
       setLoading(true);

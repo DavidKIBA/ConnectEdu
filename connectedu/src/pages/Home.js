@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"; // pour rediriger les bouttons su
 import Menu from "../components/Menu1";
 import Footer from "../components/Footer";
 import { useState } from "react";
+import axios from "axios";
 import {
   Button,
   Cascader,
@@ -45,6 +46,20 @@ const imgStyle: React.CSSProperties = {
 };
 
 const Home = () => {
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/contact/send-single-email/",
+        values
+      );
+      if (response.status === 200) {
+        message.success("Email envoyé avec succès!");
+      }
+    } catch (error) {
+      message.error("Erreur lors de l'envoi de l'email.");
+      console.error("Error sending email:", error);
+    }
+  };
   // formulaire de contact
 
   const layoutStyle = {
@@ -172,6 +187,7 @@ const Home = () => {
                 {...formItemLayout}
                 variant="filled"
                 style={{ maxWidth: 1000 }}
+                onFinish={onFinish}
               >
                 <Form.Item
                   label="E-mail"

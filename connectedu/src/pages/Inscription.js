@@ -49,7 +49,7 @@ const Inscription = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:8000/inscription/ecole/",
+        "http://localhost:8000/ecole/inscription/",
         formDataToSend,
         {
           headers: {
@@ -60,7 +60,7 @@ const Inscription = () => {
 
       if (response.status === 201) {
         message.success("Inscription réussie:", response.data);
-        continuer.push("/inscription2");
+        continuer.push("/connexion");
       } else {
         message.error("Echec de l'inscription:", response.data);
       }

@@ -1,8 +1,21 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Avatar, Typography, Button, Modal, Upload, message, Form, Input, Select } from 'antd';
-import { 
-  UserOutlined, 
-  DashboardOutlined, 
+import React, { useState, useEffect } from "react";
+
+import {
+  Layout,
+  Menu,
+  Avatar,
+  Typography,
+  Button,
+  Modal,
+  Upload,
+  message,
+  Form,
+  Input,
+  Select,
+} from "antd";
+import {
+  UserOutlined,
+  DashboardOutlined,
   LogoutOutlined,
   MessageOutlined,
   BellOutlined,
@@ -11,26 +24,57 @@ import {
   UsergroupAddOutlined,
   LockOutlined,
   FormOutlined,
-  UploadOutlined
-} from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import {  useTheme } from '../components/ThemeContext';
+  UploadOutlined,
+} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { useTheme } from "../components/ThemeContext";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const { Header, Sider, Content } = Layout;
 const { Title, Paragraph } = Typography;
 const { confirm } = Modal;
 
 const Profile = () => {
+  const [infosEcole, setInfosEcole] = useState({});
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("access");
+        const decodedToken = jwtDecode(token);
+        const ecole_id = decodedToken.id_ecole;
+        const schemaname = decodedToken.schema_name;
+        const schema = schemaname.replace("_", "-");
+
+        const response = await axios.get(
+          `http://${schema}.localhost:8000/info-ecole/${ecole_id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setInfosEcole(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des informations de l'école:",
+          error
+        );
+      }
+    };
+
+    fetchUserData();
+  }, []);
   // Utilisez le hook useTheme pour accéder à l'état du thème et à la fonction toggleTheme
   const { darkMode } = useTheme();
 
   // Utilisez l'état du thème pour définir les styles en fonction du mode sombre ou clair
   const profileStyle = {
-    background: darkMode ? '#1f1f1f' : '#ffffff', // Définissez la couleur de fond en fonction du thème
-    color: darkMode ? '#ffffff' : '#000000', // Définissez la couleur du texte en fonction du thème
+    background: darkMode ? "#1f1f1f" : "#ffffff", // Définissez la couleur de fond en fonction du thème
+    color: darkMode ? "#ffffff" : "#000000", // Définissez la couleur du texte en fonction du thème
   };
-
 
   // États pour gérer l'affichage des différentes sections et le formulaire d'ajout de compte invité
   const [showAccountInfo, setShowAccountInfo] = useState(false);
@@ -50,56 +94,56 @@ const Profile = () => {
   // Logique pour gérer l'ajout de comptes invités
   const handleAddGuest = (values) => {
     // Effectuez ici la logique pour ajouter un compte invité
-    console.log('Nouveau compte invité : ', values);
-    message.success('Compte invité ajouté avec succès !');
+    console.log("Nouveau compte invité : ", values);
+    message.success("Compte invité ajouté avec succès !");
     toggleAddGuestModal(); // Fermez le modal après l'ajout
   };
 
   // Gestion des clics sur les différents boutons du menu
   const handleAccountClick = () => {
     setShowAccountInfo(!showAccountInfo);
-    hideOtherSections('account');
+    hideOtherSections("account");
   };
 
   const handlePrivacyClick = () => {
     setShowPrivacyInfo(!showPrivacyInfo);
-    hideOtherSections('privacy');
+    hideOtherSections("privacy");
   };
 
   const handleAvatarClick = () => {
     setShowAvatarOptions(true);
-    hideOtherSections('avatar');
+    hideOtherSections("avatar");
   };
 
   const handleDiscussionsClick = () => {
     setShowDiscussionsInfo(!showDiscussionsInfo);
-    hideOtherSections('discussions');
+    hideOtherSections("discussions");
   };
 
   const handleNotificationClick = () => {
     setShowNotificationInfo(!showNotificationInfo);
-    hideOtherSections('notification');
+    hideOtherSections("notification");
   };
 
   const handleStorageClick = () => {
     setShowStorageInfo(!showStorageInfo);
-    hideOtherSections('storage');
+    hideOtherSections("storage");
   };
 
   const handleInviteClick = () => {
     setShowInviteInfo(!showInviteInfo);
-    hideOtherSections('invite');
+    hideOtherSections("invite");
   };
 
   const uploadProps = {
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
     onChange(info) {
-      if (info.file.status !== 'uploading') {
+      if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
-      if (info.file.status === 'done') {
+      if (info.file.status === "done") {
         message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
+      } else if (info.file.status === "error") {
         message.error(`${info.file.name} file upload failed.`);
       }
     },
@@ -110,13 +154,13 @@ const Profile = () => {
   // Logique pour masquer les autres sections lorsqu'une section est ouverte
   const hideOtherSections = (currentSection) => {
     const sections = [
-      'account',
-      'privacy',
-      'avatar',
-      'discussions',
-      'notification',
-      'storage',
-      'invite'
+      "account",
+      "privacy",
+      "avatar",
+      "discussions",
+      "notification",
+      "storage",
+      "invite",
     ];
 
     sections.forEach((section) => {
@@ -129,25 +173,25 @@ const Profile = () => {
   // Fonction utilitaire pour modifier l'état en fonction de la section
   const setShowState = (section, value) => {
     switch (section) {
-      case 'account':
+      case "account":
         setShowAccountInfo(value);
         break;
-      case 'privacy':
+      case "privacy":
         setShowPrivacyInfo(value);
         break;
-      case 'avatar':
+      case "avatar":
         setShowAvatarOptions(value);
         break;
-      case 'discussions':
+      case "discussions":
         setShowDiscussionsInfo(value);
         break;
-      case 'notification':
+      case "notification":
         setShowNotificationInfo(value);
         break;
-      case 'storage':
+      case "storage":
         setShowStorageInfo(value);
         break;
-      case 'invite':
+      case "invite":
         setShowInviteInfo(value);
         break;
       default:
@@ -158,7 +202,7 @@ const Profile = () => {
   // Logique pour se déconnecter
   const handleLogout = () => {
     // Gérer la déconnexion ici
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = "http://localhost:3000/";
   };
 
   // Logique pour annuler l'ajout de compte invité
@@ -167,56 +211,110 @@ const Profile = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: "100vh" }}>
       <Sider style={profileStyle}>
         <div className="logo" />
-        <Menu theme="dark" mode="vertical" defaultSelectedKeys={['1']}>
+        <Menu theme="dark" mode="vertical" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1" icon={<DashboardOutlined />}>
             <Link to="/dashboard">Dashboard</Link>
           </Menu.Item>
-          <Menu.Item key="3" icon={<UserOutlined />} onClick={handleAccountClick}>
+          <Menu.Item
+            key="3"
+            icon={<UserOutlined />}
+            onClick={handleAccountClick}
+          >
             Compte
           </Menu.Item>
-          <Menu.Item key="4" icon={<LockOutlined />} onClick={handlePrivacyClick}>
+          <Menu.Item
+            key="4"
+            icon={<LockOutlined />}
+            onClick={handlePrivacyClick}
+          >
             Confidentialité
           </Menu.Item>
-          <Menu.Item key="5" icon={<UserOutlined />} onClick={handleAvatarClick}>
+          <Menu.Item
+            key="5"
+            icon={<UserOutlined />}
+            onClick={handleAvatarClick}
+          >
             Avatar
           </Menu.Item>
-          <Menu.Item key="6" icon={<MessageOutlined />} onClick={handleDiscussionsClick}>
+          <Menu.Item
+            key="6"
+            icon={<MessageOutlined />}
+            onClick={handleDiscussionsClick}
+          >
             Discussions
           </Menu.Item>
-          <Menu.Item key="7" icon={<BellOutlined />} onClick={handleNotificationClick}>
+          <Menu.Item
+            key="7"
+            icon={<BellOutlined />}
+            onClick={handleNotificationClick}
+          >
             Notification
           </Menu.Item>
-          <Menu.Item key="8" icon={<DatabaseOutlined />} onClick={handleStorageClick}>
+          <Menu.Item
+            key="8"
+            icon={<DatabaseOutlined />}
+            onClick={handleStorageClick}
+          >
             Stockage et Données
           </Menu.Item>
-          <Menu.Item key="9" icon={<GlobalOutlined />} onClick={handleInviteClick}>
+          <Menu.Item
+            key="9"
+            icon={<GlobalOutlined />}
+            onClick={handleInviteClick}
+          >
             Invité
           </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
         <Header className="site-layout-background" style={{ padding: 0 }}>
-          <Menu mode="horizontal" theme="dark" style={{ float: 'right' }}>
-            <Menu.Item key="1" icon={<LogoutOutlined />} onClick={handleLogout} style={{ color: '#87CEEB' }}>
+          <Menu mode="horizontal" theme="dark" style={{ float: "right" }}>
+            <Menu.Item
+              key="1"
+              icon={<LogoutOutlined />}
+              onClick={handleLogout}
+              style={{ color: "#87CEEB" }}
+            >
               Déconnexion
             </Menu.Item>
           </Menu>
         </Header>
-        <Content style={{ margin: '16px', textAlign: 'center' }}>
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-          {showAccountInfo && (
+        <Content style={{ margin: "16px", textAlign: "center" }}>
+          <div
+            className="site-layout-background"
+            style={{ padding: 24, minHeight: 360 }}
+          >
+            {showAccountInfo && (
               <div>
-                <Avatar size={190} icon={<UserOutlined />} />
-                <Title level={16}>John Doe</Title>
-                <Paragraph>Email: john.doe@example.com</Paragraph>
-                <Paragraph>Téléphone: +1 123 456 7890</Paragraph>
-                <Paragraph>Ville de Résidence: Paris</Paragraph>
-                <Paragraph>Adresse: 123 Rue de la République</Paragraph>
+                <Avatar size={100} src={infosEcole.logo} />
+                <Title level={16}>{infosEcole.nom}</Title>
+                <Paragraph>{infosEcole.email_ecole}</Paragraph>
+                <Paragraph>Tel:{infosEcole.telephone_1}</Paragraph>
+                <Paragraph>{infosEcole.telephone_2}</Paragraph>
+                <Paragraph>
+                  Ville de Résidence: {infosEcole.ville_residence}
+                </Paragraph>
+                <Paragraph>Adresse: {infosEcole.adresse}</Paragraph>
                 <Paragraph>Pièce d'Identité: Carte d'identité</Paragraph>
-                <Paragraph>Mot de Passe: *********</Paragraph>
+
+                <div key={infosEcole.id}>
+                  <h3>Responsables:</h3>
+                  <ul>
+                    {infosEcole.utilisateur_set &&
+                    infosEcole.utilisateur_set.length > 0 ? (
+                      infosEcole.utilisateurs_set.map((utilisateurs) => (
+                        <li key={utilisateurs.id}>
+                          {utilisateurs.nom} - {utilisateurs.email}
+                        </li>
+                      ))
+                    ) : (
+                      <li>Aucun responsable trouvé.</li>
+                    )}
+                  </ul>
+                </div>
               </div>
             )}
 
@@ -236,7 +334,7 @@ const Profile = () => {
                 <Upload {...uploadProps}>
                   <Button icon={<UploadOutlined />}>Importer une image</Button>
                 </Upload>
-                <Button style={{ marginTop: '10px' }} icon={<UserOutlined />}>
+                <Button style={{ marginTop: "10px" }} icon={<UserOutlined />}>
                   Créer un avatar
                 </Button>
               </div>
@@ -262,7 +360,6 @@ const Profile = () => {
               </div>
             )}
 
-
             {showStorageInfo && (
               <div>
                 <DatabaseOutlined size={190} icon={<DatabaseOutlined />} />
@@ -277,12 +374,17 @@ const Profile = () => {
 
             {showInviteInfo && (
               <div>
-                <UsergroupAddOutlined size={190} icon={<UsergroupAddOutlined />} />
+                <UsergroupAddOutlined
+                  size={190}
+                  icon={<UsergroupAddOutlined />}
+                />
                 <Title level={16}>Invité</Title>
                 <Paragraph>Gérer les utilisateurs invités</Paragraph>
                 <Paragraph>Droits d'accès des invités</Paragraph>
                 <Paragraph>Historique des invitations</Paragraph>
-                <Button type="primary" onClick={toggleAddGuestModal}>Ajouter un compte invité</Button>
+                <Button type="primary" onClick={toggleAddGuestModal}>
+                  Ajouter un compte invité
+                </Button>
               </div>
             )}
           </div>
@@ -295,26 +397,36 @@ const Profile = () => {
         onCancel={handleAddGuestCancel}
         footer={null}
       >
-        <Form
-          name="addGuestForm"
-          onFinish={handleAddGuest}
-        >
+        <Form name="addGuestForm" onFinish={handleAddGuest}>
           <Form.Item
             name="guestName"
             label="Nom du compte invité"
-            rules={[{ required: true, message: 'Veuillez entrer le nom du compte invité' }]}
+            rules={[
+              {
+                required: true,
+                message: "Veuillez entrer le nom du compte invité",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="guestEmail"
             label="Email du compte invité"
-            rules={[{ required: true, type: 'email', message: 'Veuillez entrer une adresse email valide' }]}
+            rules={[
+              {
+                required: true,
+                type: "email",
+                message: "Veuillez entrer une adresse email valide",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">Ajouter</Button>
+            <Button type="primary" htmlType="submit">
+              Ajouter
+            </Button>
           </Form.Item>
         </Form>
       </Modal>

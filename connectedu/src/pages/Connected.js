@@ -1,9 +1,8 @@
 // Home.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"; // pour rediriger les bouttons sur d'autres pages
 import ConnectedMenu from "../components/ConnectedMenu";
 import Footer from "../components/Footer";
-import { useState } from "react";
 import {
   Button,
   Cascader,
@@ -30,6 +29,8 @@ import {
 
 import { Card, Layout } from "antd";
 import Item from "antd/es/list/Item";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 const { Meta } = Card;
 const { Title } = Typography;
@@ -45,6 +46,38 @@ const imgStyle: React.CSSProperties = {
 };
 
 const Home = () => {
+  const [infosEcole, setInfosEcole] = useState({});
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("access");
+        const decodedToken = jwtDecode(token);
+        const ecole_id = decodedToken.id_ecole;
+        const schemaname = decodedToken.schema_name;
+        const schema = schemaname.replace("_", "-");
+
+        const response = await axios.get(
+          `http://${schema}.localhost:8000/ecole/info/${ecole_id}/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setInfosEcole(response.data);
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des informations de l'école:",
+          error
+        );
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   // formulaire de contact
 
   const layoutStyle = {

@@ -31,7 +31,7 @@ const Dashboardsider = () => {
         const schema = schemaname.replace("_", "-");
 
         const response = await axios.get(
-          `http://${schema}.localhost:8000/info-ecole/${ecole_id}/`,
+          `http://${schema}.localhost:8000/ecole/info/${ecole_id}/`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
