@@ -20,6 +20,7 @@ import {
 import {
   Tabs,
   Breadcrumb,
+  Form,
   Layout,
   Menu,
   theme,
@@ -42,6 +43,7 @@ import { Typography, Divider } from "antd";
 import TabCyclePrimaire from "../components/TabCyclePrimaire";
 import TabCycleLycee from "../components/TabCycleLycee";
 import TabCycleCollege from "../components/TabCycleCollege";
+import Uploadfiles from "../components/Uploadfiles";
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -144,6 +146,30 @@ const Espaceparents = () => {
 
   const handleBreadcrumbClick = (route) => {
     history.push(route);
+  };
+
+  const layout = {
+    labelCol: {
+      span: 8,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+  };
+
+  const validateMessages = {
+    required: "${label} is required!",
+    types: {
+      email: "${label} is not a valid email!",
+      number: "${label} is not a valid number!",
+    },
+    number: {
+      range: "${label} must be between ${min} and ${max}",
+    },
+  };
+
+  const onFinish = (values) => {
+    console.log(values);
   };
 
   return (
@@ -455,7 +481,116 @@ const Espaceparents = () => {
               background: "#001E32",
               borderRadius: borderRadiusLG,
             }}
-          ></Content>
+          >
+            <Uploadfiles />
+            <br />
+          </Content>
+
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: "#001E32",
+              borderRadius: "16px",
+            }}
+          >
+            <div style={{ padding: "20px" }}>
+              <Card
+                cover={
+                  <video
+                    width="100%"
+                    height="auto"
+                    controls
+                    style={{ color: "white" }}
+                  >
+                    <source
+                      src={`${process.env.PUBLIC_URL}/images/tuto.mp4`}
+                      type="video/mp4"
+                    />
+                    Votre navigateur ne prend pas en charge la lecture de la
+                    vidéo.
+                  </video>
+                }
+              >
+                <h1>Tutoriel de prise en main</h1>
+                <p>
+                  Ce tutoriel est un guide vous donnant les indications sur
+                  l'importation des listes d'élèves de chaque classe.
+                </p>
+              </Card>
+            </div>
+          </Content>
+
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: "#001E32",
+              borderRadius: "16px",
+            }}
+          >
+            <Title level={4} style={{ color: "white", textAlign: "center" }}>
+              Envoyer un message groupé à tous les parents d'élèves.
+            </Title>
+            <Form
+              {...layout}
+              name="nest-messages"
+              onFinish={onFinish}
+              style={{
+                maxWidth: 600,
+              }}
+              validateMessages={validateMessages}
+            >
+              <Form.Item
+                name={["user", "objet"]}
+                label="Objet"
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name={["user", "email"]}
+                label="Email"
+                rules={[
+                  {
+                    type: "email",
+                    required: true,
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                name={["user", "message"]}
+                label="Message"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer votre message !",
+                  },
+                ]}
+              >
+                <Input.TextArea />
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  ...layout.wrapperCol,
+                  offset: 8,
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Envoyer
+                </Button>
+              </Form.Item>
+            </Form>
+          </Content>
 
           {/* Fin du corps de la page 3*/}
         </Layout>
