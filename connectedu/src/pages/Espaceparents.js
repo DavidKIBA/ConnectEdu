@@ -482,7 +482,6 @@ const Espaceparents = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Uploadfiles />
             <br />
           </Content>
 

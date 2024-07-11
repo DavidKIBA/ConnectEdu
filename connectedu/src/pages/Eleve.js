@@ -233,8 +233,7 @@ const Eleve = () => {
                 color: "white",
               }}
             >
-              {studentInfo.prenom} {studentInfo.nom} -
-              {studentInfo.niveau.libelle}
+              {studentInfo.prenom} {studentInfo.nom} -{studentInfo.niveau}
             </Title>
 
             <Button

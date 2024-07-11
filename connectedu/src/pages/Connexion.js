@@ -38,7 +38,7 @@ const Connexion = () => {
   const handleOk = async (e) => {
     try {
       const response = await axios.post(
-        "http://192.168.1.3:8000/utilisateur/reset-password/",
+        "http://localhost:8000/utilisateur/reset-password/",
         JSON.stringify(adressmail), // Convertir formData en JSON
         {
           headers: {
