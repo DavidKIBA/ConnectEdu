@@ -40,10 +40,10 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
 import { Typography, Divider } from "antd";
+import TabCyclePrescolaire from "../components/TabCyclePrescolaire";
 import TabCyclePrimaire from "../components/TabCyclePrimaire";
 import TabCycleLycee from "../components/TabCycleLycee";
 import TabCycleCollege from "../components/TabCycleCollege";
-import Uploadfiles from "../components/Uploadfiles";
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -51,9 +51,39 @@ const { Meta } = Card;
 const { TextArea } = Input;
 
 const { Title, Paragraph } = Typography;
-
-const Espaceparents = () => {
+const generateData = () => {
+  const data = [];
+  return data;
+};
+const Espaceparents = ({ classKey }) => {
   const [infosEcole, setInfosEcole] = useState({});
+  const [classeData, setClasseData] = useState(null);
+
+  useEffect(() => {
+    const selectedClasseKey = localStorage.getItem("selectedClasseKey");
+    if (selectedClasseKey) {
+      const storedClasseData = localStorage.getItem(
+        `classe_${selectedClasseKey}`
+      );
+      if (storedClasseData) {
+        const parsedClasseData = JSON.parse(storedClasseData);
+        setClasseData(parsedClasseData);
+      }
+    }
+  }, []);
+
+  const [data, setData] = useState(generateData());
+  const [classe, setClasse] = useState(null);
+
+  useEffect(() => {
+    const storedClass = localStorage.getItem(`classe_${classKey}`);
+
+    if (storedClass) {
+      setClasse(JSON.parse(storedClass));
+    }
+  }, [classKey]);
+
+  // récupération de la liste des parents
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -95,19 +125,24 @@ const Espaceparents = () => {
   const items = [
     {
       key: "1",
-      label: "Primaire",
-      children: <TabCyclePrimaire />,
+      label: infosEcole.libelle,
+      children: <TabCyclePrescolaire />,
     },
-    {
-      key: "2",
-      label: "Collège",
-      children: <TabCycleCollege />,
-    },
-    {
-      key: "3",
-      label: "Lycée",
-      children: <TabCycleLycee />,
-    },
+    // {
+    //   key: "2",
+    //   label: "Primaire",
+    //   children: <TabCyclePrimaire />,
+    // },
+    // {
+    //   key: "3",
+    //   label: "Collège",
+    //   children: <TabCycleCollege />,
+    // },
+    // {
+    //   key: "4",
+    //   label: "Lycée",
+    //   children: <TabCycleLycee />,
+    // },
   ];
 
   {
@@ -467,129 +502,80 @@ const Espaceparents = () => {
             <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
 
             {/* Fin Tabs des cycles */}
+            <Content
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+                background: "#001E32",
+                borderRadius: "16px",
+              }}
+            >
+              <Title level={4} style={{ color: "white", textAlign: "center" }}>
+                Envoyer un message groupé à tous les parents d'élèves.
+              </Title>
+              <Form
+                {...layout}
+                name="nest-messages"
+                onFinish={onFinish}
+                style={{
+                  maxWidth: 600,
+                }}
+                validateMessages={validateMessages}
+              >
+                <Form.Item
+                  name={["user", "objet"]}
+                  label="Objet"
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name={["user", "email"]}
+                  label="Email"
+                  rules={[
+                    {
+                      type: "email",
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+
+                <Form.Item
+                  name={["user", "message"]}
+                  label="Message"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Veuillez entrer votre message !",
+                    },
+                  ]}
+                >
+                  <Input.TextArea />
+                </Form.Item>
+                <Form.Item
+                  wrapperCol={{
+                    ...layout.wrapperCol,
+                    offset: 8,
+                  }}
+                >
+                  <Button type="primary" htmlType="submit">
+                    Envoyer
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Content>
           </Content>
 
           {/* fin Corps de la page 1 */}
 
           {/*corps de la page 3*/}
-
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: "#001E32",
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            <br />
-          </Content>
-
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: "#001E32",
-              borderRadius: "16px",
-            }}
-          >
-            <div style={{ padding: "20px" }}>
-              <Card
-                cover={
-                  <video
-                    width="100%"
-                    height="auto"
-                    controls
-                    style={{ color: "white" }}
-                  >
-                    <source
-                      src={`${process.env.PUBLIC_URL}/images/tuto.mp4`}
-                      type="video/mp4"
-                    />
-                    Votre navigateur ne prend pas en charge la lecture de la
-                    vidéo.
-                  </video>
-                }
-              >
-                <h1>Tutoriel de prise en main</h1>
-                <p>
-                  Ce tutoriel est un guide vous donnant les indications sur
-                  l'importation des listes d'élèves de chaque classe.
-                </p>
-              </Card>
-            </div>
-          </Content>
-
-          <Content
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: "#001E32",
-              borderRadius: "16px",
-            }}
-          >
-            <Title level={4} style={{ color: "white", textAlign: "center" }}>
-              Envoyer un message groupé à tous les parents d'élèves.
-            </Title>
-            <Form
-              {...layout}
-              name="nest-messages"
-              onFinish={onFinish}
-              style={{
-                maxWidth: 600,
-              }}
-              validateMessages={validateMessages}
-            >
-              <Form.Item
-                name={["user", "objet"]}
-                label="Objet"
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name={["user", "email"]}
-                label="Email"
-                rules={[
-                  {
-                    type: "email",
-                    required: true,
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                name={["user", "message"]}
-                label="Message"
-                rules={[
-                  {
-                    required: true,
-                    message: "Veuillez entrer votre message !",
-                  },
-                ]}
-              >
-                <Input.TextArea />
-              </Form.Item>
-              <Form.Item
-                wrapperCol={{
-                  ...layout.wrapperCol,
-                  offset: 8,
-                }}
-              >
-                <Button type="primary" htmlType="submit">
-                  Envoyer
-                </Button>
-              </Form.Item>
-            </Form>
-          </Content>
 
           {/* Fin du corps de la page 3*/}
         </Layout>

@@ -30,6 +30,7 @@ import Terms from "./pages/Terms";
 import Calendrier from "./pages/Calendrier";
 import Profile from "./pages/Profile";
 import Eleve from "./pages/Eleve";
+import TabCyclePrescolaire from "./components/TabCyclePrescolaire";
 import TabCyclePrimaire from "./components/TabCyclePrimaire";
 import TabCycleLycee from "./components/TabCycleLycee";
 import TabCycleCollege from "./components/TabCycleCollege";
@@ -90,6 +91,11 @@ const App = () => {
           <Route path="/calendrier" exact component={Calendrier} />
           <Route path="/profile" exact component={Profile} />
           <Route path="/eleve/:id" exact component={Eleve} />
+          <Route
+            path="/tabcycleprescolaire"
+            exact
+            component={TabCyclePrescolaire}
+          />
           <Route path="/tabcycleprimaire" exact component={TabCyclePrimaire} />
           <Route path="/tabcyclecollege" exact component={TabCycleCollege} />
           <Route path="/tabcyclelycee" exact component={TabCycleLycee} />
