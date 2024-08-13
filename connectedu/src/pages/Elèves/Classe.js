@@ -308,6 +308,36 @@ const Classe = ({ classKey }) => {
     console.log(values);
   };
 
+  {
+    /* Ajout des matières de la classe */
+  }
+  const [todo, setTodo] = useState(" ");
+  const [todoList, setTodoList] = useState([]);
+  const addTodo = (e) => {
+    const newTodo = {
+      id: Math.floor(Math.random() * 1000),
+      value: todo,
+    };
+    setTodoList((prev) => [...prev, newTodo]);
+    setTodo("");
+  };
+
+  {
+    /* Fin Ajout des matières de la classe */
+  }
+
+  {
+    /* Suppression des matières de la classe */
+  }
+  const deleteTodo = (todoId) => {
+    const newTodos = todoList.filter((todo) => todo.id !== todoId);
+    setTodoList(newTodos);
+  };
+
+  {
+    /* Fin Suppression des matières de la classe */
+  }
+
   return (
     <Layout style={{ background: "#001E32" }}>
       <Dashboardmenu />
@@ -385,6 +415,82 @@ const Classe = ({ classKey }) => {
                 scroll={{ x: true }}
               />
             </div>
+
+            {/* Ajout des matières de la classe */}
+            <Title level={3} style={{ color: "#3498DB" }}>
+              Matières de la classe
+            </Title>
+            <Form
+              name="basic"
+              labelCol={{
+                span: 8,
+              }}
+              wrapperCol={{
+                span: 16,
+              }}
+              style={{
+                maxWidth: 600,
+              }}
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={addTodo}
+            >
+              <Form.Item
+                name="libelle"
+                label="Matière"
+                rules={[
+                  { required: true, message: "Veuillez entrer une matière" },
+                ]}
+              >
+                <Input
+                  placeholder="Ajouter une matière"
+                  value={todo}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setTodo(e.target.value);
+                  }}
+                />
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  offset: 8,
+                  span: 16,
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+
+            {/* Liste des matières ajoutées */}
+            <Title level={4} style={{ color: "#3498DB" }}>
+              Liste des matières ajoutées
+            </Title>
+            <ol>
+              {todoList.length ? (
+                todoList.map((todo) => {
+                  return (
+                    <div>
+                      <li key={todo.id} style={{ display: "inline" }}>
+                        {todo.value}
+                      </li>
+                      <button
+                        onClick={() => deleteTodo(todo.id)}
+                        style={{ marginLeft: "200px" }}
+                      >
+                        Suprimer
+                      </button>
+                    </div>
+                  );
+                })
+              ) : (
+                <span>liste vide</span>
+              )}
+            </ol>
+            {/* fin Liste des matières ajoutées */}
+            {/* Fin Ajout des matières de la classe */}
 
             <Content
               style={{
