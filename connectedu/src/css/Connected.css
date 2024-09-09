@@ -1,49 +1,53 @@
-*{
+* {
   padding: 0%;
 }
 
 .home-container {
-    position: relative;
-  }
-  
-  .background-image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
+  position: relative;
+}
+
+.background-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 795px !important;
-    background-color: #001e32d3; /* Couleur bleu de nuit avec opacité */
-  }
-  
-  .logo {
-    width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
-  }
- 
-.titre1{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 795px !important;
+  background-color: #001e32d3; /* Couleur bleu de nuit avec opacité */
+}
+
+.logo {
+  width: 100px; /* Ajustez la taille de votre logo selon vos besoins */
+}
+
+.titre1 {
   position: absolute;
   margin-top: -600px;
   margin-left: 100px;
-  font-family:  Montserrat;
+  font-family: Montserrat;
   color: white;
   font-size: 4pc;
 }
 
-.titre2{
+.titre2 {
   position: absolute;
   margin-top: -480px;
   margin-left: 100px;
-  font-family:  Montserrat;
+  font-family: Montserrat;
   color: white;
   font-size: 2pc;
 }
+.entete {
+  position: relative;
+  margin-top: 650px;
+}
 
-.tiret{
+.tiret {
   position: absolute;
   margin-top: -480px;
   margin-left: 100px;
@@ -52,25 +56,25 @@
   color: #ffffff;
 }
 
-.titre3{
+.titre3 {
   position: absolute;
   margin-top: -400px;
   margin-left: 100px;
-  font-family:  Montserrat;
+  font-family: Montserrat;
   color: white;
   font-size: 2pc;
 }
 
-.liste{
+.liste {
   position: absolute;
   margin-top: -330px;
   margin-left: 150px;
-  font-family:  Montserrat;
+  font-family: Montserrat;
   color: white;
   font-size: 1pc;
 }
 
-.voirplus{
+.voirplus {
   position: absolute;
   margin-top: -180px;
   width: 80px;
@@ -82,11 +86,9 @@
   align-content: center;
   text-align: center;
   padding: 2px;
-  background-color: #2ECC71;
-  border-color: #2ECC71;
+  background-color: #2ecc71;
+  border-color: #2ecc71;
 }
-
-
 
 .devises {
   display: flex;
@@ -95,7 +97,7 @@
 
 .devise1 {
   flex: 1;
-  background-color: #3498DB;
+  background-color: #3498db;
   color: #ffffff;
   padding: 10px;
   text-align: center;
@@ -104,7 +106,7 @@
 
 .devise2 {
   flex: 1;
-  background-color: #2ECC71;
+  background-color: #2ecc71;
   color: #ffffff;
   padding: 10px;
   text-align: center;
@@ -113,17 +115,14 @@
 
 .devise3 {
   flex: 1;
-  background-color: #3498DB;
+  background-color: #3498db;
   color: #ffffff;
   padding: 10px;
   text-align: center;
   font-family: Roboto, sans-serif;
 }
 
-
-
 /* formulaire */
-
 
 .contact-container {
   display: flex;
@@ -141,7 +140,7 @@
   padding: 10px;
 }
 
-.contact{
+.contact {
   color: #ffffff;
 }
 
@@ -180,18 +179,18 @@ button {
   align-items: center;
 }
 
-.iconedevise{
+.iconedevise {
   width: 50px;
   height: auto;
 }
 
-.presence{
+.presence {
   text-align: center;
   font-size: 1.5pc;
   font-family: Roboto, sans-serif;
 }
 
-.pays{
+.pays {
   text-align: center;
   font-family: Roboto, sans-serif;
 }

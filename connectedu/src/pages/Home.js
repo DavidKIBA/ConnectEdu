@@ -36,14 +36,14 @@ const { Meta } = Card;
 const { Title } = Typography;
 const { Header, Sider, Content } = Layout;
 
-const cardStyle: React.CSSProperties = {
-  width: 620,
-};
+// const cardStyle: React.CSSProperties = {
+//   width: 620,
+// };
 
-const imgStyle: React.CSSProperties = {
-  display: "block",
-  width: 273,
-};
+// const imgStyle: React.CSSProperties = {
+//   display: "block",
+//   width: 273,
+// };
 
 const Home = () => {
   const onFinish = async (values) => {
@@ -62,44 +62,6 @@ const Home = () => {
   };
   // formulaire de contact
 
-  const layoutStyle = {
-    width: "80vw", // Ajustez la largeur selon vos besoins
-    minWidth: "300px", // Assurez-vous qu'il ne devienne pas trop étroit
-    background: "#fff",
-    padding: "24px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-  };
-
-  const headerStyle = {
-    textAlign: "center",
-    padding: "16px 0",
-    fontSize: "24px",
-    fontWeight: "bold",
-    background: "#001529",
-    color: "#fff",
-    borderRadius: "8px 8px 0 0",
-  };
-
-  const contentStyle = {
-    padding: "24px",
-    fontSize: "16px",
-    textAlign: "center",
-  };
-
-  const { RangePicker } = DatePicker;
-
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 6 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 14 },
-    },
-  };
-
   // fonction de redirection du boutton vers la page about
   const voirplus = useHistory();
   const Voirplus = () => {
@@ -108,13 +70,8 @@ const Home = () => {
 
   // fonction envoyant le mail de l'utilisateur.
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Ajout de la logique pour gérer l'envoi du formulaire
-  };
-
   return (
-    <div className="home-container">
+    <div className="">
       <div className="photo">
         <img
           className="background-image"
@@ -123,167 +80,162 @@ const Home = () => {
         />
       </div>
       <Menu />
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <div>
-        <Title className="titre1">ConnectEdu</Title>
-        <br></br>
-        <Title level={2} className="titre2">
-          Découvrez ce que ConnectEdu peut faire pour vous :
-        </Title>
-        <br></br>
-        <Title level={2} className="titre2">
-          L'école à portée des mains
-        </Title>
-        <div className="liste">
-          <ul>
-            <li className="ligne">
-              Gérez facilement vos étudiants, des admissions <br />à la
-              progression académique.
-            </li>{" "}
-            <br />
-            <li className="ligne">
-              Facilitez la communication avec les parents <br />
-              grâce à notre système de ....
-            </li>
-          </ul>
+
+      <div className="entete">
+        <div
+          className="titre1"
+          style={{
+            display: "block",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          <Title
+            className="titre1_1"
+            style={{ color: "white", fontSize: "70px" }}
+          >
+            ConnectEdu
+          </Title>
+
+          <Title
+            className="titre1_2"
+            level={2}
+            style={{ color: "white", fontSize: "40px" }}
+          >
+            L'école à portée des mains
+          </Title>
+          <Title
+            level={2}
+            className="titre1_3"
+            style={{ color: "#2ecc71", fontSize: "20px" }}
+          >
+            Votre partenaire de confiance!
+          </Title>
         </div>
-        <button className="voirplus" onClick={Voirplus}>
-          Voir plus
-        </button>{" "}
-      </div>
-      {/* fin description */}
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "50vh",
-        }}
-      >
-        <Flex gap="middle" wrap>
-          <Layout style={layoutStyle}>
-            <Header style={headerStyle}>Laissez-nous un message</Header>
-            <Content style={contentStyle}>
+
+        <Flex gap="10%" className="flex" style={{ padding: "80px" }}>
+          <Flex>
+            <div className="form">
               <Form
-                {...formItemLayout}
-                variant="filled"
-                style={{ maxWidth: 1000 }}
-                onFinish={onFinish}
+                name="basic"
+                labelCol={{
+                  span: 15,
+                }}
+                wrapperCol={{
+                  span: 16,
+                }}
+                style={{
+                  maxWidth: 800,
+                }}
+                initialValues={{
+                  remember: true,
+                }}
               >
                 <Form.Item
-                  label="E-mail"
-                  name="Input"
-                  rules={[{ required: true, message: "Please input!" }]}
+                  name="nom"
+                  label="nom"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Veuillez entrer le nom complet",
+                    },
+                  ]}
                 >
-                  <Input />
+                  <Input
+                    placeholder="Entrer votre nom complet"
+                    style={{ width: "150px" }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="email"
+                  label="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Veuillez entrer l'adresse mail",
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder="Entrer votre adresse mail"
+                    style={{ width: "150px" }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="subject"
+                  label="subject"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Veuillez entrer l'objet du message",
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder="Entrer l'objet"
+                    style={{ width: "150px" }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="message"
+                  label="message"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Veuillez entrer l'objet du message",
+                    },
+                  ]}
+                >
+                  <textarea />
                 </Form.Item>
 
                 <Form.Item
-                  label="Tel"
-                  name="InputNumber"
-                  rules={[{ required: true, message: "Please input!" }]}
+                  wrapperCol={{
+                    offset: 8,
+                    span: 16,
+                  }}
                 >
-                  <InputNumber style={{ width: "100%" }} />
-                </Form.Item>
-
-                <Form.Item
-                  label="Objet"
-                  name="Mentions"
-                  rules={[{ required: true, message: "Please input!" }]}
-                >
-                  <Mentions style={{ width: "100%" }} />
-                </Form.Item>
-
-                <Form.Item
-                  label="Message"
-                  name="TextArea"
-                  rules={[{ required: true, message: "Please input!" }]}
-                >
-                  <Input.TextArea style={{ width: "100%" }} />
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
                   <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
                 </Form.Item>
               </Form>
-            </Content>
-          </Layout>
+            </div>
+          </Flex>
+          <Flex>
+            <div className="liste1">
+              <Title
+                level={2}
+                className="titre1_3"
+                style={{ color: "#2ecc71", fontSize: "20px" }}
+              >
+                Découvrez ce que ConnectEdu peut faire pour vous
+              </Title>
+              <ul>
+                <li className="ligne">
+                  Gérez facilement vos étudiants, des admissions à la
+                  progression académique.
+                </li>{" "}
+                <br />
+                <li className="ligne">
+                  Facilitez la communication avec les parents grâce à notre
+                  système de ...
+                </li>
+              </ul>
+            </div>
+            {/* <button className="voirplus" onClick={Voirplus}>
+            Voir plus
+          </button>{" "} */}
+          </Flex>
         </Flex>
       </div>
-      {/* devises de ConnectEdu */}
-      {/* <div className="devises">
-        <div className="devise3">
-          <Card
-            hoverable
-            style={{ width: 300, height: 240 }}
-            // {<img alt="example" src="/images/Project Setup.png" width={10} />}
-          >
-            <h3>Efficacité Simplifiée</h3>
-            <p>Gérez tous les aspects de votre école en un seul endroit.</p>
-          </Card>
-        </div>
-        <div className="devise2">
-          <Card
-            hoverable
-            style={{ width: 300, height: 240 }}
-            // {<img alt="example" src="/images/Security Shield.png" width={50} />}
-            src={process.env.PUBLIC_URL + "/images/Security Shield.png"}
-          >
-            <h3>Sécurité Prioritaire</h3>
-            <p>Gérez tous les aspects de votre école en un seul endroit.</p>
-          </Card>
-        </div>
-        <div className="devise3">
-          <Card
-            hoverable
-            style={{ width: 300, height: 240, backgroundColor: "#3498DB" }}
-            // {<img alt="example" src="images/Registration.png" width={50} />}
-          >
-            <h3>Personnalisé pour Vous</h3>
-            <p>Gérez tous les aspects de votre école en un seul endroit.</p>
-          </Card>
-        </div>
-      </div>
-      <br></br> */}
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-
       <div className="presence">Présent dans plus de 20 pays d’Afrique</div>
       <div className="pays">Congo, RDC, Guinée Bissau, Tchad, ...</div>
       <br></br>
       {/* footer*/}
       <br></br>
       <br></br>
-      <br></br>
-      <br></br>
-
       <Footer />
     </div>
   );
