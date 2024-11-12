@@ -21,6 +21,7 @@ import {
 import {
   Breadcrumb,
   Layout,
+  Form,
   Menu,
   theme,
   Input,
@@ -34,15 +35,14 @@ import {
   Progress,
   Carousel,
   Button,
+  Modal,
+  Space,
   List,
   Skeleton,
 } from "antd";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { Typography } from "antd";
-
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
 
 const { Header, Content, Sider } = Layout;
 const { Title, Paragraph } = Typography;
@@ -90,56 +90,51 @@ const Espacemembres = () => {
     history.push(route);
   };
 
-  const [initLoading, setInitLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [list, setList] = useState([]);
-  useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setData(res.results);
-        setList(res.results);
-      });
-  }, []);
-  const onLoadMore = () => {
-    setLoading(true);
-    setList(
-      data.concat(
-        [...new Array(count)].map(() => ({
-          loading: true,
-          name: {},
-          picture: {},
-        }))
-      )
-    );
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        const newData = data.concat(res.results);
-        setData(newData);
-        setList(newData);
-        setLoading(false);
-        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-        window.dispatchEvent(new Event("resize"));
-      });
+  {
+    /* Ajout des membres de l'école */
+  }
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [todoList, setTodoList] = useState([]);
+
+  const addTodo = () => {
+    const newTodo = {
+      id: Math.floor(Math.random() * 1000),
+      email,
+      name,
+    };
+    setTodoList((prev) => [...prev, newTodo]);
+    setEmail("");
+    setName("");
   };
-  const loadMore =
-    !initLoading && !loading ? (
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: 12,
-          height: 32,
-          lineHeight: "32px",
-        }}
-      >
-        <Button onClick={onLoadMore}>loading more</Button>
-      </div>
-    ) : null;
+
+  // Fonction de suppression
+  const deleteTodo = (todoId) => {
+    const newTodos = todoList.filter((todo) => todo.id !== todoId);
+    setTodoList(newTodos);
+  };
+
+  {
+    /* Fin Ajout des matières de la classe */
+  }
+
+  {
+    /* Début modal confirmation de suppression */
+  }
+  const [open, setOpen] = useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleOk = () => {
+    setOpen(false);
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  {
+    /* Fin modal confirmation de suppression */
+  }
 
   return (
     <Layout style={{ background: "#001E32" }}>
@@ -172,44 +167,128 @@ const Espacemembres = () => {
             }}
           >
             {/* Liste membres */}
+            {/* Ajout des matières de la classe */}
+            <Title level={3} style={{ color: "#3498DB" }}>
+              Membres de l'école
+            </Title>
+            <Form
+              name="basic"
+              labelCol={{
+                span: 8,
+              }}
+              wrapperCol={{
+                span: 16,
+              }}
+              style={{
+                maxWidth: 600,
+              }}
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={addTodo}
+            >
+              <Form.Item
+                name="libelle"
+                label="Adresse mail"
+                rules={[
+                  { required: true, message: "Veuillez entrer l'adresse mail" },
+                ]}
+              >
+                <Input
+                  placeholder="Ajouter un membre"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="libelle1"
+                label="Nom du membre"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer le nom du membre",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Ajouter un membre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Item>
 
-            <List
-              className="demo-loadmore-list"
-              loading={initLoading}
-              itemLayout="horizontal"
-              loadMore={loadMore}
-              dataSource={list}
-              renderItem={(item) => (
-                <List.Item
-                  actions={[
-                    <a key="list-loadmore-edit">Modifier</a>,
-                    <a key="list-loadmore-more">more</a>,
-                  ]}
-                >
-                  <Skeleton avatar title={false} loading={item.loading} active>
-                    <List.Item.Meta
-                      avatar={<Avatar src={item.picture.large} />}
-                      title={
-                        <a
-                          href="https://ant.design"
-                          style={{ color: "#2ecc71" }}
-                        >
-                          {item.name?.last}
-                        </a>
-                      }
-                      description={
-                        <span style={{ color: "#fff" }}>
-                          Ant Design, a design language for background
-                          applications, is refined by Ant UED Team
-                        </span>
-                      }
-                    />
-                    <div style={{ color: "#3498DB" }}>membre</div>
-                  </Skeleton>
-                </List.Item>
+              <Form.Item
+                wrapperCol={{
+                  offset: 8,
+                  span: 16,
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Ajouter
+                </Button>
+              </Form.Item>
+            </Form>
+
+            {/* debut confirmation modal */}
+
+            <>
+              <Modal
+                open={open}
+                title="Title"
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={(_, { OkBtn, CancelBtn }) => (
+                  <>
+                    <CancelBtn />
+                    <OkBtn />
+                  </>
+                )}
+              >
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+              </Modal>
+            </>
+            {/* fin confirmation modal */}
+
+            {/* Liste des membres ajoutés */}
+            <Title level={4} style={{ color: "#3498DB" }}>
+              Liste des membres ajoutés
+            </Title>
+            <ol>
+              {todoList.length ? (
+                todoList.map((todo) => (
+                  <div key={todo.id}>
+                    <li style={{ display: "inline" }}>
+                      {todo.name} - {todo.email}
+                    </li>
+                    <button
+                      style={{ marginLeft: "250px" }}
+                      onClick={() => {
+                        Modal.confirm({
+                          title: "Confirmation",
+                          content: "Êtes-vous sûr de supprimer ce membre ?",
+                          onOk: () => deleteTodo(todo.id),
+                          onCancel: () => console.log("Action annulée"),
+                        });
+                      }}
+                    >
+                      Supprimer
+                    </button>
+                    <button onClick={showModal} style={{ marginLeft: "20px" }}>
+                      Modifier
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <span>Liste vide</span>
               )}
-            />
+            </ol>
 
+            {/* fin Liste des membres ajoutés */}
+            {/* Fin Ajout des membres de l'école' */}
             {/* fin Liste membres */}
           </Content>
         </Layout>
