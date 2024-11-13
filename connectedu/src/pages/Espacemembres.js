@@ -265,7 +265,7 @@ const Espacemembres = () => {
                       {todo.name} - {todo.email}
                     </li>
                     <button
-                      style={{ marginLeft: "250px" }}
+                      style={{ marginLeft: "200px" }}
                       onClick={() => {
                         Modal.confirm({
                           title: "Confirmation",
