@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Tabs, Calendar, Badge, Button, Modal, Form, Input, DatePicker, Select } from 'antd';
-import { CalendarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { Layout, Menu, Tabs, Calendar, Badge, Button, Modal, Form, Input, DatePicker, Select, message } from 'antd';
+import { CalendarOutlined, ArrowLeftOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 import '../css/Calendrier.css';
 
 const { Header, Content, Sider } = Layout;
@@ -18,69 +19,207 @@ const Calendrier = () => {
   const [selectedTab, setSelectedTab] = useState('devoirs');
   const [modalVisible, setModalVisible] = useState(false);
   const [form] = Form.useForm();
-  const [selectedDate, setSelectedDate] = useState(null); 
-  const [classEvents, setClassEvents] = useState({}); // Stocker les événements pour chaque classe
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [classEvents, setClassEvents] = useState({});
   const [userToken, setUserToken] = useState('');
+  const [schemaName, setSchemaName] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
 
   const history = useHistory();
 
+  // Récupérer le token et décoder le schema_name
   useEffect(() => {
-    // Récupérer le JWT depuis le stockage local ou tout autre source
     const token = localStorage.getItem('userToken');
-    setUserToken(token);
+    if (token) {
+      setUserToken(token);
+      const decodedToken = jwtDecode(token);
+      setSchemaName(decodedToken.schema_name);
+    }
   }, []);
 
-  const handleTabChange = (key) => {
-    setSelectedTab(key);
-  };
+  // Récupérer les événements depuis la base de données
+  useEffect(() => {
+    if (userToken && schemaName) {
+      fetchData();
+    }
+  }, [userToken, schemaName]);
 
-  const handleDateSelect = (value) => {
-    setSelectedDate(value);
-    setModalVisible(true);
-  };
-
-  const handleModalCancel = () => {
-    setModalVisible(false);
-  };
-
-  const [selectedType, setSelectedType] = useState('paiement');
-
-  const handleModalSubmit = () => {
-    form.validateFields().then((values) => {
-      console.log('Form values:', values);
-      setModalVisible(false);
-      // Mettre à jour les événements pour la classe sélectionnée
-      const events = classEvents[selectedClass] || [];
-      const newEvent = {
-        date: selectedDate.format('YYYY-MM-DD'),
-        event: values.evenement,
-        type: selectedType
-      };
-      setClassEvents({
-        ...classEvents,
-        [selectedClass]: [...events, newEvent]
-      });
-    });
-  };
-  
-  // Fonction pour envoyer une requête au serveur avec le JWT dans l'en-tête Authorization
+  // Fonction pour récupérer les événements
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://192.168.1.3:8000/calendrier', {
+      const response = await axios.get(`https://192.168.1.3:8000/calendrier?schema_name=${schemaName}`, {
         headers: {
-          Authorization: `Bearer ${userToken}` // Inclure le JWT dans l'en-tête
-        }
+          Authorization: `Bearer ${userToken}`,
+        },
       });
-      setClassEvents(response.data);
+      const eventsByClass = response.data.reduce((acc, event) => {
+        if (!acc[event.class]) {
+          acc[event.class] = [];
+        }
+        acc[event.class].push(event);
+        return acc;
+      }, {});
+      setClassEvents(eventsByClass);
     } catch (error) {
       console.error('Erreur lors de la récupération des données du calendrier :', error);
     }
   };
 
+  // Gestion des onglets
+  const handleTabChange = (key) => {
+    setSelectedTab(key);
+  };
 
+  // Sélection d'une date
+  const handleDateSelect = (value) => {
+    setSelectedDate(value);
+    setModalVisible(true);
+    setIsEditing(false);
+    form.resetFields();
+  };
+
+  // Annuler la modal
+  const handleModalCancel = () => {
+    setModalVisible(false);
+    setIsEditing(false);
+    setEditingEvent(null);
+    form.resetFields();
+  };
+
+  // Soumettre le formulaire (ajout ou modification)
+  const handleModalSubmit = () => {
+    form.validateFields().then((values) => {
+      const eventData = {
+        date: selectedDate.format('YYYY-MM-DD'),
+        event: values.evenement,
+        type: values.type,
+        class: selectedClass,
+      };
+
+      if (isEditing) {
+        // Mettre à jour l'événement existant
+        axios.put(`https://192.168.1.3:8000/calendrier/${editingEvent.id}?schema_name=${schemaName}`, eventData, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+        .then((response) => {
+          const updatedEvents = classEvents[selectedClass].map(event =>
+            event.id === editingEvent.id ? response.data : event
+          );
+          setClassEvents({
+            ...classEvents,
+            [selectedClass]: updatedEvents,
+          });
+          message.success('Événement mis à jour avec succès');
+          setModalVisible(false);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la mise à jour de l\'événement :', error);
+          message.error('Erreur lors de la mise à jour de l\'événement');
+        });
+      } else {
+        // Ajouter un nouvel événement
+        axios.post(`https://192.168.1.3:8000/calendrier?schema_name=${schemaName}`, eventData, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+        .then((response) => {
+          const events = classEvents[selectedClass] || [];
+          setClassEvents({
+            ...classEvents,
+            [selectedClass]: [...events, response.data],
+          });
+          message.success('Événement ajouté avec succès');
+          setModalVisible(false);
+        })
+        .catch((error) => {
+          console.error('Erreur lors de l\'ajout de l\'événement :', error);
+          message.error('Erreur lors de l\'ajout de l\'événement');
+        });
+      }
+    });
+  };
+
+  // Modifier un événement
+  const handleEditEvent = (event) => {
+    setEditingEvent(event);
+    setSelectedDate(event.date);
+    setIsEditing(true);
+    setModalVisible(true);
+    form.setFieldsValue({
+      type: event.type,
+      evenement: event.event,
+    });
+  };
+
+  // Supprimer un événement
+  const handleDeleteEvent = (eventId) => {
+    axios.delete(`https://192.168.1.3:8000/calendrier/${eventId}?schema_name=${schemaName}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    })
+    .then(() => {
+      const updatedEvents = classEvents[selectedClass].filter(event => event.id !== eventId);
+      setClassEvents({
+        ...classEvents,
+        [selectedClass]: updatedEvents,
+      });
+      message.success('Événement supprimé avec succès');
+    })
+    .catch((error) => {
+      console.error('Erreur lors de la suppression de l\'événement :', error);
+      message.error('Erreur lors de la suppression de l\'événement');
+    });
+  };
+
+  // Récupérer les événements pour une date donnée
+  const getListData = (value) => {
+    const classEventData = classEvents[selectedClass] || [];
+    const listData = classEventData.filter(event => event.date === value.format('YYYY-MM-DD'));
+    return listData;
+  };
+
+  // Rendu des cellules du calendrier
+  const dateCellRender = (value) => {
+    const listData = getListData(value);
+    return (
+      <div>
+        {listData.map((item, index) => (
+          <div key={index} style={{ marginBottom: 5 }}>
+            <Badge status="success" text={item.event} />
+            <Button
+              type="link"
+              icon={<EditOutlined />}
+              onClick={() => handleEditEvent(item)}
+            />
+            <Button
+              type="link"
+              danger
+              icon={<DeleteOutlined />}
+              onClick={() => handleDeleteEvent(item.id)}
+            />
+          </div>
+        ))}
+        <div style={{ marginTop: 8 }}>
+          <Button type="primary" size="small" onClick={() => handleDateSelect(value)}>
+            Planifier
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  // Retour au tableau de bord
+  const handleReturnToDashboard = () => {
+    history.push('/dashboard');
+  };
+
+  // Gestion du clic sur le menu
   const handleMenuClick = (key, section) => {
-    console.log('Selected Menu:', key);
-
     if (key === '1' || key === '2' || key === '3') {
       setShowImage(true);
       setShowCalendars(false);
@@ -91,51 +230,6 @@ const Calendrier = () => {
       setSelectedClass(key);
     }
   };
-
-  const getListData = (value) => {
-    const classEventData = classEvents[selectedClass] || []; // Récupérer les événements de la classe sélectionnée
-    const listData = classEventData.filter(event => event.date === value.format('YYYY-MM-DD'));
-    return listData.map(item => ({ type: 'success', content: item.event }));
-  };
-
-  const contentStyle = {
-    padding: 24,
-    margin: 0,
-    minHeight: 280,
-    background: "#001E32",
-    borderRadius: 8,
-  };
-
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <div>
-        {listData.map((item, index) => (
-          <div key={index} style={{ marginBottom: 5 }}>
-            <Badge status={item.type} text={item.content} />
-          </div>
-        ))}
-        <div style={{ marginTop: 8 }}>
-          <Button type="primary" size="small" onClick={() => handleDateSelect(value)}>Planifier</Button>
-        </div>
-      </div>
-    );
-  };
-
-  const handleLogout = () => {
-    window.location.href = 'http://localhost:3000/';
-  };
-
-  const handleReturnToDashboard = () => {
-    history.push('/dashboard');
-  };
-
-  // Appeler fetchData lorsque le composant est monté ou que le token utilisateur change
-  useEffect(() => {
-    if (userToken) {
-      fetchData();
-    }
-  }, [userToken]);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -212,7 +306,7 @@ const Calendrier = () => {
         <Header style={{ background: '#001F3F', textAlign: 'center', padding: 0 }}>
           <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#FFFFFF' }}>Calendrier</div>
         </Header>
-        <Content style={contentStyle}>
+        <Content style={{ padding: 24, margin: 0, minHeight: 280, background: '#001E32', borderRadius: 8 }}>
           {showImage && selectedSection && (
             <img
               src={process.env.PUBLIC_URL + `/images/${selectedSection.toLowerCase()}.jpg`}
@@ -224,33 +318,28 @@ const Calendrier = () => {
             <Tabs onChange={handleTabChange} activeKey={selectedTab}>
               <TabPane tab={<span style={{ color: '#FFFFFF' }}>Calendrier ({selectedClass})</span>} key="devoirs">
                 <Calendar dateCellRender={dateCellRender} />
-                <div>Contenu du calendrier des devoirs pour {selectedClass}</div>
                 <Modal
-                  title="Planifier un événement"
+                  title={isEditing ? 'Modifier un événement' : 'Planifier un événement'}
                   visible={modalVisible}
                   onCancel={handleModalCancel}
                   onOk={handleModalSubmit}
                   destroyOnClose={true}
                 >
-                  <Form
-                    form={form}
-                    layout="vertical"
-                    name="planification-evenement"
-                  >
-                 <Form.Item name="type" label="Type d'annonce" initialValue="paiement">
-                     <Select onChange={value => setSelectedType(value)} defaultValue="paiement">
-                     <Select.Option value="paiement">Paiement</Select.Option>
-                     <Select.Option value="examen">Examen</Select.Option>
-                     <Select.Option value="examen">Devoir</Select.Option>
-                     <Select.Option value="autre">Autre</Select.Option>
-                     </Select>
-                </Form.Item> 
+                  <Form form={form} layout="vertical" name="planification-evenement">
+                    <Form.Item name="type" label="Type d'annonce" initialValue="paiement">
+                      <Select>
+                        <Select.Option value="paiement">Paiement</Select.Option>
+                        <Select.Option value="examen">Examen</Select.Option>
+                        <Select.Option value="devoir">Devoir</Select.Option>
+                        <Select.Option value="autre">Autre</Select.Option>
+                      </Select>
+                    </Form.Item>
                     <Form.Item
-                     name="evenement"
-                     label="Événement"
-                     rules={[{ required: true, message: 'Veuillez saisir un événement!' }]}
+                      name="evenement"
+                      label="Événement"
+                      rules={[{ required: true, message: 'Veuillez saisir un événement!' }]}
                     >
-                    <TextArea rows={4} />
+                      <TextArea rows={4} />
                     </Form.Item>
                   </Form>
                 </Modal>
