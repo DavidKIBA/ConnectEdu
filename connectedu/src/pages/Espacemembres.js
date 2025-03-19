@@ -91,21 +91,43 @@ const Espacemembres = () => {
   };
 
   {
+    /* Récupération des permissions des membres */
+  }
+
+  {
     /* Ajout des membres de l'école */
   }
-  const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [adresse, setAdresse] = useState("");
+  const [ville_residence, setVille_residence] = useState("");
+  const [password, setPassword] = useState("");
   const [todoList, setTodoList] = useState([]);
 
   const addTodo = () => {
     const newTodo = {
       id: Math.floor(Math.random() * 1000),
-      email,
       name,
+      first_name,
+      last_name,
+      email,
+      telephone,
+      adresse,
+      ville_residence,
+      password,
     };
     setTodoList((prev) => [...prev, newTodo]);
-    setEmail("");
     setName("");
+    setFirst_name("");
+    setLast_name("");
+    setEmail("");
+    setTelephone("");
+    setAdresse("");
+    setVille_residence("");
+    setPassword("");
   };
 
   // Fonction de suppression
@@ -185,35 +207,131 @@ const Espacemembres = () => {
               initialValues={{
                 remember: true,
               }}
-              onFinish={addTodo}
+              onFinish={CreateMember}
             >
               <Form.Item
-                name="libelle"
-                label="Adresse mail"
+                name="name"
+                label="Pseudo"
                 rules={[
-                  { required: true, message: "Veuillez entrer l'adresse mail" },
+                  {
+                    required: true,
+                    message: "Veuillez entrer le pseudo du membre",
+                  },
                 ]}
               >
                 <Input
-                  placeholder="Ajouter un membre"
+                  placeholder=" Entrer le pseudo du membre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="first_name"
+                label="prénom"
+                rules={[
+                  { required: true, message: "Veuillez entrer le prénom" },
+                ]}
+              >
+                <Input
+                  placeholder="Entrer le prénom"
+                  value={first_name}
+                  onChange={(e) => setFirst_name(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="last_name"
+                label="Nom"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer le nom",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Entrer le nom"
+                  value={last_name}
+                  onChange={(e) => setLast_name(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="email"
+                label="Adresse mail"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer l'adresse mail",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Entrer l'adresse mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Form.Item>
               <Form.Item
-                name="libelle1"
-                label="Nom du membre"
+                name="telephone"
+                label="telephone"
                 rules={[
                   {
                     required: true,
-                    message: "Veuillez entrer le nom du membre",
+                    message: "Veuillez entrer le téléphone",
                   },
                 ]}
               >
                 <Input
-                  placeholder="Ajouter un membre"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Entrer le téléphone"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="adresse"
+                label="adresse"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer l'adresse",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Entrer l'adresse"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="ville_residence"
+                label="ville_residence"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer la ville residence",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Entrer la ville residence"
+                  value={ville_residence}
+                  onChange={(e) => setVille_residence(e.target.value)}
+                />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                label="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Veuillez entrer le mot de passe",
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Entrer le mot de passe"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Item>
 
@@ -223,7 +341,7 @@ const Espacemembres = () => {
                   span: 16,
                 }}
               >
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" onClick={CreateMember}>
                   Ajouter
                 </Button>
               </Form.Item>

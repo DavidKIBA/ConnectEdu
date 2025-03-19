@@ -6,6 +6,9 @@ import Niveauxprescolaire from "../components/Niveauxprescolaire";
 import Niveauxprimaire from "../components/Niveauxprimaire";
 import Niveauxcollege from "../components/Niveauxcollege";
 import Niveauxlycee from "../components/Niveauxlycee";
+import Classe from "./Elèves/Classe";
+import { generatedData } from "./Elèves/Classe";
+
 import {
   UserOutlined,
   MessageOutlined,
@@ -48,7 +51,7 @@ const { TextArea } = Input;
 
 const { Title, Paragraph } = Typography;
 
-const Espaceeleves = () => {
+const Espaceeleves = (donne) => {
   const [infosEcole, setInfosEcole] = useState({});
 
   useEffect(() => {

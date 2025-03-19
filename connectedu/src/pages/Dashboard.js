@@ -66,6 +66,7 @@ const contentStyle: React.CSSProperties = {
 
 const Dashboard = () => {
   const [infosEcole, setInfosEcole] = useState(null);
+  const [totalEleves, setTotalEleves] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -81,29 +82,29 @@ const Dashboard = () => {
 
         // Envoyer une requête HTTP pour obtenir les informations de l'utilisateur après l'authentification
         const response = await axios.get(
-          `http://${schema_name}.192.168.1.3:8000/ecole/`,
+          `http://${schema_name}.localhost:8000/ecole/total-eleve/`,
           {
-            // Inclure le token JWT dans l'en-tête Authorization de la requête
+            // Inclure le token JWT dans l'en-tête Authorization b       de la requête
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
 
-        // Extraire le nom de l'utilisateur à partir des données reçues
-        const { nom } = response.data;
-
-        // Mettre à jour l'état avec le nom de l'utilisateur
-        setInfosEcole(nom);
+        // Vérifie que la réponse contient bien les données attendues
+        if (response.data && response.data.count) {
+          setTotalEleves(response.data.count); // Supposons que l'API renvoie { "count": 100 }
+        } else {
+          console.error("Données inattendues reçues :", response.data);
+        }
       } catch (error) {
         console.error(
-          "Erreur lors de la récupération des informations de l'utilisateur:",
+          "Erreur lors de la récupération des informations :",
           error
         );
       }
     };
 
-    // Appeler la fonction fetchUserData lors du chargement de la page du tableau de bord
     fetchUserData();
   }, []);
 
@@ -342,7 +343,8 @@ const Dashboard = () => {
                       title={<span style={{ color: "#fff" }}>Elèves</span>}
                       description={
                         <span style={{ color: "#fff" }}>
-                          2857 Comptes inscrits
+                          {totalEleves !== null ? totalEleves : "Chargement..."}
+                          Comptes inscrits
                         </span>
                       }
                     />

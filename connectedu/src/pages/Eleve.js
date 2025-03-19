@@ -19,6 +19,7 @@ import {
 } from "antd";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { Header } from "antd/es/layout/layout";
 
 const { Title } = Typography;
 const { Content, Sider } = Layout;
@@ -40,7 +41,7 @@ const Eleve = () => {
   const schema = schemaname.replace("_", "-"); // Remplace "_" par "-" dans le nom du schéma
 
   const api = axios.create({
-    baseURL: `http://${schema}.localhost:8000/ecole`, // URL de base pour les appels API
+    baseURL: `http://${schema}.localhost:8000/ecole/`, // URL de base pour les appels API
     headers: {
       Authorization: `Bearer ${token}`, // Ajoute le token d'authentification dans les headers
     },

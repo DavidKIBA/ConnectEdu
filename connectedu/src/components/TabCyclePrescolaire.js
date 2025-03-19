@@ -34,6 +34,9 @@ const TabCyclePrescolaire = ({ classKey }) => {
   const [infosEcole, setInfosEcole] = useState({});
   const [classeData, setClasseData] = useState(null);
 
+  const [data, setData] = useState(generateData());
+  const [classe, setClasse] = useState(null);
+
   useEffect(() => {
     const selectedClasseKey = localStorage.getItem("selectedClasseKey");
     if (selectedClasseKey) {
@@ -43,20 +46,17 @@ const TabCyclePrescolaire = ({ classKey }) => {
       if (storedClasseData) {
         const parsedClasseData = JSON.parse(storedClasseData);
         setClasseData(parsedClasseData);
+
+        // Vérifier si l'ID du niveau est disponible et le stocker dans localStorage
+        if (parsedClasseData.niveau && parsedClasseData.niveau.id) {
+          localStorage.setItem("niveauId", parsedClasseData.niveau.id);
+          alert("OK");
+        } else {
+          console.error("ID du niveau introuvable dans classeData");
+        }
       }
     }
   }, []);
-
-  const [data, setData] = useState(generateData());
-  const [classe, setClasse] = useState(null);
-
-  useEffect(() => {
-    const storedClass = localStorage.getItem(`classe_${classKey}`);
-
-    if (storedClass) {
-      setClasse(JSON.parse(storedClass));
-    }
-  }, [classKey]);
 
   // récupération de la liste des parents
   useEffect(() => {

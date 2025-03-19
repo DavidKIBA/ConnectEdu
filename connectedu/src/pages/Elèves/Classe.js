@@ -20,16 +20,17 @@ import { jwtDecode } from "jwt-decode";
 import Dashboardmenu from "../../components/Dashboardmenu";
 import Dashboardsider from "../../components/Dashboardsider";
 import Uploadfiles from "../../components/Uploadfiles";
+import Espaceeleves from "../Espaceeleves";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const generateData = () => {
-  const data = [];
-  return data;
-};
-
 const Classe = ({ classKey }) => {
+  const generateData = () => {
+    const data = [];
+    return data;
+  };
+
   const [classeData, setClasseData] = useState(null);
 
   useEffect(() => {
@@ -67,12 +68,16 @@ const Classe = ({ classKey }) => {
       try {
         const storedClass = localStorage.getItem(`classe_${classKey}`);
         const token = localStorage.getItem("access");
+        const id_niveau = localStorage.getItem(niveau.id);
         const decodedToken = jwtDecode(token);
         const schemaname = decodedToken.schema_name;
         const schema = schemaname.replace("_", "-");
 
+        // récupérer la liste des élèves
+
         const response = await axios.get(
           `http://${schema}.localhost:8000/ecole/eleve`,
+
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -86,7 +91,7 @@ const Classe = ({ classKey }) => {
         console.log("classe:", classeData.libelle);
 
         // Transforme les données pour les adapter au tableau
-        const formattedData = response.data.map((item, index) => ({
+        const formattedData = response.data.results.map((item, index) => ({
           key: item.id,
           id: item.id,
           matricule: item.matricule,
@@ -118,6 +123,7 @@ const Classe = ({ classKey }) => {
     try {
       await axios.delete(
         `http://${schema}.localhost:8000/ecole/eleve/${key}/`,
+
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -311,32 +317,56 @@ const Classe = ({ classKey }) => {
   {
     /* Ajout des matières de la classe */
   }
-  const [todo, setTodo] = useState(" ");
-  const [todoList, setTodoList] = useState([]);
-  const addTodo = (e) => {
-    const newTodo = {
-      id: Math.floor(Math.random() * 1000),
-      value: todo,
-    };
-    setTodoList((prev) => [...prev, newTodo]);
-    setTodo("");
+  const [libelle, setLibelle] = useState("");
+  const [coeficient, setCoeficient] = useState("");
+  const [niveau, setNiveau] = useState("");
+
+  const handleCreateMatiere = async () => {
+    const token = localStorage.getItem("access");
+    const decodedToken = jwtDecode(token);
+    const schemaname = decodedToken.schema_name;
+    const schema = schemaname.replace("_", "-");
+    const niveauLibelle = decodedToken.libelle; // Extraire le libelle (niveau)
+    const niveauId = localStorage.getItem("niveauId");
+
+    if (!niveauId) {
+      console.error("L'ID du niveau n'a pas été trouvé dans localStorage");
+    } else {
+      console.log("ID du niveau récupéré :", niveauId);
+    }
+
+    try {
+      const response = await axios.post(
+        `http://${schema}.localhost:8000/ecole/matiere/`,
+        {
+          libelle,
+          coeficient,
+          niveau: [parseInt(niveauId)], // Passer uniquement l'ID du niveau
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // L'en-tête 'Authorization' est envoyé ici
+          },
+        }
+      );
+      console.log("Données envoyées:", response);
+      console.log({ libelle, coeficient, niveau }); // Avant la requête
+
+      if (response.data.message) {
+        message.success(response.data.message); // Message si le niveau a été ajouté
+      } else {
+        message.success("Matière créée avec succès !");
+      }
+      setLibelle(""); // Réinitialise le champ
+      setCoeficient("");
+      setNiveau("");
+    } catch (error) {
+      message.error("Erreur lors de la création de la matière");
+      console.error(error);
+    }
   };
 
-  {
-    /* Fin Ajout des matières de la classe */
-  }
-
-  {
-    /* Suppression des matières de la classe */
-  }
-  const deleteTodo = (todoId) => {
-    const newTodos = todoList.filter((todo) => todo.id !== todoId);
-    setTodoList(newTodos);
-  };
-
-  {
-    /* Fin Suppression des matières de la classe */
-  }
+  // Fin Ajout des matières de la classe
 
   return (
     <Layout style={{ background: "#001E32" }}>
@@ -385,7 +415,6 @@ const Classe = ({ classKey }) => {
                 <Col span={24}>Classe non trouvée</Col>
               </Row>
             )}
-
             <Button
               type="primary"
               onClick={handleAdd}
@@ -415,83 +444,51 @@ const Classe = ({ classKey }) => {
                 scroll={{ x: true }}
               />
             </div>
-
             {/* Ajout des matières de la classe */}
+            <h2>nombre de classe: {setClasseData.length} </h2>
+            <h2>nombre d'élèves: {data.length} </h2>
+
             <Title level={3} style={{ color: "#3498DB" }}>
               Matières de la classe
             </Title>
-            <Form
-              name="basic"
-              labelCol={{
-                span: 8,
-              }}
-              wrapperCol={{
-                span: 16,
-              }}
-              style={{
-                maxWidth: 600,
-              }}
-              initialValues={{
-                remember: true,
-              }}
-              onFinish={addTodo}
-            >
-              <Form.Item
-                name="libelle"
-                label="Matière"
-                rules={[
-                  { required: true, message: "Veuillez entrer une matière" },
-                ]}
-              >
-                <Input
-                  placeholder="Ajouter une matière"
-                  value={todo}
-                  onChange={(e) => {
-                    console.log(e.target.value);
-                    setTodo(e.target.value);
-                  }}
-                />
-              </Form.Item>
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
-              >
-                <Button type="primary" htmlType="submit">
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
 
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleCreateMatiere();
+              }}
+            >
+              <Input
+                type="text"
+                placeholder="Libelle"
+                value={libelle}
+                onChange={(e) => setLibelle(e.target.value)}
+                style={{ marginBottom: "10px" }}
+              />
+              <Input
+                type="number"
+                placeholder="Coeficient"
+                value={coeficient}
+                onChange={(e) => setCoeficient(e.target.value)}
+                style={{ marginBottom: "10px" }}
+              />
+              {/* <Input
+                type="text"
+                placeholder="Niveau"
+                value={niveau}
+                onChange={(e) => setNiveau(e.target.value)}
+                style={{ marginBottom: "10px" }}
+              /> */}
+              <Button type="primary" htmlType="submit">
+                Créer Matière
+              </Button>
+            </form>
             {/* Liste des matières ajoutées */}
             <Title level={4} style={{ color: "#3498DB" }}>
               Liste des matières ajoutées
             </Title>
-            <ol>
-              {todoList.length ? (
-                todoList.map((todo) => {
-                  return (
-                    <div>
-                      <li key={todo.id} style={{ display: "inline" }}>
-                        {todo.value}
-                      </li>
-                      <button
-                        onClick={() => deleteTodo(todo.id)}
-                        style={{ marginLeft: "200px" }}
-                      >
-                        Suprimer
-                      </button>
-                    </div>
-                  );
-                })
-              ) : (
-                <span>liste vide</span>
-              )}
-            </ol>
             {/* fin Liste des matières ajoutées */}
             {/* Fin Ajout des matières de la classe */}
-
             <Content
               style={{
                 padding: 24,
@@ -527,7 +524,6 @@ const Classe = ({ classKey }) => {
                 </Card>
               </div>
             </Content>
-
             <Content
               style={{
                 padding: 24,
@@ -540,7 +536,6 @@ const Classe = ({ classKey }) => {
               <Uploadfiles />
               <br />
             </Content>
-
             <Content
               style={{
                 padding: 24,
@@ -585,7 +580,6 @@ const Classe = ({ classKey }) => {
                 >
                   <Input />
                 </Form.Item>
-
                 <Form.Item
                   name={["user", "message"]}
                   label="Message"
@@ -610,7 +604,6 @@ const Classe = ({ classKey }) => {
                 </Form.Item>
               </Form>
             </Content>
-
             <Modal
               title={editingKey ? "Modifier un élève" : "Ajouter un élève"}
               visible={modalVisible}
@@ -622,11 +615,15 @@ const Classe = ({ classKey }) => {
                 name="addEditForm"
                 onFinish={handleSave}
                 initialValues={{
-                  Matricule: "",
-                  Nom: "",
-                  Prenom: "",
-                  Telephone: "",
-                  Adresse: "",
+                  matricule: "",
+                  nom: "",
+                  prenom: "",
+                  date_naissance: "",
+                  lieu_naissance: "",
+                  telephone: "",
+                  adresse: " ",
+                  niveau: "",
+                  tuteur: "",
                 }}
               >
                 <Form.Item
@@ -695,5 +692,4 @@ const Classe = ({ classKey }) => {
     </Layout>
   );
 };
-
 export default Classe;
